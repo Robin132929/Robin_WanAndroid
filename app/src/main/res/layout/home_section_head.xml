@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/section_head_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/viewBackground"
+    >
+
+    <Button
+        android:id="@+id/img1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_weight="1"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:drawableTop="@drawable/luobo"
+        android:text="每日问答" />
+
+    <Button
+        android:id="@+id/img2"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:drawableTop="@drawable/tiantong"
+        android:layout_toRightOf="@id/img1"
+        android:text="面试集锦"
+        />
+
+    <Button
+        android:id="@+id/img3"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+
+        android:background="@null"
+        android:drawableTop="@drawable/yinliao"
+        android:layout_toRightOf="@id/img2"
+        android:text="收藏"
+        />
+
+    <Button
+        android:id="@+id/img4"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+
+        android:background="@null"
+        android:drawableTop="@drawable/yumi"
+        android:layout_toRightOf="@id/img3"
+        android:text="积分墙"
+        />
+    <Button
+    android:id="@+id/img5"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+
+        android:background="@null"
+    android:drawableTop="@drawable/xuegao"
+        android:text="更多"
+    />
+
+</LinearLayout>
+

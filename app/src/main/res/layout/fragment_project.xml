@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_168"
+        android:background="@color/Light_Blue"
+        />
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/project_banner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="118dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_project_banner"
+        app:autoTurningTime="2000"
+        app:canLoop="true"
+        />
+
+  </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/recycle_konwledge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_30"
+            />
+
+        <LinearLayout
+            android:layout_width="28dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/White">
+
+            <ToggleButton
+                android:id="@+id/btn_expand"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@null"
+                android:foreground="@drawable/bg_top_nav_btn"
+                android:gravity="right|center_vertical"
+                android:padding="8dp"
+                android:textOff="@null"
+                android:textOn="@null" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_project_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10"
+        />
+
+</LinearLayout>
