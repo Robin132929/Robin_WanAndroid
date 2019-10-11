@@ -39,18 +39,32 @@ public class MainFragment extends BaseMvpFragment<MainPresenter> implements Main
 
     @Override
     public View initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        tabLayout=view.findViewById(R.id.tl_tabs);
-        viewPager=view.findViewById(R.id.vp_content);
-        viewPager.setAdapter(new myViewPagerAdapter(new WeChatBean(),getChildFragmentManager(),1));
+        tabLayout = view.findViewById(R.id.tl_tabs);
+        viewPager = view.findViewById(R.id.vp_content);
 
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.selectTab(tabLayout.getTabAt(1));
         return view;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                fragments.add(new NavigationFragment());
+            } else if (i == 1) {
+                fragments.add(HomeFragment.newInstance());
+            } else if (i == 2) {
+                fragments.add(new KnowledgeStructureFragment());
+            } else if (i == 3) {
+                fragments.add(new WechatFragment());
+            } else {
+                fragments.add(new ProjectFragment());
+            }
+        }
 
+        viewPager.setAdapter(new myViewPagerAdapter(fragments, getChildFragmentManager(), 1));
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.selectTab(tabLayout.getTabAt(1));
     }
 
     @Override
@@ -63,15 +77,6 @@ public class MainFragment extends BaseMvpFragment<MainPresenter> implements Main
         return R.layout.fragment_main;
     }
 
-    @Override
-    public void setHomeArt(MainArticleBean.DataBean dataBean) {
-
-    }
-
-    @Override
-    public void showLogoutSuccess(boolean success) {
-
-    }
 
     @Override
     public void showLoading() {

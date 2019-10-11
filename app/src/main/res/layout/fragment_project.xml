@@ -12,15 +12,15 @@
         >
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_168"
+        android:layout_height="@dimen/dp_110"
         android:background="@color/Light_Blue"
         />
     <com.bigkoo.convenientbanner.ConvenientBanner
         android:id="@+id/project_banner"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="118dp"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
         android:background="@drawable/bg_project_banner"
         app:autoTurningTime="2000"
         app:canLoop="true"

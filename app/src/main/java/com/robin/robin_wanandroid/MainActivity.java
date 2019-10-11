@@ -65,6 +65,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         mCoordinatorLayout = findViewById(R.id.cl_layout);
         mCoordinatorLayout.setPadding(0, statusBarHeight, 0, 0);
         StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary));
+       FrameLayout.LayoutParams layoutParams=new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, -1);
     }
 
     private void Immersive() {
@@ -174,7 +175,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
         hideFragments(fm);
         if (index == 1) {
-            if (mHomeFragment == null) {
+            if (mHomeFragment==null) {
                 mHomeFragment = HomeFragment.newInstance();
                 fm.add(R.id.fl_content_container, mHomeFragment, "home");
             } else {
@@ -182,7 +183,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             }
         }
         if (index == 0) {
-            if (mMainFragment == null) {
+            if (mMainFragment==null) {
                 mMainFragment = MainFragment.newInstance();
                 fm.add(R.id.fl_content_container, mMainFragment, "main");
             } else {
@@ -236,18 +237,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void hideLoading() {
-
-    }
-
-
-    @Override
-    public void setHomeArt(MainArticleBean.DataBean dataBean) {
-//       HomeAdapter mHomeAdapter=new HomeAdapter(this,dataBean.getDatas());
-//        recyclerView.setAdapter(mHomeAdapter);
-    }
-
-    @Override
-    public void showLogoutSuccess(boolean success) {
 
     }
 

@@ -42,7 +42,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model,HomeContract
         //打开 App 时自动加载列表
         requestBanner(false);
         requestTopArticle();
-        requestArticle(0,true);
+        requestArticle(0,false);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model,HomeContract
                     public void onNext(MainArticleBean dataBeans) {
                         Logger.i("test mian :"+dataBeans.toString());
 
-                        mView.setArticle(dataBeans.getData());
+                        mView.setArticle(dataBeans.getData(),isSave);
                     }
 
            @Override

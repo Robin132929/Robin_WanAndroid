@@ -1,25 +1,18 @@
 package com.robin.robin_wanandroid.mvp.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -50,15 +43,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, View.OnClickListener {
     private static int index = 0;
     LinearLayoutManager linearLayoutManager;
     ConvenientBanner<BannerBean.DataBean> convenientBanner;
-    CardView navlayout;
-    RecyclerView recyclerView;
-    List<HomeSectionMutipleItem> list = new ArrayList<>();
-    LinearLayout linearLayout;
+
+    LinearLayout head_LinearLayout;
+    LinearLayout head_LinearLayout_1;
+    Button img1;
+    Button img2;
+    Button img3;
+    Button img4;
+    Button img5;
+
     private BaseQuickAdapter mHomeAdapter;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -75,35 +72,20 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     public View initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view= inflater.inflate(R.layout.fragment_home, container, false);
-
         LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.banner_view, null);
         convenientBanner = linearLayout.findViewById(R.id.convenient_banner);
         linearLayout.removeView(convenientBanner);
 
-//
-//        LinearLayout bannerViewLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.banner_view,null);
-//        convenientBanner = bannerViewLayout.findViewById(R.id.convenient_banner);
-//        bannerViewLayout.removeView(convenientBanner);
-//
-//       recyclerView=linearLayout.findViewById(R.id.test_recycle);
-//        linearLayout.removeView(recyclerView);
-//        LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity());
-//        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),1);
-//        gridLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
-//        linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        HomeNavgationAdapter homeNavgationAdapter=new HomeNavgationAdapter(R.layout.navagtion_recycle_item);
-//        homeNavgationAdapter.addData(Arrays.asList(new NavgationBean("a"),new NavgationBean("b"),
-//                new NavgationBean("c"),new NavgationBean("d")));
-//        recyclerView.setAdapter(homeNavgationAdapter);
-//         navlayout= (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.navagtion_recycle_item,null);
-
-//        View BannerView = getLayoutInflater().inflate(R.layout.banner_view, container, false);
-//        convenientBanner=BannerView.findViewById(R.id.convenient_banner);
-
         mRecyclerView = view.findViewById(R.id.home_rv);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+
+        head_LinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
+        head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
+        img1 = head_LinearLayout.findViewById(R.id.img1);
+        img2 = head_LinearLayout.findViewById(R.id.img2);
+        img3 = head_LinearLayout.findViewById(R.id.img3);
+        img4 = head_LinearLayout.findViewById(R.id.img4);
+        img5 = head_LinearLayout.findViewById(R.id.img5);
         showLoading();
         return view;
     }
@@ -115,31 +97,23 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         mHomeAdapter = new HomeAdapter(R.layout.home_recycle_item);
         mHomeAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mHomeAdapter.setHeaderView(convenientBanner);
-//        ConstraintLayout head_ll= (ConstraintLayout) getLayoutInflater().inflate(R.layout.home_section_head,null);
-//        RelativeLayout head_ll= (RelativeLayout) getLayoutInflater().inflate(R.layout.home_section_head,null);
-        LinearLayout head_ll = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
-        LinearLayout head_ll2 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
+        mHomeAdapter.setHeaderView(head_LinearLayout, 1);
+        mHomeAdapter.setHeaderView(head_LinearLayout_1, 2);
 
-        Button img1 = head_ll.findViewById(R.id.img1);
-        img1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "aaaaaaaaaa", Toast.LENGTH_LONG).show();
-            }
-        });
+        img1.setOnClickListener(this);
+        img2.setOnClickListener(this);
+        img3.setOnClickListener(this);
+        img4.setOnClickListener(this);
+        img5.setOnClickListener(this);
 
-        mHomeAdapter.setHeaderView(head_ll, 1);
-        mHomeAdapter.setHeaderView(head_ll2, 2);
+
         mRecyclerView.setAdapter(mHomeAdapter);
 
         mHomeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Logger.i("click item " + position);
                 MainArticleBean.DataBean.DatasBean data = (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
-//                Intent intent = new Intent(getActivity(), ContentActivity.class);
-//                intent.putExtra("url", data.getLink());
-                ContentActivity.startActivity(App.getmMyAppComponent().application(),data.getLink());
+                ContentActivity.startActivity(App.getmMyAppComponent().application(), data.getLink());
             }
         });
         mHomeAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -148,6 +122,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 mPresenter.requestArticle(index++, true);
             }
         }, mRecyclerView);
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -169,8 +144,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     public void showLoading() {
-
-//        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -189,18 +162,16 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     @Override
-    public void setArticle(MainArticleBean.DataBean dataBean) {
+    public void setArticle(MainArticleBean.DataBean dataBean,boolean isRefresh) {
         index = dataBean.getCurPage();
-        Logger.i(dataBean.getDatas().toString());
-//        list.add(new HomeSectionMutipleItem(true,"最新文章",true));
-//        list.add(new HomeSectionMutipleItem(new HomeData(dataBean.getDatas().get(0),null ,null,null),HomeSectionMutipleItem.CONTENT));
-//        list.add(new HomeSectionMutipleItem(new HomeData(dataBean.getDatas().get(1),null ,null,null),HomeSectionMutipleItem.CONTENT));
-//        list.add(new HomeSectionMutipleItem(new HomeData(dataBean.getDatas().get(2),null ,null,null),HomeSectionMutipleItem.CONTENT));
-//        list.add(new HomeSectionMutipleItem(new HomeData(dataBean.getDatas().get(3),null ,null,null),HomeSectionMutipleItem.CONTENT));
-
+        if (isRefresh&&dataBean.isOver()){
+            mHomeAdapter.loadMoreEnd();
+        }
+        if (!isRefresh){
+            mHomeAdapter.setNewData(dataBean.getDatas());
+        }
         mHomeAdapter.addData(dataBean.getDatas());
         mHomeAdapter.loadMoreComplete();
-
     }
 
     @Override
@@ -221,7 +192,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-
+                        ContentActivity.startActivity(App.getmMyAppComponent().application(), banner.getData().get(position).getUrl());
                     }
                 });
         convenientBanner.startTurning();
@@ -231,7 +202,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img1:
-                Toast.makeText(getContext(), "每日问答" , Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "每日问答", Toast.LENGTH_LONG).show();
                 break;
             case R.id.img2:
                 Toast.makeText(getContext(), "面试集锦", Toast.LENGTH_LONG).show();
@@ -241,7 +212,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 break;
             case R.id.img4:
                 Toast.makeText(getContext(), "积分墙", Toast.LENGTH_LONG).show();
-
                 break;
             case R.id.img5:
                 Toast.makeText(getContext(), "正在建设中...", Toast.LENGTH_LONG).show();
@@ -250,5 +220,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 break;
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHomeAdapter.setNewData(null);
     }
 }

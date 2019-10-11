@@ -3,6 +3,7 @@ package com.robin.robin_wanandroid.mvp.model;
 import com.robin.rbase.MVP.MvpBase.BaseModel;
 import com.robin.rbase.MVP.integration.IRepositoryManager;
 import com.robin.robin_wanandroid.mvp.contract.ProjectContract;
+import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectCategoryBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectItemBean;
 import com.robin.robin_wanandroid.mvp.model.cache.CommonCache;
@@ -54,6 +55,19 @@ public class ProjectModel extends BaseModel implements ProjectContract.Model {
                                         return projectItemBeanReply.getData();
                                     }
                                 });
+                    }
+                });
+    }
+
+    @Override
+    public Observable<BannerBean> getBanner() {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getBanner())
+                .flatMap(new Function<Observable<BannerBean>, ObservableSource<BannerBean>>() {
+                    @Override
+                    public ObservableSource<BannerBean> apply(Observable<BannerBean> listObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .getBanner(listObservable)
+                                .map(listReply -> listReply.getData());
                     }
                 });
     }

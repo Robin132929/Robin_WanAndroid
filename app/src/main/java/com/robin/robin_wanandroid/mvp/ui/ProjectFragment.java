@@ -10,16 +10,24 @@ import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
+import com.robin.robin_wanandroid.ContentActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.KnowledgeListAdapter;
 import com.robin.robin_wanandroid.adapter.ProjectCategoryAdapter;
 import com.robin.robin_wanandroid.adapter.ProjectItemAdapter;
 import com.robin.robin_wanandroid.mvp.contract.ProjectContract;
+import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectCategoryBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectItemBean;
 import com.robin.robin_wanandroid.mvp.presenter.ProjectPresenter;
+import com.robin.robin_wanandroid.widget.BannerHolderView;
 import com.robin.robin_wanandroid.widget.CustomPopupWindow;
 
 import java.util.ArrayList;
@@ -37,9 +45,8 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
     private RecyclerView mItem_RecyclerView;
     private RecyclerView mPopopWindowRecycleView;
     private ToggleButton mToggleButton;
-    private ConvenientBanner mConvenientBanner;
+    private ConvenientBanner<BannerBean.DataBean> mConvenientBanner;
     private CustomPopupWindow mExpandPopupWindow;
-
 
     private List<ProjectCategoryBean.DataBean> mCategory_list;
     private List<ProjectItemBean.DataBean.DatasBean> mItem_list;
@@ -49,8 +56,7 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
     private ProjectItemAdapter mProjectItemAdapter;
 
     private CustomPopupWindow.LayoutGravity layoutGravity;
-
-
+    private ToggleButton mPopopWindow_ToggleButton;
 
     public ProjectFragment() {
         mCategory_list=new ArrayList<>();
@@ -74,6 +80,16 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
                 .customListener(new CustomPopupWindow.CustomPopupWindowListener() {
                     @Override
                     public void initPopupView(View contentView) {
+                        mPopopWindow_ToggleButton=contentView.findViewById(R.id.expand_tb);
+                        mPopopWindow_ToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked){
+                                    mExpandPopupWindow.dismiss();
+                                }
+                            }
+                        });
+
                         mPopopWindowRecycleView=contentView.findViewById(R.id.data_list);
                         mPopopWindowRecycleView.setLayoutManager(new FlowLayoutManager());
                         mPopopWindow_ProjectCategoryAdapter= new ProjectCategoryAdapter(R.layout.top_nav_item, mCategory_list);
@@ -85,6 +101,7 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
             @Override
             public void onDismiss() {
                 mToggleButton.setChecked(false);
+                mPopopWindow_ToggleButton.setChecked(false);
             }
         });
         return view;
@@ -99,10 +116,33 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
         mItem_RecyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         mProjectCategoryAdapter=new ProjectCategoryAdapter(R.layout.top_nav_item,mCategory_list);
-        mProjectItemAdapter=new ProjectItemAdapter(R.layout.top_nav_item,mItem_list);
+        mProjectItemAdapter=new ProjectItemAdapter(R.layout.projectitem_recycle_item,mItem_list);
 
         mCategory_RecyclerView.setAdapter(mProjectCategoryAdapter);
         mItem_RecyclerView.setAdapter(mProjectItemAdapter);
+
+        mPopopWindow_ProjectCategoryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ProjectCategoryBean.DataBean bean= (ProjectCategoryBean.DataBean) adapter.getItem(position);
+                mPresenter.getProjectitem(1,bean.getId(),false);
+            }
+        });
+
+        mProjectCategoryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ProjectCategoryBean.DataBean bean= (ProjectCategoryBean.DataBean) adapter.getItem(position);
+                mPresenter.getProjectitem(1,bean.getId(),false);
+            }
+        });
+        mProjectItemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ProjectItemBean.DataBean.DatasBean bean= (ProjectItemBean.DataBean.DatasBean) adapter.getItem(position);
+                ContentActivity.startActivity(mContext,bean.getLink());
+            }
+        });
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -112,7 +152,6 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
                     mExpandPopupWindow.showBashOfAnchor(mCategory_RecyclerView,layoutGravity,0,-mCategory_RecyclerView.getHeight());
                 }else {
                     mCategory_RecyclerView.setLayoutManager(linearLayoutManager);
-
                 }
             }
         });
@@ -121,7 +160,6 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
 
     @Override
     public void setData(@Nullable Object data) {
-
 
     }
 
@@ -139,9 +177,38 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
 
     @Override
     public void setProjectitem(ProjectItemBean bean, boolean isRefresh) {
-        mItem_list.addAll(bean.getData().getDatas());
-        mProjectItemAdapter.addData(mItem_list);
+        if (isRefresh) {
+            mItem_list.addAll(bean.getData().getDatas());
+            mProjectItemAdapter.addData(mItem_list);
+        }else {
+            mItem_list.clear();
+            mProjectItemAdapter.setNewData(bean.getData().getDatas());
+        }
 
+    }
+
+    @Override
+    public void setBanner(BannerBean banner) {
+        Logger.i("banner is :"+banner.getData().size());
+        mConvenientBanner.setPages(new CBViewHolderCreator() {
+            @Override
+            public Holder createHolder(View itemView) {
+                return new BannerHolderView(itemView, getContext());
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.project_item_banner_view;
+            }
+        }, banner.getData()).setPageIndicator(new int[]{R.drawable.ic_circle_normal, R.drawable.ic_circle_press})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+
+                    }
+                });
+        mConvenientBanner.startTurning();
     }
 
     @Override

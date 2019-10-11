@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestOptions;
 public class GlideUtils {
     public static void showBannerImage(Context context, ImageView imageView, String url){
         RequestOptions requestOptions =new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).centerInside();
         Glide.with(context).load(url).apply(requestOptions).into(imageView);
     }
 }

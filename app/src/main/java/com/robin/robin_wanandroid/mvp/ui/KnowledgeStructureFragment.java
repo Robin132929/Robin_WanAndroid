@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -24,6 +25,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
+import com.robin.robin_wanandroid.ContentActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.KnowledgeStruteItemAdapter;
 import com.robin.robin_wanandroid.adapter.KnowledgeListAdapter;
@@ -40,17 +42,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructurePresenter> implements KnowledgeStructureContract.View {
-    RecyclerView rv_list_1st;
-    RecyclerView rv_list_2st;
-    RecyclerView rv_content;
-    ToggleButton btn_list_1st;
-    ToggleButton btn_list_2st;
+    RecyclerView konwledge_rv;
+    RecyclerView konwledge_child_rv;
+    RecyclerView konwledge_list_rv;
+    ToggleButton tb_show_window;
+    ToggleButton tb_show_child_window;
     ToggleButton btn_expand;
+    ToggleButton btn_child_expand;
     ConvenientBanner<BannerBean.DataBean> convenientBanner;
+
     CustomPopupWindow mExpandPopupWindow;
     RecyclerView mPopopWindowRecycleView;
+    CustomPopupWindow mChildExpandPopupWindow;
+    RecyclerView mChildPopopWindowRecycleView;
 
     KnowledgeListChildAdapter knowledgeListChildAdapter;
+    KnowledgeListChildAdapter knowledgeListChildAdapter_expand;
     KnowledgeStruteItemAdapter mKnowledgeStruteItemAdapter;
     KnowledgeListAdapter knowledgeListAdapter;
     KnowledgeListAdapter   knowledgeListAdapter1;
@@ -72,26 +79,25 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
 
     @Override
     public View initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rv_content = view.findViewById(R.id.rv_list_2);
-        rv_list_1st = view.findViewById(R.id.rv_list);
-        rv_list_2st = view.findViewById(R.id.rv_list_1);
-        btn_list_1st = view.findViewById(R.id.btn_expand);
-        btn_list_2st = view.findViewById(R.id.btn_expand_1);
-        btn_list_1st.setChecked(false);
+        konwledge_rv = view.findViewById(R.id.konwledge_rv);
+        konwledge_child_rv = view.findViewById(R.id.konwledge_child_rv);
+        konwledge_list_rv = view.findViewById(R.id.konwledge_list_rv);
+
+        tb_show_window = view.findViewById(R.id.tb_show_window);
+        tb_show_child_window = view.findViewById(R.id.tb_show_child_window);
         convenientBanner=view.findViewById(R.id.nav_banner);
         View  contentView= LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
 
         mExpandPopupWindow=CustomPopupWindow.builder()
                 .contentView(contentView)
                 .isFocus(true)
-                .parentView(rv_content)
+                .parentView(konwledge_list_rv)
                 .setHeight(500)
                 .setWidth(ViewGroup.LayoutParams.MATCH_PARENT)
                 .customListener(new CustomPopupWindow.CustomPopupWindowListener() {
                     @Override
                     public void initPopupView(View contentView) {
                         btn_expand=contentView.findViewById(R.id.expand_tb);
-                        btn_expand.setChecked(false);
                         btn_expand.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -106,8 +112,47 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
                      mPopopWindowRecycleView.setAdapter(knowledgeListAdapter1);
                     }
                 }).build();
-//        btn_list_1st.setBackgroundColor(getResources().getColor(R.color.White));
-//        btn_list_2st.setBackgroundColor(getResources().getColor(R.color.White));
+        mExpandPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                btn_expand.setChecked(false);
+                tb_show_window.setChecked(false);
+            }
+        });
+
+        View  contentView1= LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
+        mChildExpandPopupWindow=CustomPopupWindow.builder()
+                .contentView(contentView1)
+                .isFocus(true)
+                .parentView(konwledge_child_rv)
+                .setHeight(500)
+                .setWidth(ViewGroup.LayoutParams.MATCH_PARENT)
+                .customListener(new CustomPopupWindow.CustomPopupWindowListener() {
+                    @Override
+                    public void initPopupView(View contentView) {
+                        btn_child_expand=contentView.findViewById(R.id.expand_tb);
+                        btn_child_expand.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked){
+                                    mChildExpandPopupWindow.dismiss();
+                                }
+                            }
+                        });
+                        mChildPopopWindowRecycleView=contentView.findViewById(R.id.data_list);
+                        mChildPopopWindowRecycleView.setLayoutManager(new FlowLayoutManager());
+                        knowledgeListChildAdapter_expand= new KnowledgeListChildAdapter(R.layout.top_nav_item, mChildDataList);
+                        mChildPopopWindowRecycleView.setAdapter(knowledgeListChildAdapter_expand);
+                    }
+                }).build();
+
+        mChildExpandPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                btn_child_expand.setChecked(false);
+                tb_show_child_window.setChecked(false);
+            }
+        });
         return view;
     }
 
@@ -118,32 +163,34 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());
         linearLayoutManager1.setOrientation(RecyclerView.HORIZONTAL);
 
-        rv_list_1st.setLayoutManager(linearLayoutManager);
-        rv_list_2st.setLayoutManager(linearLayoutManager1);
-        rv_content.setLayoutManager(new LinearLayoutManager(getActivity()));
+        konwledge_rv.setLayoutManager(linearLayoutManager);
+        konwledge_child_rv.setLayoutManager(linearLayoutManager1);
+        konwledge_list_rv.setLayoutManager(new LinearLayoutManager(mContext));
+
         layoutGravity=new CustomPopupWindow.LayoutGravity(CustomPopupWindow.LayoutGravity.ALIGN_LEFT| CustomPopupWindow.LayoutGravity.TO_BOTTOM);
 
-
-        btn_list_1st.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        tb_show_window.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Logger.i(" btn is check "+isChecked);
                 if (isChecked){
-//                    rv_list_1st.bringToFront();  rv_list_1st.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
-//                   rv_list_1st.setLayoutManager(new FlowLayoutManager());
                     knowledgeListAdapter1.notifyDataSetChanged();
-                    mExpandPopupWindow.showBashOfAnchor(rv_list_1st,layoutGravity,0,-rv_list_1st.getHeight());
-
+                    mExpandPopupWindow.showBashOfAnchor(konwledge_rv,layoutGravity,0,-konwledge_rv.getHeight());
                 }else {
-                    rv_list_1st.setLayoutManager(linearLayoutManager);
+                    konwledge_rv.setLayoutManager(linearLayoutManager);
 
                 }
             }
         });
-        btn_list_2st.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        tb_show_child_window.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    knowledgeListChildAdapter_expand.notifyDataSetChanged();
+                    mChildExpandPopupWindow.showBashOfAnchor(konwledge_child_rv,layoutGravity,0,-konwledge_child_rv.getHeight());
+                }else {
+                    konwledge_child_rv.setLayoutManager(linearLayoutManager1);
 
+                }
             }
         });
 
@@ -165,9 +212,6 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
                 mPresenter.requestStructureItem(0,dataBean.getChildren().get(0).getId(),false);
                 knowledgeListChildAdapter.notifyDataSetChanged();
 
-                Logger.i("state :"+ view.isClickable()  +" press "+ view.isPressed()
-                        +" enable "+ view.isEnabled()+ " focus "+ view.isFocused());
-
             }
         });
 
@@ -183,7 +227,7 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
                 mExpandPopupWindow.dismiss();
 
                 mPopopWindowRecycleView.scrollToPosition(position);
-                rv_list_1st.scrollToPosition(position);
+                konwledge_rv.scrollToPosition(position);
             }
         });
 
@@ -195,12 +239,27 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
             }
         });
 
+        knowledgeListChildAdapter_expand.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                KnowledgeStructureBean.DataBean.ChildrenBean bean= (KnowledgeStructureBean.DataBean.ChildrenBean) adapter.getItem(position);
+                mPresenter.requestStructureItem(0,bean.getId(),false);
+                mChildExpandPopupWindow.dismiss();
+                mChildPopopWindowRecycleView.scrollToPosition(position);
+                konwledge_child_rv.scrollToPosition(position);
+            }
+        });
 
-
-
-        rv_list_1st.setAdapter(knowledgeListAdapter);
-        rv_list_2st.setAdapter(knowledgeListChildAdapter);
-        rv_content.setAdapter(mKnowledgeStruteItemAdapter);
+        mKnowledgeStruteItemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+               KnowledgeArticleBean.DataBean.DatasBean bean= (KnowledgeArticleBean.DataBean.DatasBean) adapter.getItem(position);
+                ContentActivity.startActivity(mContext,bean.getLink());
+            }
+        });
+        konwledge_rv.setAdapter(knowledgeListAdapter);
+        konwledge_child_rv.setAdapter(knowledgeListChildAdapter);
+        konwledge_list_rv.setAdapter(mKnowledgeStruteItemAdapter);
 
     }
 
@@ -226,6 +285,7 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
 
     @Override
     public void setStructureList1st(KnowledgeStructureBean bean) {
+        Logger.i("KnowledgeStructureBean size is :"+bean.getData().size());
         knowledgeListAdapter.setNewData(bean.getData());
         knowledgeListAdapter1.setNewData(bean.getData());
     }
@@ -234,6 +294,7 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
     public void setStructureList2st(List<KnowledgeStructureBean.DataBean> dataBean) {
         mChildDataList.addAll(dataBean.get(0).getChildren());
      knowledgeListChildAdapter.notifyDataSetChanged();
+     knowledgeListChildAdapter_expand.notifyDataSetChanged();
     }
 
     @Override
@@ -254,27 +315,11 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
             public void onLoadMoreRequested() {
                 if (bean.getData().isOver()){
                     mKnowledgeStruteItemAdapter.setEnableLoadMore(false);
-//                    mKnowledgeStruteItemAdapter.loadMoreEnd();
                 }else {
                     mPresenter.requestStructureItem(bean.getData().getCurPage(), bean.getData().getDatas().get(0).getChapterId(), true);
                 }
             }
-        },rv_content);
-//        final int[] p = {page};
-//        mKnowledgeStruteItemAdapter.replaceData(bean.getData().getDatas());
-//        Logger.i("knowledge :" + bean.getData().getDatas().get(0).getChapterName());
-//        mKnowledgeStruteItemAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-//            @Override
-//            public void onLoadMoreRequested() {
-//                if (!bean.getData().isOver()) {
-//                    mKnowledgeStruteItemAdapter.setNewData(bean.getData().getDatas());
-//                    mKnowledgeStruteItemAdapter.loadMoreComplete();
-//                    mPresenter.requestStructureItem(++p[0], bean.getData().getDatas().get(0).getChapterId());
-//                } else {
-//                    mKnowledgeStruteItemAdapter.loadMoreEnd();
-//                }
-//            }
-//        }, rv_content);
+        },konwledge_list_rv);
 
     }
 
@@ -300,71 +345,5 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
                 });
         convenientBanner.startTurning();
     }
-
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View view= inflater.inflate(R.layout.fragment_knowledge_structure, container, false);
-////        imageView=view.findViewById(R.id.iv_arrow);
-//        recyclerView=view.findViewById(R.id.rv_list);
-//        recyclerView2=view.findViewById(R.id.rv_list_2);
-//        LinearLayoutManager linearLayout2=new LinearLayoutManager(getActivity());
-//        linearLayout2.setOrientation(RecyclerView.VERTICAL);
-//        recyclerView2.setLayoutManager(linearLayout2);
-//        //设置布局管理器
-//        FlexboxLayoutManager flexboxLayoutManager = new FlexboxLayoutManager(getActivity());
-//        //flexDirection 属性决定主轴的方向（即项目的排列方向）。类似 LinearLayout 的 vertical 和 horizontal。
-//        flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);//主轴为水平方向，起点在左端。
-////        //flexWrap 默认情况下 Flex 跟 LinearLayout 一样，都是不带换行排列的，但是flexWrap属性可以支持换行排列。
-////        flexboxLayoutManager.setFlexWrap(FlexWrap.NOWRAP);//按正常方向换行
-////        //justifyContent 属性定义了项目在主轴上的对齐方式。
-//        flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);//交叉轴的起点对齐。
-//        GridLayoutManager f =new GridLayoutManager(getActivity(),4);
-//
-//
-//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
-//        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-//        List<String> data =new ArrayList<>();
-//        for (int i = 0; i <20 ; i++) {
-//            data.add("the item "+i);
-//        }
-//        KnowledgeListAdapter testAdapter=new KnowledgeListAdapter(R.layout.flow_item,data);
-////        imageView.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v) {
-////
-////                recyclerView.postDelayed(new Runnable() {
-////                    @Override
-////                    public void run() {
-////                        recyclerView.setLayoutManager(f);
-////
-////                    }
-////                },1000);
-////
-////            }
-////        });
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//      recyclerView2.setAdapter(testAdapter);
-//        recyclerView.setAdapter(testAdapter);
-//
-//        return view;
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//    }
 
 }

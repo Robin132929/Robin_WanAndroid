@@ -22,16 +22,6 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 
 public class NavgationPresenter extends BasePresenter<NavgationContract.Model,NavgationContract.View> implements NavgationContract.Presenter {
-    RxErrorHandler mErrorHandler=RxErrorHandler
-            .builder()
-            .with(AppLifecyclesImpl.getapp())
-            .responseErrorListener(new ResponseErrorListener() {
-                @Override
-                public void handleResponseError(Context context, Throwable t) {
-
-                }
-            })
-            .build();
 
     @Inject
     public NavgationPresenter(NavgationContract.Model model, NavgationContract.View rootView) {
@@ -57,7 +47,6 @@ public class NavgationPresenter extends BasePresenter<NavgationContract.Model,Na
          @Override
          public void onError(Throwable t) {
              super.onError(t);
-             mView.showLoading();
          }
      });
     }

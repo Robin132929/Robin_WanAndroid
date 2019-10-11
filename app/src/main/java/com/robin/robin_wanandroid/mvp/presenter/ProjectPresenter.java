@@ -4,6 +4,7 @@ import com.robin.rbase.MVP.MvpBase.BasePresenter;
 import com.robin.rbase.MVP.utils.RxLifecycleUtils;
 import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.ProjectContract;
+import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectCategoryBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectItemBean;
 
@@ -26,6 +27,7 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.Model,Projec
         //打开 App 时自动加载列表
         getProjectCategory();
         getProjectitem(1,294,false);
+        getBanner();
     }
 
     @Override
@@ -50,6 +52,19 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.Model,Projec
                  @Override
                  public void onNext(ProjectItemBean projectItemBean) {
                      mView.setProjectitem(projectItemBean,isRefresh);
+                 }
+             });
+    }
+
+    @Override
+    public void getBanner() {
+     mModel.getBanner().subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
+             .compose(RxLifecycleUtils.bindToLifecycle(mView))
+             .subscribe(new ErrorHandleSubscriber<BannerBean>(App.getmMyAppComponent().rxErrorHandler()) {
+                 @Override
+                 public void onNext(BannerBean bannerBean) {
+                     mView.setBanner(bannerBean);
                  }
              });
     }

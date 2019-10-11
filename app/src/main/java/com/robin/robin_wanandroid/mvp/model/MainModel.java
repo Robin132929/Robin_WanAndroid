@@ -23,23 +23,23 @@ public class MainModel extends BaseModel implements MainContract.Model {
     }
 
 
-    @Override
-    public Observable<MainArticleBean> getMainArticle(int page) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getMainArt(page))
-                .flatMap(new Function<Observable<MainArticleBean>, ObservableSource<MainArticleBean>>() {
-                    @Override
-                    public ObservableSource<MainArticleBean> apply(Observable<MainArticleBean> listObservable) throws Exception {
-                        return mRepositoryManager.obtainCacheService(CommonCache.class)
-                                .getMainArticle(listObservable
-                                        ,new DynamicKey(page)
-                                        ,new EvictDynamicKey(true))
-                                .map(listReply -> listReply.getData());
-                    }
-                });
-    }
-
-    @Override
-    public Observable<LogoutResultBean> logout() {
-        return null;
-    }
+//    @Override
+//    public Observable<MainArticleBean> getMainArticle(int page) {
+//        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getMainArt(page))
+//                .flatMap(new Function<Observable<MainArticleBean>, ObservableSource<MainArticleBean>>() {
+//                    @Override
+//                    public ObservableSource<MainArticleBean> apply(Observable<MainArticleBean> listObservable) throws Exception {
+//                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+//                                .getMainArticle(listObservable
+//                                        ,new DynamicKey(page)
+//                                        ,new EvictDynamicKey(true))
+//                                .map(listReply -> listReply.getData());
+//                    }
+//                });
+//    }
+//
+//    @Override
+//    public Observable<LogoutResultBean> logout() {
+//        return null;
+//    }
 }

@@ -18,23 +18,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class myViewPagerAdapter extends FragmentStatePagerAdapter{
    private List<Fragment> fragmnets=new ArrayList<>();
-   private WeChatBean data;
-    public myViewPagerAdapter(WeChatBean data, @NonNull FragmentManager fm, int behavior) {
+    public myViewPagerAdapter(List<Fragment> fragments, @NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
-        this.data=data;
-         for (int i = 0; i < 5; i++) {
-             if (i==0){
-                 this.fragmnets.add(new NavigationFragment());
-             } else if (i==1){
-                 this.fragmnets.add(HomeFragment.newInstance());
-             }else if (i==2){
-                 this.fragmnets.add(new KnowledgeStructureFragment());
-             } else if(i==3){
-                 this.fragmnets.add(new WechatFragment());
-             } else{
-                 this.fragmnets.add(new ProjectFragment());
-             }
-        }
+        this.fragmnets=fragments;
     }
 
     @NonNull

@@ -9,10 +9,7 @@
         android:layout_height="match_parent"
         app:cardCornerRadius="@dimen/dp_8"
         app:cardElevation="@dimen/dp_3"
-        android:layout_marginStart="@dimen/dp_2"
-        android:layout_marginEnd="@dimen/dp_2"
-        android:layout_marginTop="@dimen/dp_8"
-        android:layout_marginBottom="@dimen/dp_8"
+
         >
         <ImageView
             android:id="@+id/image_banner"

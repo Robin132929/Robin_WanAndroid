@@ -3,24 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/White"
-        android:gravity="right"
-        >
-    <ToggleButton
-        android:id="@+id/expand_tb"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:gravity="right"
-        android:background="@null"
-        android:foreground="@drawable/bg_top_nav_btn"
-        android:padding="8dp"
-        android:textOff="@null"
-        android:textOn="@null"
-        />
-    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/data_list"
         android:layout_width="match_parent"
@@ -28,4 +11,23 @@
         android:dividerHeight="3dp"
         android:background="@android:color/white"
        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:gravity="right"
+        >
+        <ToggleButton
+            android:id="@+id/expand_tb"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:gravity="right"
+            android:background="@null"
+            android:foreground="@drawable/bg_top_nav_btn"
+            android:padding="8dp"
+            android:textOff="@null"
+            android:textOn="@null"
+            />
+    </LinearLayout>
+
 </LinearLayout>

@@ -19,7 +19,7 @@ public interface HomeContract {
 
     interface View extends IView {
         void scollerToTop();
-        void setArticle(MainArticleBean.DataBean dataBean);
+        void setArticle(MainArticleBean.DataBean dataBean,boolean isRefresh);
         void setBanner(BannerBean banner,boolean isRefresh);
     }
 

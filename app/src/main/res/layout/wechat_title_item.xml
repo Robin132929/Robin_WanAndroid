@@ -13,7 +13,6 @@
     android:padding="@dimen/dp_8"
     android:textSize="@dimen/textSize_small_10"
     android:clickable="true"
-    android:background="@drawable/bg_top_navgation"
     android:id="@+id/show_title"
    >
 
