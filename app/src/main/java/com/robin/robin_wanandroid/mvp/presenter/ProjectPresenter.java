@@ -25,9 +25,9 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.Model,Projec
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         //打开 App 时自动加载列表
-        getProjectCategory();
-        getProjectitem(1,294,false);
-        getBanner();
+//        getProjectCategory();
+//        getProjectitem(1,294,false);
+//        getBanner();
     }
 
     @Override

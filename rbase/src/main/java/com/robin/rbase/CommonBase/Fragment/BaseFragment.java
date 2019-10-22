@@ -3,11 +3,13 @@ package com.robin.rbase.CommonBase.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.robin.rbase.CommonBase.delegate.IFragment;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +43,5 @@ public abstract class BaseFragment extends Fragment implements IFragment {
         super.onDetach();
         this.mContext = null;
     }
-
 
 }

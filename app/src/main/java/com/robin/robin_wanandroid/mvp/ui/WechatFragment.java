@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.ContentActivity;
 import com.robin.robin_wanandroid.Main4Activity;
@@ -29,7 +30,7 @@ import com.robin.robin_wanandroid.mvp.presenter.WechatPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WechatFragment extends BaseMvpFragment<WechatPresenter> implements WechatContract.View {
+public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implements WechatContract.View {
     //ui
     private RecyclerView title_recycleView;
     private RecyclerView content_recycleView;
@@ -141,5 +142,11 @@ public class WechatFragment extends BaseMvpFragment<WechatPresenter> implements 
             mWechatContentAdapter.addData(content_list);
         }
         Logger.i("siaze : " + bean.getData().getDatas().size());
+    }
+
+    @Override
+    protected void lazyLoadData() {
+        mPresenter.requestWechatTitle();
+        mPresenter.requestWechatContent(408,1,false);
     }
 }

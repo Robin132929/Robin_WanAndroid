@@ -4,18 +4,25 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.robin.rbase.CommonBase.App.ConfigModule;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
+import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.rbase.CommonBase.delegate.ActivityDelegate;
+import com.robin.rbase.CommonBase.delegate.FragmentDelegate;
 import com.robin.rbase.CommonBase.delegate.IActivity;
 import com.robin.rbase.CommonBase.delegate.Impl.ActivityDelegateImpl;
+import com.robin.rbase.CommonBase.delegate.Impl.AppDelegate;
 import com.robin.rbase.CommonBase.utils.AppManager;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.Preconditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -32,23 +39,25 @@ import static com.robin.rbase.CommonBase.Lifecycle.FragmentLifecycle.getFragment
  * <p>
  * ================================================
  */
+@Singleton
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
     private static volatile ActivityLifecycle sActivityLifecycle;
 
 //   ActivityDelegate activityDelegate ;
 
-    //    @Inject
-//    Cache<String, Object> mExtras;
+//        @Inject
+    Cache<String, Object> mExtras= AppDelegate.mExtras;
     AppManager mAppManager;
     @Inject
     Application mApplication;
 
     FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle=getFragmentLifecycle();
-    @Inject
-    Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> mFragmentLifecycles;
+//    @Inject
+    List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles=new ArrayList<>();
 
     protected ActivityLifecycle() {
         mAppManager = AppManager.getAppManager();
+        Logger.i("life : "+mFragmentLifecycles.toString());
     }
 
     public static ActivityLifecycle getActivityLifecycle() {
@@ -159,18 +168,18 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             //注册框架内部已实现的 Fragment 生命周期逻辑
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);
 
-//            if (mExtras.containsKey(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()))) {
-//                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
-//                for (ConfigModule module : modules) {
-//                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
-//                }
-//                mExtras.remove(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
-//            }
+            if (mExtras.containsKey(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()))) {
+                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
+                for (ConfigModule module : modules) {
+                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
+                }
+                mExtras.remove(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
+            }
 
-//            //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
-//            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles.get()) {
-//                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
-//            }
+            //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
+            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {
+                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
+            }
         }
     }
 

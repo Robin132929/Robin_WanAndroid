@@ -32,5 +32,6 @@ lifecycles.add(new ActivtyLifeCycleImpl());
 
     @Override
     public void injectFragmentLifecycle(@NonNull Context context, @NonNull List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
+    lifecycles.add(new FragmentLifecycleCallbacksImpl());
     }
 }

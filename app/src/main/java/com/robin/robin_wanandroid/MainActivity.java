@@ -6,16 +6,23 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import dalvik.system.DexClassLoader;
 
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -34,8 +41,16 @@ import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.mvp.presenter.MainPresenter;
 import com.robin.robin_wanandroid.mvp.ui.BlankFragment;
 import com.robin.robin_wanandroid.mvp.ui.HomeFragment;
+import com.robin.robin_wanandroid.mvp.ui.KnowledgeStructureFragment;
 import com.robin.robin_wanandroid.mvp.ui.MainFragment;
+import com.robin.robin_wanandroid.mvp.ui.NavigationFragment;
+import com.robin.robin_wanandroid.mvp.ui.ProjectFragment;
+import com.robin.robin_wanandroid.mvp.ui.WechatFragment;
 import com.robin.robin_wanandroid.util.statusbarUtil.StatusBarUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View {
     private BottomNavigationView mBottomNavigationView;
@@ -44,14 +59,14 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private HomeFragment mHomeFragment;
-    private MainFragment mMainFragment;
-    private BlankFragment mBlankFragment;
     private CoordinatorLayout mCoordinatorLayout;
     private FragmentTransaction fm;
     private Button search_btn;
     private TextView nav_username;
+    private int PrePosition;
+    private List<Fragment> fragments = new ArrayList<>();
 
+    @SuppressLint("WrongConstant")
     @Override
     public void initView(Bundle savedInstanceState) {
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -65,7 +80,11 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         mCoordinatorLayout = findViewById(R.id.cl_layout);
         mCoordinatorLayout.setPadding(0, statusBarHeight, 0, 0);
         StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary));
-       FrameLayout.LayoutParams layoutParams=new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, -1);
+//        try {
+//            this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_PERMISSIONS).metaData;
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void Immersive() {
@@ -92,7 +111,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     public void initData(Bundle savedInstanceState) {
         setSupportActionBar(mToolbar);
-        fm = getSupportFragmentManager().beginTransaction();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         search_btn = mToolbar.findViewById(R.id.search_btn);
         search_btn.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +124,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 R.string.navigation_drawer_close);
         mActionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-       nav_username= mNavigationView.getHeaderView(0).findViewById(R.id.tv_username);
-       nav_username.setText(mNavigationView.getMenu().findItem(R.id.nav_logout).isVisible() ? "abc":"登陆");
+        nav_username = mNavigationView.getHeaderView(0).findViewById(R.id.tv_username);
+        nav_username.setText(mNavigationView.getMenu().findItem(R.id.nav_logout).isVisible() ? "abc" : "登陆");
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -136,11 +154,19 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 return true;
             }
         });
-        showFragment(0);
+
+        fragments.add(new MainFragment());
+        fragments.add(new BlankFragment());
+        fragments.add(new BlankFragment());
+        fragments.add(new BlankFragment());
+        fragments.add(new BlankFragment());
+
+        addFragmnets(R.id.fl_content_container, fragments, 0);
+        //TODO
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHomeFragment.scollerToTop();
+
             }
         });
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -149,19 +175,24 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 int ViewId = item.getItemId();
                 switch (ViewId) {
                     case R.id.action_home:
-                        showFragment(0);
+                        showAndhideFragment(PrePosition, 0);
+                        PrePosition = 0;
                         break;
                     case R.id.action_knowledge_system:
-                        showFragment(1);
+                        showAndhideFragment(PrePosition, 1);
+                        PrePosition = 1;
                         break;
                     case R.id.action_navigation:
-                        showFragment(2);
+                        showAndhideFragment(PrePosition, 2);
+                        PrePosition = 2;
                         break;
                     case R.id.action_wechat:
-                        showFragment(3);
+                        showAndhideFragment(PrePosition, 3);
+                        PrePosition = 3;
                         break;
                     case R.id.action_project:
-                        showFragment(4);
+                        showAndhideFragment(PrePosition, 4);
+                        PrePosition = 4;
                         break;
                     default:
                         break;
@@ -171,65 +202,41 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         });
     }
 
-    private void showFragment(int index) {
+    private void addFragmnets(int ResId, List<Fragment> fragments, int showID) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        for (int i = 0; i < fragments.size(); i++) {
+            ft.add(ResId, fragments.get(i), fragments.get(i).getClass().getName());
+            if (i != showID) {
+                ft.hide(fragments.get(i));
+            }
+        }
+        ft.commit();
+    }
+
+    private void showAndhideFragment(int hidePosition, int showPosition) {
         FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
-        hideFragments(fm);
-        if (index == 1) {
-            if (mHomeFragment==null) {
-                mHomeFragment = HomeFragment.newInstance();
-                fm.add(R.id.fl_content_container, mHomeFragment, "home");
-            } else {
-                fm.show(mHomeFragment);
+        if (showPosition == hidePosition) return;
+
+        fm.show(fragments.get(showPosition));
+
+        Fragment hideFragment = fragments.get(hidePosition);
+        if (hideFragment == null) {
+            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+            if (fragmentList != null) {
+                for (Fragment fragment : fragmentList) {
+                    if (fragment != null && fragment != fragments.get(showPosition)) {
+                        fm.hide(fragment);
+                    }
+                }
             }
-        }
-        if (index == 0) {
-            if (mMainFragment==null) {
-                mMainFragment = MainFragment.newInstance();
-                fm.add(R.id.fl_content_container, mMainFragment, "main");
-            } else {
-                fm.show(mMainFragment);
-            }
-        }
-        if (index == 2) {
-            if (mBlankFragment == null) {
-                mBlankFragment = BlankFragment.newInstance("", "");
-                fm.add(R.id.fl_content_container, mBlankFragment, "home1");
-            } else {
-                fm.show(mBlankFragment);
-            }
-        }
-        if (index == 3) {
-            if (mBlankFragment == null) {
-                mBlankFragment = BlankFragment.newInstance("", "");
-                fm.add(R.id.fl_content_container, mBlankFragment, "blank");
-            } else {
-                fm.show(mBlankFragment);
-            }
-        }
-        if (index == 4) {
-            if (mBlankFragment == null) {
-                mBlankFragment = BlankFragment.newInstance("", "");
-                fm.add(R.id.fl_content_container, mBlankFragment, "blank1");
-            } else {
-                fm.show(mBlankFragment);
-            }
+        } else {
+            fm.hide(hideFragment);
         }
         fm.commit();
     }
 
-    private void hideFragments(FragmentTransaction fm) {
-        if (mHomeFragment != null) {
-            fm.hide(mHomeFragment);
-        }
-        if (mMainFragment != null) {
-            fm.hide(mMainFragment);
-        }
-        if (mBlankFragment != null) {
-            fm.hide(mBlankFragment);
-        }
 
-    }
-
+    //TODO
     @Override
     public void showLoading() {
 
@@ -264,7 +271,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             default:
                 break;
         }
-//        return super.onOptionsItemSelected(item);
         return true;
     }
 }

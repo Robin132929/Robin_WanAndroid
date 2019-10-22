@@ -5,6 +5,8 @@ import android.content.Context;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.CacheType;
 import com.robin.rbase.CommonBase.Fragment.BaseFragment;
+import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.lifecycle.ActivityLifecycleable;
 import com.robin.rbase.MVP.lifecycle.FragmentLifecycleable;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 

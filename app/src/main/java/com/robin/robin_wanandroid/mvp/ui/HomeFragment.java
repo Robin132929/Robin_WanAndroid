@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO 懒加载
 public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, View.OnClickListener {
     private static int index = 0;
     LinearLayoutManager linearLayoutManager;

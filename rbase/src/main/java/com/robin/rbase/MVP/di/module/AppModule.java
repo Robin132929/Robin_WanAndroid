@@ -84,7 +84,6 @@ public abstract class AppModule {
     abstract Application.ActivityLifecycleCallbacks bindActivityLifecycleForRxLifecycle(ActivityLifecycleForRxLifecycle activityLifecycleForRxLifecycle);
 
     @Binds
-    @Named("FragmentLifecycle")
     abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifecycle fragmentLifecycle);
 
     @Binds

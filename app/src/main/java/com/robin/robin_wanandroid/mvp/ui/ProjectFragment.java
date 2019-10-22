@@ -15,6 +15,7 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
+import com.robin.rbase.CommonBase.Fragment.BaseLazyLoadFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.ContentActivity;
@@ -39,7 +40,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implements ProjectContract.View {
+public class ProjectFragment extends BaseLazyLoadFragment<ProjectPresenter> implements ProjectContract.View {
 
     private RecyclerView mCategory_RecyclerView;
     private RecyclerView mItem_RecyclerView;
@@ -219,5 +220,12 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    protected void lazyLoadData() {
+        mPresenter.getProjectCategory();
+        mPresenter.getProjectitem(1,294,false);
+        mPresenter.getBanner();
     }
 }

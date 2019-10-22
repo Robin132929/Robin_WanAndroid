@@ -22,16 +22,6 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 
 public class HomePresenter extends BasePresenter<HomeContract.Model,HomeContract.View> implements HomeContract.Presenter {
-    RxErrorHandler mErrorHandler=RxErrorHandler
-            .builder()
-            .with(AppLifecyclesImpl.getapp())
-            .responseErrorListener(new ResponseErrorListener() {
-                @Override
-                public void handleResponseError(Context context, Throwable t) {
-
-                }
-            })
-            .build();
 
     @Inject
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
@@ -69,7 +59,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model,HomeContract
     public void requestBanner(boolean isrefresh) {
         mModel.requestBanner().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<BannerBean>(mErrorHandler) {
+                .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<BannerBean>(App.getmMyAppComponent().rxErrorHandler()) {
             @Override
             public void onNext(BannerBean dataBeans) {
                 Logger.i("banner "+dataBeans.getData().get(0).toString());

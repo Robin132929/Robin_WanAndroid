@@ -5,12 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
+import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.myViewPagerAdapter;
 import com.robin.robin_wanandroid.mvp.contract.MainContract;
-import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
-import com.robin.robin_wanandroid.mvp.model.bean.WeChatBean;
 import com.robin.robin_wanandroid.mvp.presenter.MainPresenter;
 
 import java.util.ArrayList;
@@ -21,13 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-public class MainFragment extends BaseMvpFragment<MainPresenter> implements MainContract.View {
-    TabLayout tabLayout;
-    ViewPager viewPager;
-
-
-    List<Fragment> fragments = new ArrayList<>();
-    List<String> titles = new ArrayList<>();
+public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements MainContract.View {
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     public MainFragment() {
     }
@@ -47,24 +43,11 @@ public class MainFragment extends BaseMvpFragment<MainPresenter> implements Main
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        for (int i = 0; i < 5; i++) {
-            if (i == 0) {
-                fragments.add(new NavigationFragment());
-            } else if (i == 1) {
-                fragments.add(HomeFragment.newInstance());
-            } else if (i == 2) {
-                fragments.add(new KnowledgeStructureFragment());
-            } else if (i == 3) {
-                fragments.add(new WechatFragment());
-            } else {
-                fragments.add(new ProjectFragment());
-            }
-        }
-
-        viewPager.setAdapter(new myViewPagerAdapter(fragments, getChildFragmentManager(), 1));
-
+        viewPager.setAdapter(new myViewPagerAdapter(getChildFragmentManager()));
+        viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.selectTab(tabLayout.getTabAt(1));
+
     }
 
     @Override
@@ -86,5 +69,17 @@ public class MainFragment extends BaseMvpFragment<MainPresenter> implements Main
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Logger.i("visable load");
+
+    }
+
+    @Override
+    protected void lazyLoadData() {
+        Logger.i("lazy load");
     }
 }

@@ -27,8 +27,8 @@ public class KnowledgeStructurePresenter extends BasePresenter<KnowledgeStructur
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         //打开 App 时自动加载列表
-        requestStructureList();
-        requestBanner();
+//        requestStructureList();
+//        requestBanner();
 //        requestStructureItem(0,60);
     }
     @Override

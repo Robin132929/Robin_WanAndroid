@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.ContentActivity;
 import com.robin.robin_wanandroid.R;
@@ -27,8 +28,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> implements NavgationContract.View {
-    List<NavgationSection> head = new ArrayList<>();
+public class NavigationFragment extends BaseLazyLoadFragment<NavgationPresenter> implements NavgationContract.View {
     List<NavgationSection> data = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -123,7 +123,12 @@ public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> impl
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Logger.i("destory is :");
         data.clear();
+    }
+
+    @Override
+    protected void lazyLoadData() {
+        Logger.i(" lazyLoadData:");
+        mPresenter.requestNavgationData();
     }
 }

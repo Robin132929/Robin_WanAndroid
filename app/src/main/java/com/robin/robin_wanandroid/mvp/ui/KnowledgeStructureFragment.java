@@ -24,6 +24,7 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.ContentActivity;
 import com.robin.robin_wanandroid.R;
@@ -41,7 +42,7 @@ import com.robin.robin_wanandroid.widget.CustomPopupWindow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructurePresenter> implements KnowledgeStructureContract.View {
+public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeStructurePresenter> implements KnowledgeStructureContract.View {
     RecyclerView konwledge_rv;
     RecyclerView konwledge_child_rv;
     RecyclerView konwledge_list_rv;
@@ -346,4 +347,10 @@ public class KnowledgeStructureFragment extends BaseMvpFragment<KnowledgeStructu
         convenientBanner.startTurning();
     }
 
+    @Override
+    protected void lazyLoadData() {
+        Logger.i(" lazyLoadData:");
+        mPresenter.requestStructureList();
+        mPresenter.requestBanner();
+    }
 }

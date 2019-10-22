@@ -2,6 +2,9 @@ package com.robin.rbase.CommonBase.App;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.robin.rbase.CommonBase.Cache.IntelligentCache;
+import com.robin.rbase.CommonBase.delegate.App;
 import com.robin.rbase.CommonBase.delegate.Impl.AppDelegate;
 import com.robin.rbase.CommonBase.delegate.AppLifecycles;
 import com.robin.rbase.MVP.di.module.GlobalConfigModule;
@@ -15,7 +18,7 @@ import java.util.List;
  * ================================================
  */
 public class BaseApplication extends Application  {
-    private AppLifecycles mAppDelegate;
+    protected AppLifecycles mAppDelegate;
     /**
      * 这里会在 {@link BaseApplication#onCreate} 之前被调用,可以做一些较早的初始化
      * 常用于 MultiDex 以及插件化框架的初始化
@@ -34,7 +37,7 @@ public class BaseApplication extends Application  {
     public void onCreate() {
         super.onCreate();
         if (mAppDelegate != null)
-            this.mAppDelegate.onCreate(this);
+        this.mAppDelegate.onCreate(this);
     }
 
     /**
@@ -57,5 +60,9 @@ public class BaseApplication extends Application  {
         }
 
         return builder.build();
+    }
+
+    public AppLifecycles getmAppDelegate() {
+        return mAppDelegate;
     }
 }

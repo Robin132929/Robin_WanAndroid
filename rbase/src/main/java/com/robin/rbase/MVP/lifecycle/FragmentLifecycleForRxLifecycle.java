@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.view.View;
 
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 

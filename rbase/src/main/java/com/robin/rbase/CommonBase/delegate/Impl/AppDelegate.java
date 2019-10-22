@@ -8,6 +8,7 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonBase.Lifecycle.ActivityLifecycle;
 import com.robin.rbase.CommonBase.delegate.App;
@@ -16,14 +17,21 @@ import com.robin.rbase.CommonBase.App.ConfigModule;
 import com.robin.rbase.CommonBase.utils.ManifestParser;
 import com.robin.rbase.CommonUtils.Logger.AndroidLogAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.di.component.DaggerMvpAppComponent;
 import com.robin.rbase.MVP.di.component.MvpAppComponent;
 import com.robin.rbase.MVP.lifecycle.ActivityLifecycleForRxLifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import static com.robin.rbase.CommonBase.App.BaseApplication.getGlobalConfigModule;
+import static com.robin.rbase.MVP.di.component.DaggerMvpAppComponent.builder;
 
 /**
  * ================================================
@@ -34,7 +42,10 @@ import androidx.fragment.app.Fragment;
  * <p>
  * ================================================
  */
+
 public class AppDelegate implements AppLifecycles, App {
+
+    public static Cache<String, Object> mExtras=new IntelligentCache(500);
     public List<ConfigModule> mModules;
     private Application mApplication;
     private MvpAppComponent mMvpAppComponent;
@@ -73,7 +84,7 @@ public class AppDelegate implements AppLifecycles, App {
     public void onCreate(@NonNull Application application) {
         this.mApplication = application;
 
-//        mMvpAppComponent = DaggeraAppComponent
+//        mMvpAppComponent =DaggerMvpAppComponent
 //                .builder()
 //                .application(mApplication)//提供application
 //                .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
@@ -84,7 +95,7 @@ public class AppDelegate implements AppLifecycles, App {
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
         //否则存储在 LRU 算法的存储空间中 (大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目)
         //前提是 extras 使用的是 IntelligentCache (框架默认使用)
-//        mMvpAppComponent.extras().put(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()), mModules);
+       mExtras.put(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()), mModules);
 
         this.mModules = null;
         //注册框架内部已实现的 Activity 生命周期逻辑

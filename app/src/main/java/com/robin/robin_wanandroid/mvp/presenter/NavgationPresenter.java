@@ -30,7 +30,7 @@ public class NavgationPresenter extends BasePresenter<NavgationContract.Model,Na
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         //打开 App 时自动加载列表
-       requestNavgationData();
+//       requestNavgationData();
     }
 
     @Override

@@ -24,8 +24,8 @@ public class WechatPresenter extends BasePresenter<WechatContract.Model,WechatCo
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         //打开 App 时自动加载列表
-        requestWechatTitle();
-        requestWechatContent(408,1,false);
+//        requestWechatTitle();
+//        requestWechatContent(408,1,false);
     }
 
     @Override

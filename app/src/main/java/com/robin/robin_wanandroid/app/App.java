@@ -5,7 +5,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.robin.rbase.CommonBase.App.BaseApplication;
+import com.robin.rbase.CommonBase.App.ConfigModule;
+import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonBase.utils.ManifestParser;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.ContextUtil;
 import com.robin.rbase.MVP.di.module.GlobalConfigModule;
 import com.robin.robin_wanandroid.di.DaggerMyAppComponent;
@@ -36,6 +39,8 @@ public class App extends BaseApplication implements HasAndroidInjector{
     public void onCreate() {
 
         super.onCreate();
+        mMyAppComponent.extras().put(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()), getmAppDelegate());
+        Logger.i("extra : "+ mMyAppComponent.extras().toString()+"  "+System.currentTimeMillis());
         ContextUtil.init(this);
     }
     @Override
