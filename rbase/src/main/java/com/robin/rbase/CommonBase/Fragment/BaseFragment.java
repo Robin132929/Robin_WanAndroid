@@ -30,6 +30,7 @@ public abstract class BaseFragment extends Fragment implements IFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(getLayoutId(), container, false);
         initView(view, container, savedInstanceState);
+
         return view;
     }
 

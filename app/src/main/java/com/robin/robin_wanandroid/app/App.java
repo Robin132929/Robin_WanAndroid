@@ -11,8 +11,11 @@ import com.robin.rbase.CommonBase.utils.ManifestParser;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.ContextUtil;
 import com.robin.rbase.MVP.di.module.GlobalConfigModule;
+import com.robin.robin_wanandroid.delegate.GlobalConfiguration;
 import com.robin.robin_wanandroid.di.DaggerMyAppComponent;
 import com.robin.robin_wanandroid.di.MyAppComponent;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -46,12 +49,11 @@ public class App extends BaseApplication implements HasAndroidInjector{
     @Override
     protected void attachBaseContext(Context base) {
 
-       mMyAppComponent = DaggerMyAppComponent.builder().application(this).globalConfigModule(  GlobalConfigModule
-               .builder().build()).build();
-              mMyAppComponent.inject(this);
-
-//               DaggerMyAppComponent.create().inject(this);
-
+       mMyAppComponent = DaggerMyAppComponent.builder().
+               application(this)
+               .globalConfigModule(getGlobalConfigModule(this,new GlobalConfiguration()))
+               .build();
+       mMyAppComponent.inject(this);
         super.attachBaseContext(base);
     }
 
@@ -61,5 +63,15 @@ public class App extends BaseApplication implements HasAndroidInjector{
         }
         return null;
     }
+    public static GlobalConfigModule getGlobalConfigModule(Context context, ConfigModule modules) {
+        GlobalConfigModule.Builder builder = GlobalConfigModule
+                .builder();
 
+        //遍历 ConfigModule 集合, 给全局配置 GlobalConfigModule 添加参数
+//        for (ConfigModule module : modules) {
+            modules.applyOptions(context, builder);
+//        }
+
+        return builder.build();
+    }
 }

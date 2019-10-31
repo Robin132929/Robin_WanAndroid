@@ -2,7 +2,6 @@ package com.robin.robin_wanandroid;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -30,11 +27,8 @@ import com.robin.rbase.CommonBase.Activity.BaseActivity;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonUtils.Logger.Logger;
-import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
-import com.robin.robin_wanandroid.adapter.ShowMoreNavgationAdapter;
-import com.robin.robin_wanandroid.mvp.contract.ContentContract;
+import com.robin.robin_wanandroid.adapter.wanandroid.ShowMoreNavgationAdapter;
 import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
-import com.robin.robin_wanandroid.mvp.presenter.ContentPresenter;
 
 import java.util.List;
 
@@ -138,6 +132,7 @@ public class ContentActivity extends BaseActivity {
             }
         });
         webBase.setDownloadListener(new DownloadListener() {
+            @Override
             public void onDownloadStart(String paramAnonymousString1, String paramAnonymousString2, String paramAnonymousString3, String paramAnonymousString4, long paramAnonymousLong) {
                 Intent intent = new Intent();
                 intent.setAction("android.intent.action.VIEW");

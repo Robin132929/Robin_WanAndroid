@@ -52,18 +52,18 @@
 <!--        android:visibility="visible"-->
 <!--        app:tab_mode="scrollable" />-->
 
-    <q.rorbin.verticaltablayout.VerticalTabLayout
-        android:id="@+id/tablayout1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#EF7062"
-        android:visibility="visible"
-        app:indicator_color="#FFFFFF"
-        app:indicator_corners="5dp"
-        app:indicator_gravity="right"
-        app:tab_height="50dp"
-        app:tab_mode="scrollable" />
+<!--    <q.rorbin.verticaltablayout.VerticalTabLayout-->
+<!--        android:id="@+id/tablayout1"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:background="#EF7062"-->
+<!--        android:visibility="visible"-->
+<!--        app:indicator_color="#FFFFFF"-->
+<!--        app:indicator_corners="5dp"-->
+<!--        app:indicator_gravity="right"-->
+<!--        app:tab_height="50dp"-->
+<!--        app:tab_mode="scrollable" />-->
 
 <androidx.viewpager.widget.ViewPager
 android:id="@+id/viewpager"

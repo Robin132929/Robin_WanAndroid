@@ -30,6 +30,15 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
+
+        tryLoadData();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        this.isVisibleToUser = !hidden;
+
         tryLoadData();
     }
 
@@ -57,7 +66,12 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
      */
     private boolean isParentVisible() {
         Fragment fragment = getParentFragment();
-        return fragment != null || (fragment instanceof BaseLazyLoadFragment && ((BaseLazyLoadFragment) fragment).isVisibleToUser);
+        if (fragment!=null) {
+            Logger.i("paerent is " + fragment.getClass().getSimpleName() + (fragment instanceof BaseLazyLoadFragment && ((BaseLazyLoadFragment) fragment).getUserVisibleHint() && !fragment.isHidden()));
+        }else {
+            Logger.i("paerent is null");
+        }
+        return fragment == null || (fragment instanceof BaseLazyLoadFragment && ((BaseLazyLoadFragment) fragment).getUserVisibleHint()&&!fragment.isHidden());
     }
 
     /**
@@ -77,6 +91,9 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
     }
 
     public void tryLoadData() {
+                Logger.i(    getClass().getSimpleName()+" status:" +
+                "isVisibleToUser "+isVisibleToUser+" isViewCreated :" +isViewCreated
+              +" isDataLoaded "+isDataLoaded +" isParentVisable "+isParentVisible());
         if (isViewCreated && isVisibleToUser && isParentVisible() && !isDataLoaded) {
             lazyLoadData();
             isDataLoaded = true;

@@ -1,7 +1,7 @@
 package com.robin.robin_wanandroid.mvp.presenter;
 
 import com.robin.rbase.MVP.MvpBase.BasePresenter;
-import com.robin.robin_wanandroid.mvp.contract.ContentContract;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.ContentContract;
 
 public class ContentPresenter extends BasePresenter<ContentContract.Model,ContentContract.View> implements ContentContract.Presenter {
     @Override

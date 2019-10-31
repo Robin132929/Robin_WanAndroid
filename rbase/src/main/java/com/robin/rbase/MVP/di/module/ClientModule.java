@@ -58,15 +58,13 @@ public abstract class ClientModule {
     @Provides
     static Retrofit provideRetrofit(Application application, @Nullable RetrofitConfiguration configuration, Retrofit.Builder builder, OkHttpClient client
             , HttpUrl httpUrl, Gson gson) {
-        builder
-                .baseUrl("https://www.wanandroid.com/")//域名
-                .client(new OkHttpClient());//设置 OkHttp
+        builder.baseUrl(httpUrl)//域名
+                .client(client);//设置 OkHttp
 
         if (configuration != null)
             configuration.configRetrofit(application, builder);
 
-        builder
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 RxJava
+        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 RxJava
                 .addConverterFactory(GsonConverterFactory.create(gson));//使用 Gson
         return builder.build();
     }
@@ -87,8 +85,7 @@ public abstract class ClientModule {
     @Provides
     static OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder
             ,  ExecutorService executorService) {
-        builder
-                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+        builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 ;
 

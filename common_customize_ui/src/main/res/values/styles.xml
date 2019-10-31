@@ -1,0 +1,19 @@
+<resources>
+    <style name="MultipleStatusView"/>
+    <style name="MultipleStatusView.Content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">#a9b7b7</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="MultiStatusView">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="animateViewChanges">false</item>
+    <item name="emptyView">@layout/empty_view</item>
+    <item name="errorView">@layout/error_view</item>
+    <item name="loadingView">@layout/loading_view</item>
+    </style>
+</resources>

@@ -48,7 +48,6 @@ public class AppDelegate implements AppLifecycles, App {
     public static Cache<String, Object> mExtras=new IntelligentCache(500);
     public List<ConfigModule> mModules;
     private Application mApplication;
-    private MvpAppComponent mMvpAppComponent;
     private ActivityLifecycle mActivityLifecycle = ActivityLifecycle.getActivityLifecycle();
     private ActivityLifecycleForRxLifecycle mActivityLifecycleForRxLifecycle = ActivityLifecycleForRxLifecycle.getActivityLifecycleForRxLifecycle();
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();

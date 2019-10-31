@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.robin.common_customize_ui.multis_status_view.MultiStateView
+    android:id="@+id/wechat_fragment_msv"
+    style="@style/MultiStatusView"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
@@ -19,3 +21,4 @@
         android:background="@color/grey_search"
         />
 </LinearLayout>
+</com.robin.common_customize_ui.multis_status_view.MultiStateView>

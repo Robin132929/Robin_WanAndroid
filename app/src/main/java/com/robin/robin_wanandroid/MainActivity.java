@@ -1,31 +1,22 @@
 package com.robin.robin_wanandroid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import dalvik.system.DexClassLoader;
 
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,24 +26,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
-import com.robin.robin_wanandroid.adapter.HomeAdapter;
-import com.robin.robin_wanandroid.mvp.contract.MainContract;
-import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
-import com.robin.robin_wanandroid.mvp.presenter.MainPresenter;
+import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
+import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
+import com.robin.robin_wanandroid.dummy.DummyContent;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
+import com.robin.robin_wanandroid.mvp.presenter.wanandroid.MainPresenter;
 import com.robin.robin_wanandroid.mvp.ui.BlankFragment;
-import com.robin.robin_wanandroid.mvp.ui.HomeFragment;
-import com.robin.robin_wanandroid.mvp.ui.KnowledgeStructureFragment;
-import com.robin.robin_wanandroid.mvp.ui.MainFragment;
-import com.robin.robin_wanandroid.mvp.ui.NavigationFragment;
-import com.robin.robin_wanandroid.mvp.ui.ProjectFragment;
-import com.robin.robin_wanandroid.mvp.ui.WechatFragment;
+import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
+import com.robin.robin_wanandroid.mvp.ui.gank.GankMainFragment;
+import com.robin.robin_wanandroid.mvp.ui.readhub.ReadhubMainFragment;
+import com.robin.robin_wanandroid.util.FragmentPageManager;
 import com.robin.robin_wanandroid.util.statusbarUtil.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View, ItemFragment.OnListFragmentInteractionListener {
     private BottomNavigationView mBottomNavigationView;
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
@@ -80,11 +69,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         mCoordinatorLayout = findViewById(R.id.cl_layout);
         mCoordinatorLayout.setPadding(0, statusBarHeight, 0, 0);
         StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary));
-//        try {
-//            this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_PERMISSIONS).metaData;
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void Immersive() {
@@ -156,17 +140,22 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         });
 
         fragments.add(new MainFragment());
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment());
+        fragments.add(new GankMainFragment());
+        fragments.add(new ReadhubMainFragment());
+        fragments.add(ItemFragment.newInstance(1));
         fragments.add(new BlankFragment());
 
         addFragmnets(R.id.fl_content_container, fragments, 0);
-        //TODO
+        //TODO 一键返回顶部 已实现2019-10-25
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-
+                Fragment f = FragmentPageManager.getFragmentPageManager().getCurrentFragment();
+                Logger.i("current122 click " + f.getClass().getSimpleName());
+                if (f instanceof ScrollTopListener) {
+                    ((ScrollTopListener) f).scroll2Top();
+                }
             }
         });
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -202,6 +191,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         });
     }
 
+
     private void addFragmnets(int ResId, List<Fragment> fragments, int showID) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         for (int i = 0; i < fragments.size(); i++) {
@@ -214,9 +204,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     private void showAndhideFragment(int hidePosition, int showPosition) {
+        Logger.i("form :"+hidePosition +"to :"+showPosition);
         FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
         if (showPosition == hidePosition) return;
-
         fm.show(fragments.get(showPosition));
 
         Fragment hideFragment = fragments.get(hidePosition);
@@ -236,7 +226,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
 
-    //TODO
+    //TODO loading view 已实现2019-10-24
     @Override
     public void showLoading() {
 
@@ -244,6 +234,11 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError() {
 
     }
 
@@ -272,5 +267,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }

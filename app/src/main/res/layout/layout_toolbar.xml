@@ -45,12 +45,15 @@
       android:text="输入搜索内容"
     />
 
+
+  </androidx.appcompat.widget.Toolbar>
   <ViewStub
       android:id="@+id/view_stub"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-    />
-  </androidx.appcompat.widget.Toolbar>
-
+      android:layout="@layout/top_layout"
+      android:theme="@style/Base.ThemeOverlay.AppCompat.Light"
+      app:layout_scrollFlags="scroll|enterAlways"
+      />
 
   </com.google.android.material.appbar.AppBarLayout>

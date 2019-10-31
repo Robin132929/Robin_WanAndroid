@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.robin.common_customize_ui.multis_status_view.MultiStateView
+    android:id="@+id/knowledge_fragment_msv"
+    style="@style/MultiStatusView"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.KnowledgeStructureFragment">
+    tools:context=".mvp.ui.WanAndroid.KnowledgeStructureFragment">
 
     <com.bigkoo.convenientbanner.ConvenientBanner
         android:id="@+id/nav_banner"
@@ -86,3 +90,4 @@
         />
 
 </LinearLayout>
+</com.robin.common_customize_ui.multis_status_view.MultiStateView>

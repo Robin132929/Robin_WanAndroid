@@ -66,4 +66,14 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseFragment
         this.mPresenter = null;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+
+        return super.getUserVisibleHint();
+    }
 }

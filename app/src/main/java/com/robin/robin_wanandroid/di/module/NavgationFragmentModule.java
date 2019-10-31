@@ -1,8 +1,8 @@
 package com.robin.robin_wanandroid.di.module;
 
-import com.robin.robin_wanandroid.mvp.contract.NavgationContract;
-import com.robin.robin_wanandroid.mvp.model.NavgationModel;
-import com.robin.robin_wanandroid.mvp.ui.NavigationFragment;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.NavgationContract;
+import com.robin.robin_wanandroid.mvp.model.wanandroid.NavgationModel;
+import com.robin.robin_wanandroid.mvp.ui.WanAndroid.NavigationFragment;
 
 import dagger.Module;
 import dagger.Provides;

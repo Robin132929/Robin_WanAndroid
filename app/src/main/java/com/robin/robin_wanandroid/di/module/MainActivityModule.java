@@ -1,27 +1,13 @@
 package com.robin.robin_wanandroid.di.module;
 
-import android.app.Application;
-import android.content.Context;
 
-
-import com.robin.rbase.CommonBase.App.BaseApplication;
-import com.robin.rbase.MVP.integration.IRepositoryManager;
-import com.robin.rbase.MVP.integration.RepositoryManager;
 import com.robin.robin_wanandroid.MainActivity;
-import com.robin.robin_wanandroid.mvp.contract.MainContract;
-import com.robin.robin_wanandroid.mvp.model.MainModel;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
+import com.robin.robin_wanandroid.mvp.model.wanandroid.MainModel;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Named;
-
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 
 @Module
 abstract class MainActivityModule {

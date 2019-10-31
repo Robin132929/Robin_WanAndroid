@@ -1,2 +1,2 @@
-include ':app','rbase','BaseRecyclerViewAdapter','convenientBanner'
+include ':app', ':common_customize_ui','rbase','BaseRecyclerViewAdapter','convenientBanner'
 rootProject.name='Robin_WanAndroid'

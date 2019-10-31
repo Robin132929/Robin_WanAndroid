@@ -20,6 +20,8 @@ public interface IView {
      */
     void hideLoading();
 
+    void showError();
+
     /**
      * 跳转 {@link Activity}
      *
