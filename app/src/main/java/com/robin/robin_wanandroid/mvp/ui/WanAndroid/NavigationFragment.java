@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.common_customize_ui.multis_status_view.MultiStateView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
-import com.robin.robin_wanandroid.ContentActivity;
+import com.robin.robin_wanandroid.activity.ContentActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.NavgationAdapter;
 import com.robin.robin_wanandroid.app.App;

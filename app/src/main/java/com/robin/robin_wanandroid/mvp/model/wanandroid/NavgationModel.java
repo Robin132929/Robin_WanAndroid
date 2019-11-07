@@ -5,7 +5,7 @@ import com.robin.rbase.MVP.integration.IRepositoryManager;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.NavgationContract;
 import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
 import com.robin.robin_wanandroid.mvp.model.cache.CommonCache;
-import com.robin.robin_wanandroid.mvp.model.service.MainArticleService;
+import com.robin.robin_wanandroid.mvp.model.service.Api;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ public class NavgationModel extends BaseModel implements NavgationContract.Model
 
     @Override
     public Observable<NavgationBean> requestNavgationData() {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getNavgationData())
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getNavgationData())
                 .flatMap(new Function<Observable<NavgationBean>, ObservableSource<NavgationBean>>() {
                     @Override
                     public ObservableSource<NavgationBean> apply(Observable<NavgationBean> navgationBeanObservable) throws Exception {

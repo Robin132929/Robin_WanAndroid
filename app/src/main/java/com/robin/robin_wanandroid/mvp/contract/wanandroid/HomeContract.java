@@ -10,21 +10,23 @@ import com.robin.robin_wanandroid.mvp.model.bean.TopArticleBean;
 
 import io.reactivex.Observable;
 
-public interface HomeContract {
-    interface Model extends IModel {
+public interface HomeContract extends CommonContract {
+    interface Model extends CommonContract.Model {
         Observable<BannerBean> requestBanner();
         Observable<MainArticleBean> requestArticle(int page,boolean isSave);
         Observable<TopArticleBean> requestTopArticle();
+
     }
 
-    interface View extends IView {
+    interface View extends CommonContract.View {
         void setArticle(MainArticleBean.DataBean dataBean,boolean isRefresh);
         void setBanner(BannerBean banner,boolean isRefresh);
     }
 
-    interface Presenter extends IPresenter {
+    interface Presenter extends CommonContract.Presenter {
         void requestArticle(int page,boolean isSave);
         void requestBanner(boolean isrefresh);
         void requestTopArticle();
+
     }
 }

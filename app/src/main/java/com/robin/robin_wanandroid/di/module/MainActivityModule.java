@@ -1,7 +1,7 @@
 package com.robin.robin_wanandroid.di.module;
 
 
-import com.robin.robin_wanandroid.MainActivity;
+import com.robin.robin_wanandroid.activity.MainActivity;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
 import com.robin.robin_wanandroid.mvp.model.wanandroid.MainModel;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;

@@ -7,7 +7,7 @@ import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.KnowledgeArticleBean;
 import com.robin.robin_wanandroid.mvp.model.bean.KnowledgeStructureBean;
 import com.robin.robin_wanandroid.mvp.model.cache.CommonCache;
-import com.robin.robin_wanandroid.mvp.model.service.MainArticleService;
+import com.robin.robin_wanandroid.mvp.model.service.Api;
 
 import javax.inject.Inject;
 
@@ -27,7 +27,7 @@ public class KnowledgeStructureModel extends BaseModel implements KnowledgeStruc
     @Override
     public Observable<KnowledgeStructureBean> requestStructureList() {
 
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getKnowledgeStructure())
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getKnowledgeStructure())
                 .flatMap(new Function<Observable<KnowledgeStructureBean>, ObservableSource<KnowledgeStructureBean>>() {
                     @Override
                     public ObservableSource<KnowledgeStructureBean> apply(Observable<KnowledgeStructureBean> knowledgeStructureBeanObservable) throws Exception {
@@ -45,7 +45,7 @@ public class KnowledgeStructureModel extends BaseModel implements KnowledgeStruc
 
     @Override
     public Observable<KnowledgeArticleBean> requestStructureItem(int page, int cid) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getKnowledgeStructureItem(page, cid))
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getKnowledgeStructureItem(page, cid))
                 .flatMap(new Function<Observable<KnowledgeArticleBean>, ObservableSource<KnowledgeArticleBean>>() {
                     @Override
                     public ObservableSource<KnowledgeArticleBean> apply(Observable<KnowledgeArticleBean> knowledgeArticleBeanObservable) throws Exception {
@@ -63,7 +63,7 @@ public class KnowledgeStructureModel extends BaseModel implements KnowledgeStruc
 
     @Override
     public Observable<BannerBean> requestBanner() {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getBanner())
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getBanner())
                 .flatMap(new Function<Observable<BannerBean>, ObservableSource<BannerBean>>() {
                     @Override
                     public ObservableSource<BannerBean> apply(Observable<BannerBean> listObservable) throws Exception {

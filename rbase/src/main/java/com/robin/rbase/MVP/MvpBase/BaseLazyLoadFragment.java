@@ -38,7 +38,7 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         this.isVisibleToUser = !hidden;
-
+Logger.i("status: hidden "+isVisibleToUser+ hidden);
         tryLoadData();
     }
 
@@ -55,9 +55,9 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isViewCreated = true;
-//        Logger.i("status:" +
-//                "isVisibleToUser "+isVisibleToUser+"\n"+"isViewCreated :" +isViewCreated
-//                +"\n"+"isDataLoaded "+isDataLoaded +"\n"+"isParentVisable "+isParentVisible());
+        Logger.i("status:" +
+                "isVisibleToUser "+isVisibleToUser+"\n"+"isViewCreated :" +isViewCreated
+                +"\n"+"isDataLoaded "+isDataLoaded +"\n"+"isParentVisable "+isParentVisible());
         tryLoadData();
     }
 

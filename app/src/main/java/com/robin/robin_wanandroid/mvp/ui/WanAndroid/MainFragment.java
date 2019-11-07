@@ -56,20 +56,20 @@ public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements
     }
 
 
-    @Override
-    public void showLoading() {
+//    @Override
+//    public void showLoading() {
+//
+//    }
 
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
+//    @Override
+//    public void hideLoading() {
+//
+//    }
+//
+//    @Override
+//    public void showError() {
+//
+//    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -79,7 +79,7 @@ public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements
     }
 
     @Override
-    protected void lazyLoadData() {
+    public void lazyLoadData() {
         getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
         Logger.i("view stub is "+getActivity().findViewById(R.id.top_layout));
         if(getActivity().findViewById(R.id.top_layout)!=null){
@@ -97,5 +97,25 @@ public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements
                 getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void showLogoutSuccess(boolean success) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError() {
+
     }
 }

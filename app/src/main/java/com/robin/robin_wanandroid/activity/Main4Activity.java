@@ -1,5 +1,7 @@
-package com.robin.robin_wanandroid;
+package com.robin.robin_wanandroid.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,7 +22,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.robin.rbase.CommonBase.Activity.BaseActivity;
+import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.dummy.DummyContent;
 import com.robin.robin_wanandroid.util.flowView.FlowAdapter;
 import com.robin.robin_wanandroid.util.flowView.FlowLayout;
@@ -29,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Main4Activity extends AppCompatActivity  {
+public class Main4Activity extends BaseActivity {
     private static final String TAG = "Main4Activity";
     FlowLayout flowLayout;
     List<String> data=new ArrayList<>();
@@ -93,6 +98,27 @@ public class Main4Activity extends AppCompatActivity  {
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        }
 
+    }
+
+
+    @Override
+    public void initView(@Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public boolean useFragment() {
+        return true;
     }
 
 //    private class MyPagerAdapter extends PagerAdapter implements TabAdapter {

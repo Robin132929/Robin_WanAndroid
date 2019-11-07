@@ -8,7 +8,9 @@ import com.bumptech.glide.Glide;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.CacheType;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
+import com.robin.rbase.CommonBase.utils.GlobalHttpHandler;
 import com.robin.rbase.CommonUtils.DataHelper;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.Preconditions;
 import com.robin.rbase.MVP.integration.BaseUrl;
 
@@ -45,7 +47,7 @@ public class GlobalConfigModule {
     private HttpUrl mApiUrl;
     private BaseUrl mBaseUrl;
     //    private BaseImageLoaderStrategy mLoaderStrategy;
-//    private GlobalHttpHandler mHandler;
+    private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
         private ResponseErrorListener mErrorListener;
     private File mCacheFile;
@@ -53,7 +55,7 @@ public class GlobalConfigModule {
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private AppModule.GsonConfiguration mGsonConfiguration;
-    //    private RequestInterceptor.Level mPrintHttpLogLevel;
+        private RequestInterceptor.Level mPrintHttpLogLevel;
 //    private FormatPrinter mFormatPrinter;
     private Cache.Factory mCacheFactory;
     private ExecutorService mExecutorService;
@@ -62,7 +64,7 @@ public class GlobalConfigModule {
         this.mApiUrl = builder.apiUrl;
         this.mBaseUrl = builder.baseUrl;
 //        this.mLoaderStrategy = builder.loaderStrategy;
-//        this.mHandler = builder.handler;
+        this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
         this.mErrorListener = builder.responseErrorListener;
         this.mCacheFile = builder.cacheFile;
@@ -70,7 +72,7 @@ public class GlobalConfigModule {
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
         this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
-//        this.mPrintHttpLogLevel = builder.printHttpLogLevel;
+        this.mPrintHttpLogLevel = builder.printHttpLogLevel;
 //        this.mFormatPrinter = builder.formatPrinter;
 //        this.mCacheFactory = builder.cacheFactory;
         this.mExecutorService = builder.executorService;
@@ -116,17 +118,17 @@ public class GlobalConfigModule {
 //        return mLoaderStrategy;
 //    }
 //
-//    /**
-//     * 提供处理 Http 请求和响应结果的处理类
-//     *
-//     * @return
-//     */
-//    @Singleton
-//    @Provides
-//    @Nullable
-//    GlobalHttpHandler provideGlobalHttpHandler() {
-//        return mHandler;
-//    }
+    /**
+     * 提供处理 Http 请求和响应结果的处理类
+     *
+     * @return
+     */
+    @Singleton
+    @Provides
+    @Nullable
+    GlobalHttpHandler provideGlobalHttpHandler() {
+        return mHandler;
+    }
 
     /**
      * 提供缓存文件
@@ -178,11 +180,11 @@ public class GlobalConfigModule {
         return mGsonConfiguration;
     }
 
-//    @Singleton
-//    @Provides
-//    RequestInterceptor.Level providePrintHttpLogLevel() {
-//        return mPrintHttpLogLevel == null ? RequestInterceptor.Level.ALL : mPrintHttpLogLevel;
-//    }
+    @Singleton
+    @Provides
+    RequestInterceptor.Level providePrintHttpLogLevel() {
+        return mPrintHttpLogLevel == null ? RequestInterceptor.Level.ALL : mPrintHttpLogLevel;
+    }
 //
 //    @Singleton
 //    @Provides
@@ -230,7 +232,7 @@ public class GlobalConfigModule {
         private HttpUrl apiUrl;
         private BaseUrl baseUrl;
         //        private BaseImageLoaderStrategy loaderStrategy;
-//        private GlobalHttpHandler handler;
+        private GlobalHttpHandler handler;
         private List<Interceptor> interceptors;
                 private ResponseErrorListener responseErrorListener;
         private File cacheFile;
@@ -238,7 +240,7 @@ public class GlobalConfigModule {
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private AppModule.GsonConfiguration gsonConfiguration;
-        //        private RequestInterceptor.Level printHttpLogLevel;
+                private RequestInterceptor.Level printHttpLogLevel;
 //        private FormatPrinter formatPrinter;
         private Cache.Factory cacheFactory;
         private ExecutorService executorService;
@@ -264,10 +266,11 @@ public class GlobalConfigModule {
 //            return this;
 //        }
 //
-//        public Builder globalHttpHandler(GlobalHttpHandler handler) {//用来处理http响应结果
-//            this.handler = handler;
-//            return this;
-//        }
+        public Builder globalHttpHandler(GlobalHttpHandler handler) {//用来处理http响应结果
+            Logger.i("iscollect 111");
+            this.handler = handler;
+            return this;
+        }
 
         public Builder addInterceptor(Interceptor interceptor) {//动态添加任意个interceptor
             if (interceptors == null)
@@ -306,10 +309,10 @@ public class GlobalConfigModule {
             return this;
         }
 
-//        public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) {//是否让框架打印 Http 的请求和响应信息
-//            this.printHttpLogLevel = Preconditions.checkNotNull(printHttpLogLevel, "The printHttpLogLevel can not be null, use RequestInterceptor.Level.NONE instead.");
-//            return this;
-//        }
+        public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) {//是否让框架打印 Http 的请求和响应信息
+            this.printHttpLogLevel = Preconditions.checkNotNull(printHttpLogLevel, "The printHttpLogLevel can not be null, use RequestInterceptor.Level.NONE instead.");
+            return this;
+        }
 //
 //        public Builder formatPrinter(FormatPrinter formatPrinter) {
 //            this.formatPrinter = Preconditions.checkNotNull(formatPrinter, FormatPrinter.class.getCanonicalName() + "can not be null.");

@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid;
+package com.robin.robin_wanandroid.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.robin.robin_wanandroid.MyItemRecyclerViewAdapter;
+import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.dummy.DummyContent;
 import com.robin.robin_wanandroid.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.

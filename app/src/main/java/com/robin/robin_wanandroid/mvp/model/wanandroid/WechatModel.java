@@ -6,7 +6,7 @@ import com.robin.robin_wanandroid.mvp.contract.wanandroid.WechatContract;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatContentBean;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatTitleBean;
 import com.robin.robin_wanandroid.mvp.model.cache.CommonCache;
-import com.robin.robin_wanandroid.mvp.model.service.MainArticleService;
+import com.robin.robin_wanandroid.mvp.model.service.Api;
 
 import javax.inject.Inject;
 
@@ -25,7 +25,7 @@ public class WechatModel extends BaseModel implements WechatContract.Model {
 
     @Override
     public Observable<WechatTitleBean> requestWechatTitle() {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getWechatTitle())
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getWechatTitle())
                 .flatMap(new Function<Observable<WechatTitleBean>, ObservableSource<WechatTitleBean>>() {
                     @Override
                     public ObservableSource<WechatTitleBean> apply(Observable<WechatTitleBean> wechatTitleBeanObservable) throws Exception {
@@ -43,7 +43,7 @@ public class WechatModel extends BaseModel implements WechatContract.Model {
 
     @Override
     public Observable<WechatContentBean> requestWechatContent(int id, int page, boolean isRefresh) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(MainArticleService.class).getWechatContent(id, page))
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getWechatContent(id, page))
                 .flatMap(new Function<Observable<WechatContentBean>, ObservableSource<WechatContentBean>>() {
                     @Override
                     public ObservableSource<WechatContentBean> apply(Observable<WechatContentBean> wechatContentBeanObservable) throws Exception {

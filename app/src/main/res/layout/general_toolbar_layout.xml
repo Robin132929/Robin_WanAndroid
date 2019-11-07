@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout android:id="@+id/app_bar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Base.ThemeOverlay.AppCompat.Light"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="@style/Base.ThemeOverlay.AppCompat.Light"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:title="@null">
+
+<!--  <androidx.appcompat.widget.SearchView-->
+<!--      android:id="@+id/search_view"-->
+<!--      android:layout_marginTop="@dimen/dp_10"-->
+<!--      android:layout_marginBottom="@dimen/dp_10"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      app:queryHint="输入搜索内容"-->
+<!--      android:focusable="false"-->
+<!--      android:layout_gravity="center"-->
+<!--      android:focusedByDefault="false"-->
+<!--      android:background="@drawable/bg_serachview"-->
+<!--      app:iconifiedByDefault="false"-->
+<!--      app:searchHintIcon="@null"-->
+<!--      app:searchIcon="@null"-->
+<!--      />-->
+
+  </androidx.appcompat.widget.Toolbar>
+<!--  <ViewStub-->
+<!--      android:id="@+id/view_stub"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout="@layout/top_layout"-->
+<!--      android:theme="@style/Base.ThemeOverlay.AppCompat.Light"-->
+<!--      app:layout_scrollFlags="scroll|enterAlways"-->
+<!--      />-->
+
+  </com.google.android.material.appbar.AppBarLayout>

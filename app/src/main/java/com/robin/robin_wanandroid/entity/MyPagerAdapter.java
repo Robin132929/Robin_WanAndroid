@@ -6,7 +6,7 @@
 //import android.view.ViewGroup;
 //import android.widget.TextView;
 //
-//import com.robin.robin_wanandroid.Main4Activity;
+//import com.robin.robin_wanandroid.activity.Main4Activity;
 //import com.robin.robin_wanandroid.app.App;
 //
 //import java.util.List;

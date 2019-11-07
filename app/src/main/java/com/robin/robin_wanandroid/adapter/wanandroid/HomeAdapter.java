@@ -51,6 +51,10 @@ public class HomeAdapter extends BaseQuickAdapter<MainArticleBean.DataBean.Datas
             TextView tag=helper.getView(R.id.tv_article_tag);
             tag.setText(item.getTags().get(0).getName());
         }
+
+        helper.setImageResource(R.id.iv_like,item.isCollect() ? R.drawable.ic_like:R.drawable.ic_like_not)
+        .addOnClickListener(R.id.iv_like);
+
     }
 }
 

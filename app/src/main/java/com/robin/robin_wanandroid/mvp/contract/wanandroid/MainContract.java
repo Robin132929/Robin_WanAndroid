@@ -11,16 +11,16 @@ import io.reactivex.Observable;
 public interface MainContract {
     interface Model extends IModel {
 //        Observable<MainArticleBean> getMainArticle(int page);
-//        Observable<LogoutResultBean> logout();
+        Observable<LogoutResultBean> logout();
     }
 
     interface View extends IView {
 //        void setHomeArt(MainArticleBean.DataBean dataBean);
-//       void  showLogoutSuccess(boolean success);
+       void  showLogoutSuccess(boolean success);
     }
 
     interface Presenter extends IPresenter {
 //        MainArticleBean load(int page);
-//       void  logout();
+       void  logout();
     }
 }

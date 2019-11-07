@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid;
+package com.robin.robin_wanandroid.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -7,10 +7,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import io.reactivex.functions.Consumer;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,8 +26,10 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
-import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
+import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
 import com.robin.robin_wanandroid.dummy.DummyContent;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
@@ -35,6 +38,8 @@ import com.robin.robin_wanandroid.mvp.ui.BlankFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
 import com.robin.robin_wanandroid.mvp.ui.gank.GankMainFragment;
 import com.robin.robin_wanandroid.mvp.ui.readhub.ReadhubMainFragment;
+import com.robin.robin_wanandroid.rx.LoginEvent;
+import com.robin.robin_wanandroid.rx.RxBus;
 import com.robin.robin_wanandroid.util.FragmentPageManager;
 import com.robin.robin_wanandroid.util.statusbarUtil.StatusBarUtil;
 
@@ -54,6 +59,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     private TextView nav_username;
     private int PrePosition;
     private List<Fragment> fragments = new ArrayList<>();
+    private String username= (String) PreferUtil.get(App.getmMyAppComponent().application(),"name","");
+    private boolean isLogin= (boolean) PreferUtil.get(App.getmMyAppComponent().application(),"login",false);
 
     @SuppressLint("WrongConstant")
     @Override
@@ -69,6 +76,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         mCoordinatorLayout = findViewById(R.id.cl_layout);
         mCoordinatorLayout.setPadding(0, statusBarHeight, 0, 0);
         StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary));
+        RxBusSubscriber();
     }
 
     private void Immersive() {
@@ -108,15 +116,28 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 R.string.navigation_drawer_close);
         mActionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+        if (!isLogin){
+            mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+        }
         nav_username = mNavigationView.getHeaderView(0).findViewById(R.id.tv_username);
-        nav_username.setText(mNavigationView.getMenu().findItem(R.id.nav_logout).isVisible() ? "abc" : "登陆");
+        nav_username.setText(mNavigationView.getMenu().findItem(R.id.nav_logout).isVisible() ? username: "登陆");
+        nav_username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isLogin){
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                }
+            }
+        });
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_collect:
-                        Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
-                        break;
+                        Intent intent=new Intent(MainActivity.this,SlidingMenuDetailActivity.class);
+                        intent.putExtra("type",0x0001);
+                        startActivity(intent);
+                    break;
                     case R.id.nav_todo:
                         Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
                         break;
@@ -130,7 +151,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                         Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.nav_logout:
-                        Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
+                        logout();
                         break;
                     default:
                         break;
@@ -189,6 +210,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 return true;
             }
         });
+    }
+
+    private void logout() {
+        mPresenter.logout();
     }
 
 
@@ -272,5 +297,34 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
+    }
+
+    public void RxBusSubscriber(){
+        RxBus.getInstance().toObservable(this, LoginEvent.class).subscribe(new Consumer<LoginEvent>() {
+            @Override
+            public void accept(LoginEvent loginEvent) throws Exception {
+                MainFragment ma= (MainFragment) fragments.get(0);
+
+                if (loginEvent.isLogin){
+                    nav_username.setText(loginEvent.name);
+                    ma.lazyLoadData();
+                    mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+                }else {
+                    nav_username.setText("登录");
+                    ma.lazyLoadData();
+                    mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showLogoutSuccess(boolean success) {
+       if (success){
+           PreferUtil.persist(App.getmMyAppComponent().application(),"login",false);
+           PreferUtil.persist(App.getmMyAppComponent().application(),"name","");
+           RxBus.getInstance().post(new LoginEvent(false,""));
+           startActivity(new Intent(MainActivity.this,LoginActivity.class));
+       }
     }
 }

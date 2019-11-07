@@ -1,5 +1,6 @@
 package com.robin.robin_wanandroid.di.module;
 
+import com.robin.robin_wanandroid.mvp.ui.WanAndroid.CollectFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.HomeFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.KnowledgeStructureFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
@@ -35,6 +36,11 @@ public abstract class AllFragmentsModule {
     @ContributesAndroidInjector(modules =  GankAndroidModule.class)
     abstract GankMainFragment contributeGankAndroidInjector();
 
+    @ContributesAndroidInjector(modules =  CollectFragmentModule.class)
+    abstract CollectFragment contributeCollectMaintInjector();
+
+
     @ContributesAndroidInjector(modules =  ReadhubMainFragmentModule.class)
     abstract ReadhubMainFragment contributeReadhubMaintInjector();
+
 }

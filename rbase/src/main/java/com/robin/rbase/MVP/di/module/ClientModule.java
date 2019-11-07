@@ -5,7 +5,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.robin.rbase.CommonBase.utils.GlobalHttpHandler;
 import com.robin.rbase.CommonUtils.DataHelper;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,25 +86,27 @@ public abstract class ClientModule {
     @Singleton
     @Provides
     static OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder
-            ,  ExecutorService executorService) {
+            , Interceptor intercept
+            , @Nullable List<Interceptor> interceptors, @Nullable GlobalHttpHandler handler, ExecutorService executorService) {
         builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                 .addNetworkInterceptor(intercept)
                 ;
-
-//        if (handler != null)
-//            builder.addInterceptor(new Interceptor() {
-//                @Override
-//                public Response intercept(Chain chain) throws IOException {
-//                    return chain.proceed(handler.onHttpRequestBefore(chain, chain.request()));
-//                }
-//            });
+        Logger.i("iscollect handler "+(handler==null));
+        if (handler != null)
+            builder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    return chain.proceed(handler.onHttpRequestBefore(chain, chain.request()));
+                }
+            });
 
         //如果外部提供了 Interceptor 的集合则遍历添加
-//        if (interceptors != null) {
-//            for (Interceptor interceptor : interceptors) {
-//                builder.addInterceptor(interceptor);
-//            }
-//        }
+        if (interceptors != null) {
+            for (Interceptor interceptor : interceptors) {
+                builder.addInterceptor(interceptor);
+            }
+        }
 
         //为 OkHttp 设置默认的线程池
         builder.dispatcher(new Dispatcher(executorService));
@@ -124,8 +128,8 @@ public abstract class ClientModule {
         return new OkHttpClient.Builder();
     }
 
-//    @Binds
-//    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
+    @Binds
+    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
 
     /**
      * 提供 {@link RxCache}

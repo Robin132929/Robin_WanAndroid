@@ -1,5 +1,6 @@
 package com.robin.robin_wanandroid.mvp.ui.WanAndroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,11 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.common_customize_ui.multis_status_view.MultiStateView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
-import com.robin.robin_wanandroid.ContentActivity;
+import com.robin.robin_wanandroid.activity.ContentActivity;
 import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.activity.LoginActivity;
 import com.robin.robin_wanandroid.adapter.wanandroid.HomeAdapter;
 import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
@@ -108,6 +111,27 @@ Logger.e("view is null :"+(mMultiStateView==null));
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MainArticleBean.DataBean.DatasBean data = (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
                 ContentActivity.startActivity(App.getmMyAppComponent().application(), data.getLink());
+            }
+        });
+        mHomeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Logger.i("iscollect : click ");
+                MainArticleBean.DataBean.DatasBean bean= (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
+                if (view.getId()==R.id.iv_like){
+                    if ((boolean)PreferUtil.get(App.getmMyAppComponent().application(),"login",false)){
+                        bean.setCollect(!bean.isCollect());
+                        mHomeAdapter.setData(position,bean);
+                        Logger.i("iscollect "+bean.isCollect());
+                        if (bean.isCollect()) {
+                            mPresenter.addCollectArticle(bean.getId());
+                        } else {
+                            mPresenter.cancelCollectArticle(bean.getId());
+                        }
+                    }
+                }else {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                }
             }
         });
         mHomeAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

@@ -19,7 +19,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class HomePresenter extends BasePresenter<HomeContract.Model,HomeContract.View> implements HomeContract.Presenter {
+public class HomePresenter extends CommonPresenter<HomeContract.Model,HomeContract.View> implements HomeContract.Presenter {
 
     @Inject
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {

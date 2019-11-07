@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.robin.robin_wanandroid.ItemFragment.OnListFragmentInteractionListener;
+import com.robin.robin_wanandroid.activity.ItemFragment.OnListFragmentInteractionListener;
 import com.robin.robin_wanandroid.dummy.DummyContent.DummyItem;
 
 import java.util.List;

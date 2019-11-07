@@ -15,6 +15,9 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.platform.Platform;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -24,21 +27,19 @@ public class GlobalConfiguration implements ConfigModule {
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlobalConfigModule.Builder builder) {
         builder.baseurl("https://www.wanandroid.com/")
+                .globalHttpHandler(new GlobaHttpHandlerImpl())
                 .responseErrorListener(new ResponseErrorListenerImpl())
                 .okhttpConfiguration(new ClientModule.OkhttpConfiguration() {
                     @Override
                     public void configOkhttp(@NonNull Context context, @NonNull OkHttpClient.Builder builder) {
+
                         RetrofitUrlManager.getInstance().with(builder);
                         RetrofitUrlManager.getInstance().putDomain("gank", "http://gank.io/");
                         RetrofitUrlManager.getInstance().putDomain("readhub", "https://api.readhub.cn/");
 
                     }
                 })
-                .retrofitConfiguration(new ClientModule.RetrofitConfiguration() {
-                    @Override
-                    public void configRetrofit(@NonNull Context context, @NonNull Retrofit.Builder builder) {
-                    }
-                })
+
                 .build();
     }
 

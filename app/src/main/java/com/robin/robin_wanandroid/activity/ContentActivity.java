@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid;
+package com.robin.robin_wanandroid.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +27,7 @@ import com.robin.rbase.CommonBase.Activity.BaseActivity;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.ShowMoreNavgationAdapter;
 import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
 
