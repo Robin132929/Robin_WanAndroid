@@ -3,6 +3,7 @@ package com.robin.robin_wanandroid.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -142,10 +143,19 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                         Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.nav_night_mode:
-                        Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
+                        if (!(boolean) PreferUtil.get(App.getmMyAppComponent().application(),"night_mode",false)){
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            PreferUtil.persist(App.getmMyAppComponent().application(),"night_mode",true);
+                        }else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            PreferUtil.persist(App.getmMyAppComponent().application(),"night_mode",false);
+                        }
+                        recreate();
                         break;
                     case R.id.nav_setting:
-                        Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
+                        Intent intent_setting=new Intent(getApplicationContext(),SlidingMenuDetailActivity.class);
+                        intent_setting.putExtra("type",0x0002);
+                        startActivity(intent_setting);
                         break;
                     case R.id.nav_about_us:
                         Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();

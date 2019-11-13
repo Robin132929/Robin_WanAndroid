@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SlidingMenuDetailActivity">
+    tools:context=".activity.SlidingMenuDetailActivity"
+    android:orientation="vertical">
 
     <include layout="@layout/general_toolbar_layout" />
 
     <FrameLayout
         android:id="@+id/slide_menu_detail_content_fl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

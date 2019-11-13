@@ -236,7 +236,6 @@ public class ContentActivity extends BaseActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Toast.makeText(ContentActivity.this,"实现中。。。",Toast.LENGTH_LONG).show();
                 onBackPressed();
                 break;
             default:
