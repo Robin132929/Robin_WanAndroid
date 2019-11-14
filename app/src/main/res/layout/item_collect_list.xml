@@ -36,35 +36,37 @@
             tools:text="@string/app_name" />
 
         <TextView
-            android:id="@+id/tv_article_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_article_top"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/item_date"
-            android:textSize="@dimen/item_tv_date"
-            tools:text="@string/app_name" />
-
-        <TextView
             android:id="@+id/tv_article_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_article_author"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_toRightOf="@+id/iv_article_thumbnail"
             android:ellipsize="end"
             android:gravity="top|start"
             android:lineSpacingExtra="2dp"
-            android:lines="1"
+            android:lines="2"
             android:paddingBottom="@dimen/dp_6"
             android:textColor="@color/item_title"
             android:textSize="@dimen/item_tv_title" />
+        <TextView
+            android:id="@+id/tv_article_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_below="@+id/tv_article_title"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/item_date"
+            android:textSize="@dimen/item_tv_date"
+            tools:text="@string/app_name" />
 
             <ImageView
                 android:id="@+id/iv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 app:srcCompat="@drawable/ic_like_not" />

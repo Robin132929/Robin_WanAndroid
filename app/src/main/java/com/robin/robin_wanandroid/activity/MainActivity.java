@@ -26,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.robin.rbase.CommonBase.delegate.IFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
@@ -36,10 +37,12 @@ import com.robin.robin_wanandroid.dummy.DummyContent;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.MainPresenter;
 import com.robin.robin_wanandroid.mvp.ui.BlankFragment;
+import com.robin.robin_wanandroid.mvp.ui.WanAndroid.HomeFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
 import com.robin.robin_wanandroid.mvp.ui.gank.GankMainFragment;
 import com.robin.robin_wanandroid.mvp.ui.readhub.ReadhubMainFragment;
 import com.robin.robin_wanandroid.rx.LoginEvent;
+import com.robin.robin_wanandroid.rx.RefreshHomeEvent;
 import com.robin.robin_wanandroid.rx.RxBus;
 import com.robin.robin_wanandroid.util.FragmentPageManager;
 import com.robin.robin_wanandroid.util.statusbarUtil.StatusBarUtil;
@@ -310,6 +313,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     public void RxBusSubscriber(){
+
         RxBus.getInstance().toObservable(this, LoginEvent.class).subscribe(new Consumer<LoginEvent>() {
             @Override
             public void accept(LoginEvent loginEvent) throws Exception {
@@ -323,6 +327,21 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                     nav_username.setText("登录");
                     ma.lazyLoadData();
                     mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                }
+            }
+        });
+        RxBus.getInstance().toObservable(this, RefreshHomeEvent.class).subscribe(new Consumer<RefreshHomeEvent>() {
+            @Override
+            public void accept(RefreshHomeEvent refreshHomeEvent) throws Exception {
+                MainFragment ma= (MainFragment) fragments.get(0);
+
+                if (refreshHomeEvent.isRefresh){
+                    Logger.i("refesh home");
+                    for (Fragment fragment : ma.getChildFragmentManager().getFragments()) {
+                        if (fragment instanceof HomeFragment){
+                            ((HomeFragment) fragment).lazyLoadData();
+                        }
+                    }
                 }
             }
         });

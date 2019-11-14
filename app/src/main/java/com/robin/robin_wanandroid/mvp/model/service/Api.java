@@ -68,6 +68,17 @@ public interface Api {
 
     @POST("lg/uncollect_originId/{id}/json")
     Observable<AddCollectBean> cancelCollectArticle(@Path("id") int id );
+    /**
+     * 收藏列表中取消收藏文章
+     * http://www.wanandroid.com/lg/uncollect/2805/json
+     * @param id
+     * @param originId
+     */
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    Observable<AddCollectBean> removeCollectArticle(@Path("id") int id,
+                             @Field("originId")int originId);
+
 
     @GET("lg/collect/list/{page}/json")
     Observable<GetCollectBean> getCollectList(@Path("page") int  page);

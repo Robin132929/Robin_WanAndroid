@@ -259,7 +259,7 @@ Logger.e("view is null :"+(mMultiStateView==null));
     }
 
     @Override
-    protected void lazyLoadData() {
+    public void lazyLoadData() {
         mPresenter.requestBanner(false);
         mPresenter.requestTopArticle();
         mPresenter.requestArticle(0,false);

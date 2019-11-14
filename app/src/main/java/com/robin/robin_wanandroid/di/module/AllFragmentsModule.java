@@ -1,7 +1,6 @@
 package com.robin.robin_wanandroid.di.module;
 
-import com.robin.robin_wanandroid.mvp.ui.SettingFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.CollectFragment;
+import com.robin.robin_wanandroid.mvp.ui.CollectFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.HomeFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.KnowledgeStructureFragment;
 import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;

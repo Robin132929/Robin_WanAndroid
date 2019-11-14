@@ -1,11 +1,8 @@
 package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.CollectContract;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
 import com.robin.robin_wanandroid.mvp.model.wanandroid.CollectModel;
-import com.robin.robin_wanandroid.mvp.model.wanandroid.MainModel;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.CollectFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
+import com.robin.robin_wanandroid.mvp.ui.CollectFragment;
 
 import dagger.Module;
 import dagger.Provides;

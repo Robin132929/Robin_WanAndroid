@@ -4,6 +4,7 @@ import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.utils.RxLifecycleUtils;
 import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.CollectContract;
+import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.GetCollectBean;
 
 import javax.inject.Inject;
@@ -37,5 +38,25 @@ public class CollectPresenter extends CommonPresenter<CollectContract.Model,Coll
                      mView.setCollectList(getCollectBean,isRefresh);
                  }
              });
+    }
+
+    @Override
+    public void removeCollectState(int id, int originId) {
+        mModel.removeCollectState(id, originId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mView))
+                .subscribe(new ErrorHandleSubscriber<AddCollectBean>(App.getmMyAppComponent().rxErrorHandler()) {
+                    @Override
+                    public void onNext(AddCollectBean addCollectBean) {
+                        mView.removeCollectState(true);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        mView.removeCollectState(false);
+                    }
+                });
     }
 }

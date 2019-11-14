@@ -22,5 +22,7 @@ public class CollectListAdapter extends BaseQuickAdapter<GetCollectBean.DataBean
         helper.setImageResource(R.id.iv_like, R.drawable.ic_like)
                 .addOnClickListener(R.id.iv_like);
         helper.setText(R.id.tv_article_author,item.getAuthor());
+        helper.setText(R.id.tv_article_date,item.getNiceDate());
+        helper.addOnClickListener(R.id.iv_like);
     }
 }
