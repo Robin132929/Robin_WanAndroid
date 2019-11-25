@@ -146,7 +146,7 @@ public class ProjectFragment extends BaseLazyLoadFragment<ProjectPresenter> impl
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ProjectItemBean.DataBean.DatasBean bean= (ProjectItemBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(mContext,bean.getLink());
+                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
             }
         });
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -69,4 +69,36 @@
     <color name="Grey700">#616161</color>
     <color name="Grey800">#424242</color>
     <color name="Grey900">#212121</color>
+
+
+    <color name="TURQUOISE">#1ABC9C</color>
+    <color name="GREENSEA">#16A085</color>
+
+    <color name="EMERALD">#2ECC71</color>
+    <color name="NEPHRITIS">#27AE60</color>
+
+    <color name="PETERRIVER">#3498DB</color>
+    <color name="BELIZEHOLE">#2980B9</color>
+
+    <color name="AMETHYST">#9B59B6</color>
+    <color name="WISTERIA">#8E44AD</color>
+
+    <color name="WETASPHALT">#34495E</color>
+    <color name="MIDNIGHTBLUE">#2C3E50</color>
+
+    <color name="SUNFLOWER">#F1C40F</color>
+    <color name="ORANGE">#F39C12</color>
+
+    <color name="CARROT">#E67E22</color>
+    <color name="PUMPKIN">#D35400</color>
+
+    <color name="ALIZARIN">#E74C3C</color>
+    <color name="POMEGRANATE">#C0392B</color>
+
+    <color name="CLOUDS">#ECF0F1</color>
+    <color name="SILVER">#BDC3C7</color>
+
+    <color name="CONCRETE">#95A5A6</color>
+    <color name="ASBESTOS">#7F8C8D</color>
+
 </resources>

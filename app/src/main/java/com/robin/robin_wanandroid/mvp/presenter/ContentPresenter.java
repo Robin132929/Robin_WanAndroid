@@ -1,16 +1,14 @@
 package com.robin.robin_wanandroid.mvp.presenter;
 
-import com.robin.rbase.MVP.MvpBase.BasePresenter;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.ContentContract;
+import com.robin.robin_wanandroid.mvp.contract.ContentContract;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.CollectContract;
+import com.robin.robin_wanandroid.mvp.presenter.wanandroid.CommonPresenter;
 
-public class ContentPresenter extends BasePresenter<ContentContract.Model,ContentContract.View> implements ContentContract.Presenter {
-    @Override
-    public void onAttach() {
+import javax.inject.Inject;
 
-    }
-
-    @Override
-    public void onDetach() {
-
+public class ContentPresenter extends CommonPresenter<ContentContract.Model,ContentContract.View> implements ContentContract.Presenter {
+    @Inject
+    public ContentPresenter(ContentContract.Model model, ContentContract.View view) {
+        super(model, view);
     }
 }

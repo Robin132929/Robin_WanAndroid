@@ -9,12 +9,13 @@ import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.CommonContract;
 import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 public class CommonPresenter<M extends CommonContract.Model, V extends CommonContract.View> extends BasePresenter<M,V> implements CommonContract.Presenter {
-
     public CommonPresenter(M model, V view) {
         super(model, view);
     }
@@ -45,5 +46,36 @@ public class CommonPresenter<M extends CommonContract.Model, V extends CommonCon
 
                 }
             });
+    }
+
+    @Override
+    public void addFootPrint(String name, String link) {
+        Logger.i("add footprint presenter"+name+link);
+
+        mModel.addFootPrint(name,link)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mView))
+                .subscribe(new ErrorHandleSubscriber<AddCollectBean>(App.getmMyAppComponent().rxErrorHandler()) {
+                    @Override
+                    public void onNext(AddCollectBean addCollectBean) {
+                        Logger.i("add footprint next"+addCollectBean.toString());
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        Logger.i("add footprint next error"+t.getMessage());
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        Logger.i("add footprint next complete");
+
+                    }
+                });
     }
 }

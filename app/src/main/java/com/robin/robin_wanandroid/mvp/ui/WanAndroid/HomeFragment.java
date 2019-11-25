@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import io.reactivex.functions.Consumer;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ import com.robin.robin_wanandroid.mvp.contract.wanandroid.HomeContract;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.HomePresenter;
+import com.robin.robin_wanandroid.rx.FootPrintEvent;
+import com.robin.robin_wanandroid.rx.RxBus;
 import com.robin.robin_wanandroid.widget.BannerHolderView;
 import com.robin.robin_wanandroid.widget.CustomPopupWindow;
 
@@ -75,7 +78,6 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
         mRecyclerView = view.findViewById(R.id.home_rv);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mMultiStateView=view.findViewById(R.id.home_fragment_msv);
-Logger.e("view is null :"+(mMultiStateView==null));
         head_LinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
         head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
         img1 = head_LinearLayout.findViewById(R.id.img1);
@@ -103,6 +105,8 @@ Logger.e("view is null :"+(mMultiStateView==null));
         img4.setOnClickListener(this);
         img5.setOnClickListener(this);
 
+        RxBusSubscriber();
+
 
         mRecyclerView.setAdapter(mHomeAdapter);
 
@@ -110,7 +114,7 @@ Logger.e("view is null :"+(mMultiStateView==null));
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MainArticleBean.DataBean.DatasBean data = (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(App.getmMyAppComponent().application(), data.getLink());
+                ContentActivity.startActivity(App.getmMyAppComponent().application(),data.getTitle(), data.getLink());
             }
         });
         mHomeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -222,7 +226,7 @@ Logger.e("view is null :"+(mMultiStateView==null));
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        ContentActivity.startActivity(App.getmMyAppComponent().application(), banner.getData().get(position).getUrl());
+                        ContentActivity.startActivity(App.getmMyAppComponent().application(),banner.getData().get(position).getTitle(), banner.getData().get(position).getUrl());
                     }
                 });
         convenientBanner.startTurning();
@@ -232,6 +236,7 @@ Logger.e("view is null :"+(mMultiStateView==null));
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img1:
+                mPresenter.addFootPrint("aaa","bbb");
                 Toast.makeText(getContext(), "每日问答", Toast.LENGTH_LONG).show();
                 break;
             case R.id.img2:
@@ -272,6 +277,17 @@ Logger.e("view is null :"+(mMultiStateView==null));
         } else {
             mRecyclerView.smoothScrollToPosition(0);
         }
+    }
+
+    public void RxBusSubscriber(){
+        RxBus.getInstance().toObservable(this, FootPrintEvent.class).subscribe(new Consumer<FootPrintEvent>() {
+            @Override
+            public void accept(FootPrintEvent footPrintEvent) throws Exception {
+                Logger.i(" rxbus is get the event");
+                mPresenter.addFootPrint(footPrintEvent.title,footPrintEvent.url);
+            }
+        });
+
     }
 
 }

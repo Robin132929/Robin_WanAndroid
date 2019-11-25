@@ -87,12 +87,17 @@ public interface Api {
     Observable<AddCollectBean> addExternalLink(@Query("title") String title,@Query("author") String author,@Query("link") String link);
 
 
+    @POST("lg/collect/addtool/json")
+    Observable<AddCollectBean> addFootPrint(@Query("name") String name,@Query("link") String link);
+
     /**************************************Gank Api***************************************/
 
     @Headers({"Domain-Name: gank"})
     @GET("api/data/Android/20/{page}")
     Observable<GankAndroidBean> getGankAndroidData(@Path("page")int page);
 
+    @GET("lg/collect/usertools/json")
+    Observable<GetCollectBean> getFootPrintList();
 
     /**************************************Readhub Api***************************************/
 

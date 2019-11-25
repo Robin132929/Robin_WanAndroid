@@ -4,6 +4,7 @@ import com.robin.rbase.CommonBase.utils.GlobalHttpHandler;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.robin_wanandroid.util.CacheUtil;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
@@ -26,13 +27,24 @@ public class GlobaHttpHandlerImpl implements GlobalHttpHandler {
     @NonNull
     @Override
     public Response onHttpResultResponse(@Nullable String httpResult, @NonNull Interceptor.Chain chain, @NonNull Response response) {
-        //如果是登录的话，需要保存cookie
-        Logger.i("iscollect : cookie"+chain.request().url());
+        if (chain.request().url().encodedPath().equals("https://www.wanandroid.com/lg/collect/addtool/json")) {
+            try {
+                Logger.i("resppone is :" + response.body().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+//如果是登录的话，需要保存cookie
+        Logger.i("iscollect : cookie"+chain.request().url()+"  "+ httpResult +"  " + response.request().url().encodedPath());
         if (chain.request().url().toString().contains("user/login")) {
             Logger.i("request url :"+chain.request().url().encodedPath());
             if (!response.headers("set-cookie").isEmpty()) {
                 //保存Cookie做持久化操作 set-cookie可能为多个
                 List<String> cookies = response.headers("set-cookie");
+                for (int i = 0; i < cookies.size(); i++) {
+                    Logger.i("cookie : "+cookies.get(i));
+
+                }
                 Logger.i("iscollect : save "+chain.request().url().toString());
 
                 CacheUtil.setCookie(chain.request().url().toString(),cookieUtil(cookies));
@@ -46,9 +58,11 @@ public class GlobaHttpHandlerImpl implements GlobalHttpHandler {
     @Override
     public Request onHttpRequestBefore(@NonNull Interceptor.Chain chain, @NonNull Request request) {
         /* 如果需要在请求服务器之前做一些操作, 则重新构建一个做过操作的 Request 并 return, 如增加 Header、Params 等请求信息, 不做操作则直接返回参数 request*/
-       Logger.i("iscollect respon: "+CacheUtil.isLogin()+"   11  "+ CacheUtil.getCookie(chain.request().url().toString())+" 22 "+chain.request().url().toString());
+       Logger.i("iscollect respon: "+CacheUtil.isLogin()+"   11  "+ CacheUtil.getCookie("https://www.wanandroid.com/user/login")+" 22 "+chain.request().url().toString());
         if (CacheUtil.isLogin()) {
             String cookies = CacheUtil.getCookie("https://www.wanandroid.com/user/login");
+            Logger.i("iscollect respon: islogin  "+cookies);
+
             //如果已经登录过了，那么请求的时候可以带上cookie 参数
                 return chain.request().newBuilder()
                         .addHeader("Cookie", cookies)
@@ -62,7 +76,7 @@ public class GlobaHttpHandlerImpl implements GlobalHttpHandler {
         StringBuilder sb = new StringBuilder();
         HashSet<String> set = new HashSet<String>();
         for (String cookie : cookies) {
-            String [] arr=cookie.split(",");
+            String [] arr=cookie.split(";");
             for (String s : arr) {
                 if ( s.isEmpty()||set.contains(s)){
                     continue;

@@ -5,6 +5,7 @@ import com.robin.rbase.MVP.MvpBase.BasePresenter;
 import com.robin.rbase.MVP.utils.RxLifecycleUtils;
 import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.HomeContract;
+import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 
@@ -84,4 +85,6 @@ public class HomePresenter extends CommonPresenter<HomeContract.Model,HomeContra
     public void requestTopArticle() {
 
     }
+
+
 }

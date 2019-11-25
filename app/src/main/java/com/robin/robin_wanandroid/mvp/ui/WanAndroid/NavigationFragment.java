@@ -59,7 +59,7 @@ public class NavigationFragment extends BaseLazyLoadFragment<NavgationPresenter>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 NavgationSection nav = data.get(position);
                 if (!nav.isHeader) {
-                    ContentActivity.startActivity(App.getmMyAppComponent().application(), nav.t.getLink());
+                    ContentActivity.startActivity(App.getmMyAppComponent().application(),nav.t.getTitle(), nav.t.getLink());
                 }
             }
         });

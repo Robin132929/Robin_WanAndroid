@@ -91,7 +91,7 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
             WechatContentBean.DataBean.DatasBean bean= (WechatContentBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(mContext,bean.getLink());
+                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
             }
         });
         content_recycleView.setLayoutManager(linearLayoutManager1);

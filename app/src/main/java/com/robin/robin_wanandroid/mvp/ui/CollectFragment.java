@@ -60,7 +60,7 @@ public class CollectFragment extends BaseMvpFragment<CollectPresenter> implement
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 GetCollectBean.DataBean.DatasBean bean= (GetCollectBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(App.getmMyAppComponent().application(), bean.getLink());
+                ContentActivity.startActivity(App.getmMyAppComponent().application(), bean.getTitle(),bean.getLink());
             }
         });
         mCollectListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

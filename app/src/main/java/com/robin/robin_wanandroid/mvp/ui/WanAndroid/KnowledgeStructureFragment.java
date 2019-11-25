@@ -259,7 +259,7 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                KnowledgeArticleBean.DataBean.DatasBean bean= (KnowledgeArticleBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(mContext,bean.getLink());
+                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
             }
         });
         konwledge_rv.setAdapter(knowledgeListAdapter);

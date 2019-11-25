@@ -1,16 +1,19 @@
 package com.robin.rbase.MVP.MvpBase;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.robin.rbase.CommonBase.Activity.BaseActivity;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.CacheType;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.lifecycle.ActivityLifecycleable;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import dagger.android.AndroidInjection;
@@ -77,4 +80,6 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
             mPresenter.onDetach();//释放资源
         this.mPresenter = null;
     }
+
+
 }

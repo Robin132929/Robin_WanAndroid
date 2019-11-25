@@ -1,6 +1,7 @@
 package com.robin.robin_wanandroid.di.module;
 
 
+import com.robin.robin_wanandroid.activity.ContentActivity;
 import com.robin.robin_wanandroid.activity.LoginActivity;
 import com.robin.robin_wanandroid.activity.MainActivity;
 
@@ -16,5 +17,8 @@ public abstract class AllActivitysModule {
 
     @ContributesAndroidInjector(modules = LoginActivityModule.class)
     abstract LoginActivity contributeLoginActivitytInjector();
+
+    @ContributesAndroidInjector(modules = ContentActivityModule.class)
+    abstract ContentActivity contributeContentActivitytInjector();
 
 }

@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +28,20 @@ import com.robin.rbase.CommonBase.Activity.BaseActivity;
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.ShowMoreNavgationAdapter;
+import com.robin.robin_wanandroid.mvp.contract.ContentContract;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.CommonContract;
 import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
+import com.robin.robin_wanandroid.mvp.presenter.ContentPresenter;
+import com.robin.robin_wanandroid.mvp.presenter.wanandroid.CommonPresenter;
+import com.robin.robin_wanandroid.rx.FootPrintEvent;
+import com.robin.robin_wanandroid.rx.RxBus;
 
 import java.util.List;
 
-public class ContentActivity extends BaseActivity {
+public class ContentActivity extends MyBaseActivity<ContentPresenter> implements ContentContract.View {
     private WebView webView;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerView;
@@ -190,6 +198,10 @@ public class ContentActivity extends BaseActivity {
             initWebView(this,webView);
         Intent intent=getIntent();
        String url= intent.getStringExtra("url");
+       String title= intent.getStringExtra("title");
+       if (!TextUtils.isEmpty(url)&& !TextUtils.isEmpty(title)){
+           mPresenter.addFootPrint(title,url);
+       }
        if (url!=null){
            Logger.i("url is "+url);
            webView.loadUrl(url);
@@ -205,7 +217,7 @@ public class ContentActivity extends BaseActivity {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     NavgationBean.DataBean.ArticlesBean articlesBean= (NavgationBean.DataBean.ArticlesBean) adapter.getItem(position);
-                    startActivity(ContentActivity.this,articlesBean.getLink());
+                    startActivity(ContentActivity.this,articlesBean.getTitle(),articlesBean.getLink());
                 }
             });
             mRecyclerView.setAdapter(mShowMoreNavgationAdapter);
@@ -217,11 +229,12 @@ public class ContentActivity extends BaseActivity {
         return true;
     }
 
-    public static void startActivity(Context context,String url){
+    public static void startActivity(Context context,String title,String url){
         Tag=0;
         Intent intent=new Intent(context,ContentActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("url",url);
+        intent.putExtra("title",title);
         context.startActivity(intent);
     }
 
@@ -242,5 +255,20 @@ public class ContentActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError() {
+
     }
 }

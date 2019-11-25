@@ -2,6 +2,7 @@ package com.robin.robin_wanandroid.mvp.model.wanandroid;
 
 import com.robin.rbase.MVP.integration.IRepositoryManager;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.HomeContract;
+import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.mvp.model.bean.TopArticleBean;
@@ -55,4 +56,6 @@ public class HomeModel extends CommonModel implements HomeContract.Model {
     public Observable<TopArticleBean> requestTopArticle() {
         return null;
     }
+
+
 }

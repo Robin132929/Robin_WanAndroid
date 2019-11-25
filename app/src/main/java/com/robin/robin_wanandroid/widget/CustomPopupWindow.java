@@ -76,7 +76,7 @@ public class CustomPopupWindow extends PopupWindow {
         if (mParentView == null) {
             showAtLocation(mContentView, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         } else {
-            showAtLocation(mParentView, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+            showAtLocation(mParentView, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0,0);
         }
     }
 

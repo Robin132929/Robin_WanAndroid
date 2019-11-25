@@ -20,7 +20,7 @@ import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.LoginContract;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.LoginPresenter;
 
-public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends MyBaseActivity<LoginPresenter> implements LoginContract.View {
     TextWatcher afterTextChangedListener = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
