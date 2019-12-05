@@ -20,7 +20,7 @@ import com.robin.robin_wanandroid.util.statusbarUtil.StatusBarUtil;
 
 import java.util.Arrays;
 
-public class SlidingMenuDetailActivity extends BaseActivity {
+public class SlidingMenuDetailActivity extends MyBaseActivity {
     public static int TYPE_COLLECT=0x0001;
     private static int TYPE_SETTING=0x0002;
     private static int TYPE_ABOUT=0x0003;

@@ -2,6 +2,7 @@ package com.robin.robin_wanandroid.mvp.model.service;
 
 import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
+import com.robin.robin_wanandroid.mvp.model.bean.FootPrintBean;
 import com.robin.robin_wanandroid.mvp.model.bean.GankAndroidBean;
 import com.robin.robin_wanandroid.mvp.model.bean.GetCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.KnowledgeArticleBean;
@@ -97,7 +98,7 @@ public interface Api {
     Observable<GankAndroidBean> getGankAndroidData(@Path("page")int page);
 
     @GET("lg/collect/usertools/json")
-    Observable<GetCollectBean> getFootPrintList();
+    Observable<FootPrintBean> getFootPrintList();
 
     /**************************************Readhub Api***************************************/
 

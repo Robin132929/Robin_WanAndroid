@@ -12,7 +12,6 @@ import androidx.annotation.ColorInt;
 public abstract class MyBaseActivity<P extends BasePresenter> extends BaseMvpActivity<P> {
     public void initColor(@ColorInt int color){
         StatusBarUtil.setStatusBarColor(this, color);
-        Logger.i("color is 11 ");
 
         if (getSupportActionBar()!=null){
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));

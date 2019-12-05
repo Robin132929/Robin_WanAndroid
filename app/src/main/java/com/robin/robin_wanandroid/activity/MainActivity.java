@@ -178,7 +178,7 @@ public class MainActivity extends MyBaseActivity<MainPresenter> implements MainC
         fragments.add(new MainFragment());
         fragments.add(new GankMainFragment());
         fragments.add(new ReadhubMainFragment());
-        fragments.add(ItemFragment.newInstance(1));
+//        fragments.add(ItemFragment.newInstance(1));
         fragments.add(new BlankFragment());
 
         addFragmnets(R.id.fl_content_container, fragments, 0);

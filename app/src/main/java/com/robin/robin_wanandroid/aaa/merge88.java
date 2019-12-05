@@ -1,7 +1,25 @@
 package com.robin.robin_wanandroid.aaa;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Binder;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.MessageQueue;
+import android.os.Process;
+import android.os.SystemClock;
+import android.os.Trace;
+import android.os.UserHandle;
+import android.util.Log;
+import android.util.LogPrinter;
 
+import java.io.File;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class merge88 {
@@ -87,5 +105,70 @@ public class merge88 {
 //
 //        }
 //    }
+
+    public static void main(String[] args) {
+        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "ActivityThreadMain");
+
+        // CloseGuard defaults to true and can be quite spammy.  We
+        // disable it here, but selectively enable it later (via
+        // StrictMode) on debug builds, but using DropBox, not logs.
+        CloseGuard.setEnabled(false);
+
+        Environment.initForCurrentUser();
+
+        // Set the reporter for event logging in libcore
+        EventLogger.setReporter(new EventLoggingReporter());
+
+        // Make sure TrustedCertificateStore looks in the right place for CA certificates
+        final File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());
+        TrustedCertificateStore.setDefaultUserDirectory(configDir);
+
+        Process.setArgV0("<pre-initialized>");
+        //主线程looper
+        Looper.prepareMainLooper();
+        //创建主线程
+        ActivityThread thread = new ActivityThread();
+        //调用attach 创建application 传入false
+        thread.attach(false);
+
+        if (sMainThreadHandler == null) {
+            sMainThreadHandler = thread.getHandler();
+        }
+
+        if (false) {
+            Looper.myLooper().setMessageLogging(new
+                    LogPrinter(Log.DEBUG, "ActivityThread"));
+        }
+        //为了便于理解 ，我们假定现在是从子线程发消息给主线程（UI线程）经过上面的分析此时Message已经从子线程发出并送到MessageQueue
+        //此时在主线程执行Looper.loop 便可以将MessageQueue中的Message取出并分发 loop取出一个message 之后进入一个无限循环中 不断调用MessageQueue的next方法
+        //next方法的主要作用是从MessageQueue中取出Messade
+        //最后调用handler的dispatchMessage分发Message  在dispatchMessage方法中进行Message的处理 首先会判断该Message的callback是否为空
+        // 如果为空 则判断handler的callback是否为空 如果handler的callback为空才会执行handleMessage 该方法就是我们重写的handleMessage方法
+        // 至此我们回到主线程
+
+
+        // End of event ActivityThreadMain.
+        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+        //开启looper
+        Looper.loop();
+
+        throw new RuntimeException("Main thread loop unexpectedly exited");
+    }
+
+
+            Log.i("intent", "invoke: " +method.getName());
+
+            if (method.getName().equals("getIntentSender")){
+        for (Object obj : args) {
+
+            if (obj instanceof Intent[]){
+                Intent [] intents= (Intent[]) obj;
+                Uri uri = intents[0].getData();
+                Log.i("intent", "invoke:  11" + uri.toString());
+                intents[0].setData(Uri.parse("tenvideo2://?action=1&cover_id=zr5a67l333ehzu9&video_id=n00320bp8yr&from=30090|1913|20191016|732"));
+
+            }
+        }
+    }
 
 }
