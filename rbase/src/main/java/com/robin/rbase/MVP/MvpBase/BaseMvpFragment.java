@@ -20,13 +20,9 @@ import io.reactivex.subjects.Subject;
 
 public abstract class BaseMvpFragment<P extends IPresenter> extends BaseFragment implements FragmentLifecycleable {
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
-    protected Context mContext;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
-    @Inject
-    Cache.Factory mCachefactory;
-    private Cache<String, Object> mCache;
 
     @NonNull
     @Override
@@ -34,28 +30,15 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseFragment
         return mLifecycleSubject;
     }
 
-    @NonNull
-    @Override
-    public synchronized Cache<String, Object> provideCache() {
-        if (mCache == null) {
-//            mCache = ArmsUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
-            mCache = mCachefactory.build(CacheType.ACTIVITY_CACHE);
-
-        }
-        return mCache;
-    }
-
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
-        mContext = context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mContext = null;
     }
 
     @Override
@@ -64,16 +47,5 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends BaseFragment
         //释放资源
         if (mPresenter != null) mPresenter.onDetach();
         this.mPresenter = null;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public boolean getUserVisibleHint() {
-
-        return super.getUserVisibleHint();
     }
 }

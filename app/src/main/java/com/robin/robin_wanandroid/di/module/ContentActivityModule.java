@@ -1,7 +1,7 @@
 package com.robin.robin_wanandroid.di.module;
 
 
-import com.robin.robin_wanandroid.activity.ContentActivity;
+import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.mvp.contract.ContentContract;
 import com.robin.robin_wanandroid.mvp.model.ContentModel;
 

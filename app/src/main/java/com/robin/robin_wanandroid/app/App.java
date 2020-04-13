@@ -1,32 +1,28 @@
 package com.robin.robin_wanandroid.app;
 
-import android.app.Application;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
+import android.view.View;
 
 import com.robin.rbase.CommonBase.App.BaseApplication;
 import com.robin.rbase.CommonBase.App.ConfigModule;
 import com.robin.rbase.CommonBase.Cache.IntelligentCache;
-import com.robin.rbase.CommonBase.utils.ManifestParser;
-import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.ContextUtil;
 import com.robin.rbase.MVP.di.module.GlobalConfigModule;
+import com.robin.robin_wanandroid.ui.login.LoginActivity;
 import com.robin.robin_wanandroid.delegate.GlobalConfiguration;
 import com.robin.robin_wanandroid.di.DaggerMyAppComponent;
 import com.robin.robin_wanandroid.di.MyAppComponent;
-
-import java.util.List;
+import com.robin.robin_wanandroid.util.Login.LoginHelper;
+import com.robin.robin_wanandroid.util.Login.RLogin;
+import com.robin.robin_wanandroid.util.loading.Gloading;
+import com.robin.robin_wanandroid.util.loading.GlobalLoadingStatusView;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.internal.platform.Platform;
-
 
 public class App extends BaseApplication implements HasAndroidInjector{
     @Inject
@@ -40,15 +36,34 @@ public class App extends BaseApplication implements HasAndroidInjector{
 
     @Override
     public void onCreate() {
-
         super.onCreate();
+        //??? 操作什么作用
         mMyAppComponent.extras().put(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()), getmAppDelegate());
-        Logger.i("extra : "+ mMyAppComponent.extras().toString()+"  "+System.currentTimeMillis());
         ContextUtil.init(this);
+
+        LoginHelper.getInstance().init(this,new RLogin() {
+            @Override
+            public boolean login(Context context) {
+                Intent intent = new Intent(context, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                LoginActivity.startLogin(context, intent);
+                return true;
+            }
+        });
+
+        Gloading.initDefault(new Gloading.Adapter() {
+            @Override
+            public View getView(Gloading.Holder holder, View convertView, int status) {
+
+                  convertView=new GlobalLoadingStatusView(holder.getContext());
+                  ((GlobalLoadingStatusView) convertView).setStatus(status);
+
+                return convertView;
+            }
+        });
     }
     @Override
     protected void attachBaseContext(Context base) {
-
        mMyAppComponent = DaggerMyAppComponent.builder().
                application(this)
                .globalConfigModule(getGlobalConfigModule(this,new GlobalConfiguration()))

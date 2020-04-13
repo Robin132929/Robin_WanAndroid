@@ -5,7 +5,7 @@
     android:id="@+id/main_dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity"
+    tools:context=".ui.home.activty.MainActivity"
     tools:openDrawer="start">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -37,7 +37,7 @@
 <!--        </FrameLayout>-->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+            android:id="@+id/bottom_navigation_view2"
             style="@style/Widget.Design.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

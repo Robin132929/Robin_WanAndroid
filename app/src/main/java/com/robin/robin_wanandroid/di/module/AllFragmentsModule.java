@@ -1,15 +1,16 @@
 package com.robin.robin_wanandroid.di.module;
 
-import com.robin.robin_wanandroid.mvp.ui.CollectFragment;
-import com.robin.robin_wanandroid.mvp.ui.FootPrintFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.HomeFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.KnowledgeStructureFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.NavigationFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.ProjectFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.WechatFragment;
-import com.robin.robin_wanandroid.mvp.ui.gank.GankMainFragment;
-import com.robin.robin_wanandroid.mvp.ui.readhub.ReadhubMainFragment;
+import com.robin.robin_wanandroid.ui.CollectFragment;
+import com.robin.robin_wanandroid.ui.FootPrintFragment;
+import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.HomeFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.MainFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.NavigationFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.ProjectFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.WechatFragment;
+import com.robin.robin_wanandroid.ui.readhub.ReadhubMainFragment;
+
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

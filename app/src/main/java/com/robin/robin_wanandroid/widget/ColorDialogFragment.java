@@ -1,106 +1,119 @@
-//package com.robin.robin_wanandroid.widget;
-//
-//import android.app.Dialog;
-//import android.content.DialogInterface;
-//import android.os.Bundle;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//
-//import com.chad.library.adapter.base.BaseQuickAdapter;
-//import com.robin.robin_wanandroid.R;
-//import com.robin.robin_wanandroid.adapter.ThemeColorAdapter;
-//import com.robin.robin_wanandroid.rx.RxBus;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import androidx.annotation.NonNull;
-//import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AlertDialog;
-//import androidx.fragment.app.DialogFragment;
-//import androidx.recyclerview.widget.GridLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//public class ColorDialogFragment extends DialogFragment {
-//    private int resID;
-//    private boolean dimiss=false;
-//    private boolean show=false;
-//    private RecyclerView mRecyclerView;
-//    private List<Integer> data=new ArrayList<>();
-//
-//    public ColorDialogFragment(Builder builder) {
-//        this.resID=builder.resID;
-//        this.dimiss=builder.dimiss;
-//        this.show=builder.show;
-//
-//        data.add(R.color.TURQUOISE);
-//        data.add(R.color.EMERALD);
-//        data.add(R.color.PETERRIVER);
-//        data.add(R.color.AMETHYST);
-//        data.add(R.color.WETASPHALT);
-//        data.add(R.color.SUNFLOWER);
-//        data.add(R.color.CARROT);
-//        data.add(R.color.ALIZARIN);
-//        data.add(R.color.CLOUDS);
-//        data.add(R.color.CONCRETE);
-//
-//        data.add(R.color.GREENSEA);
-//        data.add(R.color.NEPHRITIS);
-//        data.add(R.color.BELIZEHOLE);
-//        data.add(R.color.WISTERIA);
-//        data.add(R.color.MIDNIGHTBLUE);
-//        data.add(R.color.ORANGE);
-//        data.add(R.color.PUMPKIN);
-//        data.add(R.color.POMEGRANATE);
-//        data.add(R.color.SILVER);
-//        data.add(R.color.ASBESTOS);
-//    }
-//
-//    @NonNull
-//    @Override
-//    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // Get the layout inflater
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//        View view = inflater.inflate(R.layout.fragment_select_color_layout, null);
-//        mRecyclerView=view.findViewById(R.id.color_list);
-//        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
-//        ThemeColorAdapter adapter=new ThemeColorAdapter(data);
-//
-//        mRecyclerView.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//              int color= (int) adapter.getItem(position);
-////                RxBus.getInstance().post(new );
-//            }
-//        });
-//        builder.setTitle("选择颜色");
-//        builder.setView(view);
-//        return builder.create();
-//    }
-//
-//    public static class Builder{
-//        private int resID=0;
-//        private boolean dimiss=false;
-//        private boolean show=false;
-//        public Builder setRes(int id){
-//            this.resID=id;
-//            return this;
-//        }
-//
-//        public Builder dimiss(boolean dimiss){
-//            this.dimiss=dimiss;
-//            return this;
-//        }
-//
-//        public Builder show (boolean show){
-//            this.show=show;
-//            return this;
-//        }
-//        public ColorDialogFragment build() {
-//            return new ColorDialogFragment(this);
-//        }
-//
-//    }
-//}
+package com.robin.robin_wanandroid.widget;
+
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.adapter.ThemeColorAdapter;
+import com.robin.robin_wanandroid.entity.ThemeColorBean;
+import com.robin.robin_wanandroid.rx.ColorEvent;
+import com.robin.robin_wanandroid.rx.RxBus;
+import com.robin.robin_wanandroid.util.SettingUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class ColorDialogFragment extends DialogFragment {
+    static int mSelect = -1;
+    ThemeColorAdapter themeColorAdapter;
+    View view;
+    private RecyclerView mRecyclerView;
+    private List<ThemeColorBean> color_data;
+    private static int lastColor=SettingUtil.getColor();
+
+    public ColorDialogFragment(List<ThemeColorBean> color_data) {
+        this.color_data = color_data;
+        if (mSelect==-1){
+            for (int i = 0; i < color_data.size(); i++) {
+               if (this.color_data.get(i).getColorInt()==lastColor){
+                   this.color_data.get(i).setSelect(true);
+                   mSelect=i;
+               }
+            }
+        }
+        Logger.i(" mSelect is "+mSelect);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Logger.i("post button which   onDetach ");
+
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Logger.i("post button which   onCreateDialog ");
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        view = inflater.inflate(R.layout.fragment_select_color_layout, null);
+        themeColorAdapter = new ThemeColorAdapter(color_data);
+        mRecyclerView = view.findViewById(R.id.recycle);
+        themeColorAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Logger.i("post button which 444 " + position);
+                BaseViewHolder hodler = (BaseViewHolder) mRecyclerView.findViewHolderForLayoutPosition(mSelect);
+                if (hodler != null) {
+                    hodler.getView(R.id.img_select).setVisibility(View.GONE);
+                } else {
+                    adapter.notifyItemChanged(mSelect);
+                }
+                color_data.get(mSelect).setSelect(false);
+
+                mSelect = position;
+                color_data.get(mSelect).setSelect(true);
+                view.findViewById(R.id.img_select).setVisibility(View.VISIBLE);
+                SettingUtil.setColor(color_data.get(position).getColorInt());
+
+                RxBus.getInstance().post(new ColorEvent(color_data.get(position).getColorName(), color_data.get(position).getColorInt()));
+
+            }
+        });
+        if (mRecyclerView.getLayoutManager() == null) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        }
+
+        mRecyclerView.setAdapter(themeColorAdapter);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("选择颜色").setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+            }
+        }).setView(view).setPositiveButton("确认", null);
+
+        return builder.create();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRecyclerView=null;
+        themeColorAdapter=null;
+        view=null;
+        color_data=null;
+    }
+}

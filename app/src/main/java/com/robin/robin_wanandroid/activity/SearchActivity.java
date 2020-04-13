@@ -1,13 +1,14 @@
 package com.robin.robin_wanandroid.activity;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.base.MyBaseActivity;
 import com.robin.robin_wanandroid.mvp.contract.SearchContract;
 import com.robin.robin_wanandroid.mvp.model.bean.HotSearchBean;
 import com.robin.robin_wanandroid.mvp.presenter.SearchPresenter;
@@ -22,7 +23,7 @@ public class SearchActivity extends MyBaseActivity<SearchPresenter> implements S
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
-
+  System.out.println();
     }
 
     @Override
@@ -32,7 +33,6 @@ public class SearchActivity extends MyBaseActivity<SearchPresenter> implements S
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
     }
 
     @Override

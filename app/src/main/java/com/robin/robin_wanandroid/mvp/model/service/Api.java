@@ -16,6 +16,7 @@ import com.robin.robin_wanandroid.mvp.model.bean.ProjectItemBean;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatContentBean;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatTitleBean;
 import com.robin.robin_wanandroid.mvp.model.bean.readhub.TopicBean;
+import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
 
 import java.util.List;
 
@@ -91,6 +92,19 @@ public interface Api {
     @POST("lg/collect/addtool/json")
     Observable<AddCollectBean> addFootPrint(@Query("name") String name,@Query("link") String link);
 
+
+
+    @GET("wenda/list/{page}/json")
+    Observable<wendaBean> getWendaList(@Path("page")int page);
+
+    //面试集锦https://www.wanandroid.com/article/list/0/json?cid=73
+    //积分榜 https://www.wanandroid.com/coin/rank/1/json
+    //个人积分https://www.wanandroid.com/lg/coin/userinfo/json
+    //个人积分获取详情https://www.wanandroid.com//lg/coin/list/1/json
+
+    //常用网址https://www.wanandroid.com/friend/json
+
+    //关注作者
     /**************************************Gank Api***************************************/
 
     @Headers({"Domain-Name: gank"})

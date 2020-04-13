@@ -1,11 +1,16 @@
 package com.robin.robin_wanandroid.di.module;
 
 
-import com.robin.robin_wanandroid.activity.MainActivity;
+import com.robin.robin_wanandroid.ui.home.activty.MainActivity;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
 import com.robin.robin_wanandroid.mvp.model.wanandroid.MainModel;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
+import com.robin.robin_wanandroid.ui.home.fragment.MainFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.fragment.app.Fragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,8 +18,8 @@ import dagger.Provides;
 abstract class MainActivityModule {
 
     @Provides
-    static  String provideabc(){
-        return "abcqqqqqqqqqq";
+    static List<Fragment> providFragmentList(){
+        return new ArrayList<>();
     }
 
     @Provides
@@ -22,7 +27,10 @@ abstract class MainActivityModule {
         return new MainArticleBean();
 
     }
-
+    @Provides
+    static MainFragment providMainFragment(){
+        return new MainFragment();
+    }
     @Provides
     static MainContract.View provideView(MainActivity activity) {
         return activity;

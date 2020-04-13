@@ -1,118 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <RadioGroup
-        android:id="@+id/color_list"
+
+<!--    <RadioGroup-->
+<!--        android:id="@+id/color_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:background="@color/White"-->
+<!--        android:orientation="vertical"-->
+<!--        >-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginTop="@dimen/dp_10"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:stateListAnimator="@null"-->
+<!--            android:button="@null"-->
+<!--            android:background="@null"-->
+<!--            android:focusable="true"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:text="TURQUOISE" />-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="GREENSEA"-->
+<!--            android:textColorHighlight="@color/GREENSEA"/>-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="EMERALD"-->
+<!--            android:textColorHighlight="@color/EMERALD"/>-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="NEPHRITIS"-->
+<!--            android:textColorHighlight="@color/NEPHRITIS"/>-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="PETERRIVER"-->
+<!--            android:textColorHighlight="@color/PETERRIVER"/>-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="BELIZEHOLE"-->
+<!--            android:textColorHighlight="@color/BELIZEHOLE"/>-->
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="AMETHYST"-->
+<!--            android:textColorHighlight="@color/AMETHYST"/>-->
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:button="@null"-->
+<!--            android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--            android:drawableRight="@drawable/thenm_color_selector"-->
+<!--            android:layout_marginLeft="@dimen/dp_30"-->
+<!--            android:layout_marginRight="@dimen/dp_30"-->
+<!--            android:layout_marginBottom="@dimen/dp_10"-->
+<!--            android:text="WISTERIA"-->
+<!--            android:textColorHighlight="@color/WISTERIA"/>-->
+
+
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/WETASPHALT"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:textColorHighlight="color/TURQUOISE"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/MIDNIGHTBLUE"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="MIDNIGHTBLUE"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:textColorHighlight="color/TURQUOISE"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/Blue"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="@string/app_name" />&ndash;&gt;-->
+<!--    </RadioGroup>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginRight="@dimen/dp_20"-->
+<!--        android:text="@string/app_name"-->
+<!--        android:drawableLeft="@drawable/thenm_color_selector"-->
+<!--        android:drawableRight="@drawable/thenm_color_selector"-->
+<!--        />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        >-->
+
+<!--        <Button-->
+<!--            android:id="@+id/cancle"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_marginLeft="@dimen/dp_20"-->
+<!--            android:layout_marginRight="@dimen/dp_20"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            />-->
+<!--        <Button-->
+<!--            android:id="@+id/select"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_marginLeft="@dimen/dp_20"-->
+<!--            android:layout_marginRight="@dimen/dp_20"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            />-->
+
+<!--</LinearLayout>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/TURQUOISE"
-            android:text="TURQUOISE"
-            android:textColorHighlight="@color/TURQUOISE"/>
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/GREENSEA"
-            android:text="GREENSEA"
-            android:textColorHighlight="@color/GREENSEA"/>
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/EMERALD"
-            android:text="EMERALD"
-            android:textColorHighlight="@color/EMERALD"/>
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/NEPHRITIS"
-            android:text="NEPHRITIS"
-            android:textColorHighlight="@color/NEPHRITIS"/>
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/PETERRIVER"
-            android:text="PETERRIVER"
-            android:textColorHighlight="@color/PETERRIVER"/>
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/BELIZEHOLE"
-            android:text="BELIZEHOLE"
-            android:textColorHighlight="@color/BELIZEHOLE"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/AMETHYST"
-            android:text="AMETHYST"
-            android:textColorHighlight="@color/AMETHYST"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/WISTERIA"
-            android:text="WISTERIA"
-            android:textColorHighlight="@color/WISTERIA"/>
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/WETASPHALT"-->
-<!--            android:text="@string/app_name"-->
-<!--            android:textColorHighlight="color/TURQUOISE"/>-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/MIDNIGHTBLUE"-->
-<!--            android:text="MIDNIGHTBLUE"-->
-<!--            android:textColorHighlight="color/TURQUOISE"/>-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-<!--        <RadioButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/Blue"-->
-<!--            android:text="@string/app_name" />-->
-    </RadioGroup>
-
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

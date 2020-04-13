@@ -5,7 +5,7 @@ import androidx.annotation.ColorRes;
 
 public class ColorEvent {
     public String Color;
-    @ColorInt
+    @ColorRes
     public int colorInt;
 
     public ColorEvent(String color,@ColorInt int colorInt) {

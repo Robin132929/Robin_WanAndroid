@@ -3,6 +3,9 @@ package com.robin.rbase.CommonUtils.Utils;
 import android.app.Application;
 import android.content.Context;
 
+import com.robin.rbase.CommonBase.delegate.App;
+import com.robin.rbase.CommonUtils.Logger.Logger;
+
 public class ContextUtil {
 
     private static Context globalAppContext;
@@ -19,27 +22,7 @@ public class ContextUtil {
 
     public synchronized static Context getAppContext() {
         if (globalAppContext == null) {
-            try {
-                Application application = (Application) Class.forName("android.app.ActivityThread")
-                        .getMethod("currentApplication").invoke(null, (Object[]) null);
-                if (application != null) {
-                    globalAppContext = application;
-                    return application;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                Application application = (Application) Class.forName("android.app.AppGlobals")
-                        .getMethod("getInitialApplication").invoke(null, (Object[]) null);
-                if (application != null) {
-                    globalAppContext = application;
-                    return application;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            throw new IllegalStateException("ContextUtil is not initialed.");
+            Logger.i("globalAppContext is null");
         }
         return globalAppContext;
     }

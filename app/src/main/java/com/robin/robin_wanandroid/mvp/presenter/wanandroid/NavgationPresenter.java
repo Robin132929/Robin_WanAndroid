@@ -31,12 +31,14 @@ public class NavgationPresenter extends BasePresenter<NavgationContract.Model,Na
     }
 
     @Override
-    public void requestNavgationData() {
+    public void requestNavgationData(boolean isRefresh) {
      mModel.requestNavgationData().subscribeOn(Schedulers.io())
              .doOnSubscribe(new Consumer<Disposable>() {
                  @Override
                  public void accept(Disposable disposable) throws Exception {
-                     mView.showLoading();
+                     if (!isRefresh){
+                         mView.showLoading();
+                     }
                  }
              })
              .doFinally(new Action() {
@@ -56,13 +58,17 @@ public class NavgationPresenter extends BasePresenter<NavgationContract.Model,Na
          @Override
          public void onComplete() {
              super.onComplete();
-             mView.hideLoading();
+             if (!isRefresh){
+                 mView.hideLoading();
+             }
          }
 
          @Override
          public void onError(Throwable t) {
              super.onError(t);
-             mView.showError();
+             if (!isRefresh){
+                 mView.showError();
+             }
          }
      });
     }

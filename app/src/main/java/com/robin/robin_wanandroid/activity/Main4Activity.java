@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import butterknife.ButterKnife;
 
 
 import android.content.Intent;
@@ -103,6 +104,7 @@ public class Main4Activity extends BaseActivity {
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
+      ButterKnife.bind(this);
 
     }
 

@@ -1,10 +1,12 @@
 package com.robin.robin_wanandroid.adapter.wanandroid;
 
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.HomeFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.KnowledgeStructureFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.NavigationFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.ProjectFragment;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.WechatFragment;
+
+
+import com.robin.robin_wanandroid.ui.home.fragment.HomeFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.NavigationFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.ProjectFragment;
+import com.robin.robin_wanandroid.ui.home.fragment.WechatFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * ————————————————
  */
 public class myViewPagerAdapter extends FragmentPagerAdapter {
+
     public myViewPagerAdapter( @NonNull FragmentManager fm) {
         super(fm);
     }

@@ -31,11 +31,11 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_16" />
 
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/hot_search_flow_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:max_select="0" />
+<!--            <com.zhy.view.flowlayout.TagFlowLayout-->
+<!--                android:id="@+id/hot_search_flow_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:max_select="0" />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.LogoutResultBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.mvp.model.bean.TopArticleBean;
+import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
 
 import io.reactivex.Observable;
 
@@ -15,6 +16,8 @@ public interface HomeContract extends CommonContract {
         Observable<BannerBean> requestBanner();
         Observable<MainArticleBean> requestArticle(int page,boolean isSave);
         Observable<TopArticleBean> requestTopArticle();
+//        Observable<wendaBean>  requestDailyInterviewQuestion(int page, boolean isRefresh);
+
 
     }
 
@@ -27,6 +30,7 @@ public interface HomeContract extends CommonContract {
         void requestArticle(int page,boolean isSave);
         void requestBanner(boolean isrefresh);
         void requestTopArticle();
+//        void requestDailyInterviewQuestion(int page,boolean isRefresh);
 
     }
 }

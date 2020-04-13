@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -23,35 +24,22 @@ import dagger.android.HasAndroidInjector;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActivity implements ActivityLifecycleable, HasAndroidInjector {
+public abstract class BaseMvpActivity<P extends IPresenter> extends BaseActivity implements ActivityLifecycleable, HasAndroidInjector {
     @Inject
     DispatchingAndroidInjector<Object> androidInjector;
-
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
-    @Inject
-    Cache.Factory mCachefactory;
-    private Cache<String, Object> mCache;
-
     @NonNull
     @Override
     public final Subject<ActivityEvent> provideLifecycleSubject() {
         return mLifecycleSubject;
     }
+
     @Override
     public AndroidInjector<Object> androidInjector() {
         return androidInjector;
-    }
-    @NonNull
-    @Override
-    public synchronized Cache<String, Object> provideCache() {
-        if (mCache == null) {
-//            mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
-            mCache = mCachefactory.build(CacheType.ACTIVITY_CACHE);
-        }
-        return mCache;
     }
 
     /**

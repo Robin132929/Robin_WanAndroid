@@ -1,6 +1,5 @@
 package com.robin.rbase.MVP.MvpBase;
 
-
 import android.os.Bundle;
 
 import com.robin.rbase.CommonUtils.Logger.Logger;
@@ -10,7 +9,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 
 /**
  * 子类覆写{@link BaseLazyLoadFragment}lazyLoadData可快速实现Fragment懒加载
@@ -27,6 +25,14 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
     protected abstract void lazyLoadData();
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        this.isVisibleToUser = !hidden;
+        Logger.i("status: hidden " + isVisibleToUser + hidden);
+        tryLoadData();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
@@ -35,29 +41,12 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseMvp
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        this.isVisibleToUser = !hidden;
-Logger.i("status: hidden "+isVisibleToUser+ hidden);
-        tryLoadData();
-    }
-
-    /**
-     * 保证在initData后触发
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isViewCreated = true;
         Logger.i("status:" +
-                "isVisibleToUser "+isVisibleToUser+"\n"+"isViewCreated :" +isViewCreated
-                +"\n"+"isDataLoaded "+isDataLoaded +"\n"+"isParentVisable "+isParentVisible());
+                "isVisibleToUser " + isVisibleToUser + "\n" + "isViewCreated :" + isViewCreated
+                + "\n" + "isDataLoaded " + isDataLoaded + "\n" + "isParentVisable " + isParentVisible());
         tryLoadData();
     }
 
@@ -66,12 +55,12 @@ Logger.i("status: hidden "+isVisibleToUser+ hidden);
      */
     private boolean isParentVisible() {
         Fragment fragment = getParentFragment();
-        if (fragment!=null) {
+        if (fragment != null) {
             Logger.i("paerent is " + fragment.getClass().getSimpleName() + (fragment instanceof BaseLazyLoadFragment && ((BaseLazyLoadFragment) fragment).getUserVisibleHint() && !fragment.isHidden()));
-        }else {
+        } else {
             Logger.i("paerent is null");
         }
-        return fragment == null || (fragment instanceof BaseLazyLoadFragment && ((BaseLazyLoadFragment) fragment).getUserVisibleHint()&&!fragment.isHidden());
+        return fragment == null || (fragment instanceof BaseLazyLoadFragment && ((BaseLazyLoadFragment) fragment).getUserVisibleHint() && !fragment.isHidden());
     }
 
     /**
@@ -91,9 +80,9 @@ Logger.i("status: hidden "+isVisibleToUser+ hidden);
     }
 
     public void tryLoadData() {
-                Logger.i(    getClass().getSimpleName()+" status:" +
-                "isVisibleToUser "+isVisibleToUser+" isViewCreated :" +isViewCreated
-              +" isDataLoaded "+isDataLoaded +" isParentVisable "+isParentVisible());
+        Logger.i(getClass().getSimpleName() + " status:" +
+                "isVisibleToUser " + isVisibleToUser + " isViewCreated :" + isViewCreated
+                + " isDataLoaded " + isDataLoaded + " isParentVisable " + isParentVisible());
         if (isViewCreated && isVisibleToUser && isParentVisible() && !isDataLoaded) {
             lazyLoadData();
             isDataLoaded = true;

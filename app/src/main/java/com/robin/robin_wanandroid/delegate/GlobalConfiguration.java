@@ -38,9 +38,7 @@ public class GlobalConfiguration implements ConfigModule {
                         RetrofitUrlManager.getInstance().putDomain("readhub", "https://api.readhub.cn/");
 
                     }
-                })
-
-                .build();
+                }).build();
     }
 
     @Override

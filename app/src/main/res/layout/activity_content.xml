@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#3c4858"
-    tools:context=".activity.ContentActivity">
+    tools:context=".ui.content.ContentActivity">
     <include layout="@layout/layout_toolbar"/>
 <!--    <include layout="@layout/fl_container"/>-->
 <!--<WebView-->

@@ -43,27 +43,10 @@ public final class AppManager {
      * 当前在前台的 Activity
      */
     private Activity mCurrentActivity;
-    /**
-     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
-     * <p>
-     * 提供给外部扩展 {@link AppManager} 的 {@link #onReceive(Message)} 方法
-     */
-    private HandleListener mHandleListener;
 
     private AppManager() {
     }
 
-    /**
-     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
-     * <p>
-     * 通过此方法远程遥控 {@link AppManager}, 使 {@link #onReceive(Message)} 执行对应方法
-     *
-     * @param msg {@link Message}
-     */
-    @Deprecated
-    public static void post(Message msg) {
-        getAppManager().onReceive(msg);
-    }
 
     public static AppManager getAppManager() {
         if (sAppManager == null) {
@@ -76,43 +59,12 @@ public final class AppManager {
         return sAppManager;
     }
 
-    /**
-     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
-     * <p>
-     * 可通过 {@link #setHandleListener(HandleListener)}, 让外部可扩展新的事件
-     *
-     * @param message
-     */
-    @Deprecated
-    public void onReceive(Message message) {
-        if (mHandleListener != null) {
-            mHandleListener.handleMessage(this, message);
-        }
-    }
 
     public AppManager init(Application application) {
         this.mApplication = application;
         return sAppManager;
     }
 
-    @Deprecated
-    public HandleListener getHandleListener() {
-        return mHandleListener;
-    }
-
-    /**
-     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
-     * <p>
-     * 提供给外部扩展 {@link AppManager} 的 {@link #onReceive} 方法(远程遥控 {@link AppManager} 的功能)
-     * 建议在 {@link ConfigModule#injectAppLifecycle(Context, List)} 中
-     * 通过 {@link AppLifecycles#onCreate(Application)} 在 App 初始化时,使用此方法传入自定义的 {@link HandleListener}
-     *
-     * @param handleListener
-     */
-    @Deprecated
-    public void setHandleListener(HandleListener handleListener) {
-        this.mHandleListener = handleListener;
-    }
 
     /**
      * 让在前台的 {@link Activity}, 使用 {@link Snackbar} 显示文本内容
@@ -216,7 +168,6 @@ public final class AppManager {
      */
     public void release() {
         mActivityList.clear();
-        mHandleListener = null;
         mActivityList = null;
         mCurrentActivity = null;
         mApplication = null;
@@ -430,10 +381,5 @@ public final class AppManager {
                 next.finish();
             }
         }
-    }
-
-    @Deprecated
-    public interface HandleListener {
-        void handleMessage(AppManager appManager, Message message);
     }
 }

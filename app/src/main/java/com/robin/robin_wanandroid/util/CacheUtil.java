@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.robin_wanandroid.app.App;
+import com.robin.robin_wanandroid.util.Login.LoginHelper;
+import com.robin.robin_wanandroid.util.Login.Online;
 
 public class CacheUtil {
    public static String getCookie(String url){
@@ -14,7 +16,7 @@ public class CacheUtil {
    }
 
     public static boolean isLogin(){
-        return (boolean) PreferUtil.get(App.getmMyAppComponent().application(),"login",false);
+        return LoginHelper.getInstance().getState().getType()== Online.LOGIN;
     }
 
     public static void setCookie(String url,String cookie){

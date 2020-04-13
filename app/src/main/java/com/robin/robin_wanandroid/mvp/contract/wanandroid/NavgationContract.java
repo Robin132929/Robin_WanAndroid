@@ -18,6 +18,6 @@ public interface NavgationContract {
     }
 
     interface Presenter extends IPresenter {
-        void requestNavgationData();
+        void requestNavgationData(boolean isRefresh);
     }
 }

@@ -1,11 +1,8 @@
 package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.readhub.ReadhubMainContract;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
 import com.robin.robin_wanandroid.mvp.model.readhub.ReadhubMainModel;
-import com.robin.robin_wanandroid.mvp.model.wanandroid.MainModel;
-import com.robin.robin_wanandroid.mvp.ui.WanAndroid.MainFragment;
-import com.robin.robin_wanandroid.mvp.ui.readhub.ReadhubMainFragment;
+import com.robin.robin_wanandroid.ui.readhub.ReadhubMainFragment;
 
 import dagger.Module;
 import dagger.Provides;

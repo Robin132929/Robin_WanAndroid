@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.util.FragmentPageManager;
@@ -53,7 +54,7 @@ public class FragmentLifecycleCallbacksImpl extends FragmentManager.FragmentLife
     @Override
     public void onFragmentCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @Nullable Bundle savedInstanceState) {
         super.onFragmentCreated(fm, f, savedInstanceState);
-        Logger.i("FragmentLifecycleCallbacksImpl: \n" +
+        Logger.i("FragmentLifecycleCallbacksImpl111: " +
                 "Name :" + f.getClass().getSimpleName() +
                 "Action :onFragmentCreated \n" +
                 "Time :" + System.currentTimeMillis());
@@ -96,7 +97,7 @@ public class FragmentLifecycleCallbacksImpl extends FragmentManager.FragmentLife
                 "Name :" + f.getClass().getSimpleName()  +
                 "Action :onFragmentResumed \n" +
                 "Time :" + System.currentTimeMillis());
-        if (f instanceof BaseMvpFragment &&f.getUserVisibleHint()){
+        if (f instanceof BaseFragment &&f.getUserVisibleHint()){
             sFragmentPageManager.setCurrentFragment(f);
         }
     }

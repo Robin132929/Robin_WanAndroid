@@ -16,7 +16,9 @@ ext {
             rxlifecycle2SdkVersion  : "2.2.1",
             espressoSdkVersion      : "3.0.2",
             canarySdkVersion        : "1.6.1",
-            dagger2SdkVersion           :"2.24"
+            dagger2SdkVersion       :"2.24",
+            butterknifeVersion      : "10.2.0",
+
     ]
 
     dependencies = [
@@ -80,6 +82,10 @@ ext {
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
 
             "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.1.1",
+
+            "butterknife"                       : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",
+            "butterknife-compiler"              : "com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
+
 
     ]
 

@@ -45,14 +45,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
 //   ActivityDelegate activityDelegate ;
 
-//        @Inject
     Cache<String, Object> mExtras= AppDelegate.mExtras;
     AppManager mAppManager;
     @Inject
     Application mApplication;
 
     FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle=getFragmentLifecycle();
-//    @Inject
     List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles=new ArrayList<>();
 
     protected ActivityLifecycle() {

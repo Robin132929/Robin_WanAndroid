@@ -1,39 +1,36 @@
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
    >
-    <com.robin.robin_wanandroid.customizeview.RPreferenceCategory android:title="@string/basic_setting"
+    <PreferenceCategory android:title="@string/basic_setting"
         android:layout="@layout/custom_preference_layout"
+
        >
         <CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:defaultValue="false"
             android:key="switch_noPhotoMode"
             android:layout="@layout/custom_preference_layout"
-
             android:summary="@string/switch_no_photo_mode_summary"
             android:title="@string/switch_photo_mode" />
-        <Preference
+        <CheckBoxPreference
             android:key="auto_nightMode"
             android:layout="@layout/custom_preference_layout"
-
             android:summary="@string/auto_night_mode_summary"
             android:title="@string/auto_night_mode" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="nav_bar"
-            android:layout="@layout/custom_preference_layout"
+        <com.robin.robin_wanandroid.widget.SelfSelectThemColorPreference
+            android:title="选择主题颜色"
             android:summary="@string/nav_bar_coloration_summary"
-            android:title="@string/nav_bar_coloration" />
-        <Preference
-            android:key="color"
             android:layout="@layout/custom_preference_layout"
-            android:summary="@string/nav_bar_coloration_summary"
-            android:title="@string/nav_bar_coloration" />
-
+            android:key="color_select"
+            />
         <Preference
             android:key="clearCache"
             android:layout="@layout/custom_preference_layout"
             android:title="@string/clear_cache" />
-    </com.robin.robin_wanandroid.customizeview.RPreferenceCategory>
-    <com.robin.robin_wanandroid.customizeview.RPreferenceCategory android:title="@string/about_settings"
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/about_settings"
         android:layout="@layout/custom_preference_layout"
         >
 
@@ -60,6 +57,6 @@
             android:summary="@string/copyright_summary"
             android:title="@string/copyright" />
 
-    </com.robin.robin_wanandroid.customizeview.RPreferenceCategory>
+    </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

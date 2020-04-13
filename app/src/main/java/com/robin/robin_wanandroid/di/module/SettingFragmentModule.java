@@ -1,11 +1,6 @@
 package com.robin.robin_wanandroid.di.module;
 
-import com.robin.robin_wanandroid.mvp.contract.SettingContract;
-import com.robin.robin_wanandroid.mvp.model.SettingModel;
-import com.robin.robin_wanandroid.mvp.ui.SettingFragment;
-
 import dagger.Module;
-import dagger.Provides;
 
 @Module
 abstract class SettingFragmentModule {

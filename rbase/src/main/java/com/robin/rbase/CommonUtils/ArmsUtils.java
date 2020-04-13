@@ -25,6 +25,8 @@ import com.robin.rbase.MVP.di.component.MvpAppComponent;
 import java.security.MessageDigest;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * ================================================
@@ -386,21 +388,6 @@ public class ArmsUtils {
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
-    /**
-     * 配置 RecyclerView
-     *
-     * @param recyclerView
-     * @param layoutManager
-     * @deprecated Use {@link #configRecyclerView(RecyclerView, RecyclerView.LayoutManager)} instead
-     */
-//    @Deprecated
-//    public static void configRecycleView(final RecyclerView recyclerView
-//            , RecyclerView.LayoutManager layoutManager) {
-//        recyclerView.setLayoutManager(layoutManager);
-//        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//    }
 
     /**
      * 配置 RecyclerView
@@ -408,13 +395,13 @@ public class ArmsUtils {
      * @param recyclerView
      * @param layoutManager
      */
-//    public static void configRecyclerView(final RecyclerView recyclerView
-//            , RecyclerView.LayoutManager layoutManager) {
-//        recyclerView.setLayoutManager(layoutManager);
-//        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//    }
+    public static void configRecyclerView(final RecyclerView recyclerView
+            , RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
 
     /**
      * 执行 {@link AppManager#killAll()}

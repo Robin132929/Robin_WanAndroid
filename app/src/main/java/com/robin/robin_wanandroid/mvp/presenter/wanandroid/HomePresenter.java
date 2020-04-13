@@ -8,6 +8,7 @@ import com.robin.robin_wanandroid.mvp.contract.wanandroid.HomeContract;
 import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
+import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
 
 import javax.inject.Inject;
 
@@ -85,6 +86,18 @@ public class HomePresenter extends CommonPresenter<HomeContract.Model,HomeContra
     public void requestTopArticle() {
 
     }
+
+//    @Override
+//    public void requestDailyInterviewQuestion(int page, boolean isRefresh) {
+//        mModel.requestDailyInterviewQuestion(page,isRefresh).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .compose(RxLifecycleUtils.bindToLifecycle(mView))
+//                .subscribe(new ErrorHandleSubscriber<wendaBean>(App.getmMyAppComponent().rxErrorHandler()) {
+//                    @Override
+//                    public void onNext(wendaBean wendaBean) {
+//                    }
+//                });
+//    }
 
 
 }

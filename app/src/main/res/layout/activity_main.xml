@@ -5,19 +5,19 @@
     android:id="@+id/main_dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity"
+    tools:context=".ui.home.activty.MainActivity"
     tools:openDrawer="start">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cl_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/cl_layout">
+        android:layout_height="match_parent">
 
         <include layout="@layout/layout_toolbar" />
 
         <include layout="@layout/fl_container"
 
-           />
+            />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
@@ -42,8 +42,7 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_60"
             app:layout_behavior=".widget.BottomNavigationBehavior"
-            app:srcCompat="@drawable/ic_arrow_upward_white_24dp"
-            />
+            app:srcCompat="@drawable/ic_arrow_upward_white_24dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -53,9 +52,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/viewBackground"
+        app:headerLayout="@layout/sideslip_nav_header"
         app:itemIconTint="@color/item_nav_color_tv"
         app:itemTextColor="@color/item_nav_color_tv"
-        app:menu="@menu/menu_sideslip_nav"
-        app:headerLayout="@layout/sideslip_nav_header"/>
+        app:menu="@menu/menu_sideslip_nav" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

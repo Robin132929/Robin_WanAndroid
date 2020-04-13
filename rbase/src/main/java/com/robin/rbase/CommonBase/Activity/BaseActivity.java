@@ -5,12 +5,14 @@ import android.os.Bundle;
 
 import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.CacheType;
-import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonBase.delegate.IActivity;
+import com.robin.rbase.CommonBase.utils.Const;
 import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * ================================================
@@ -22,34 +24,21 @@ import androidx.appcompat.app.AppCompatActivity;
  * ================================================
  */
 public abstract class BaseActivity extends AppCompatActivity implements IActivity {
-
-    Cache.Factory factory=new Cache.Factory() {
-        @NonNull
-        @Override
-        public Cache build(CacheType type) {
-            //若想自定义 LruCache 的 size, 或者不想使用 LruCache, 想使用自己自定义的策略
-            //使用 GlobalConfigModule.Builder#cacheFactory() 即可扩展
-            switch (type.getCacheTypeId()) {
-                //Activity、Fragment 以及 Extras 使用 IntelligentCache (具有 LruCache 和 可永久存储数据的 Map)
-                case CacheType.EXTRAS_TYPE_ID:
-                case CacheType.ACTIVITY_CACHE_TYPE_ID:
-                case CacheType.FRAGMENT_CACHE_TYPE_ID:
-                    return new IntelligentCache(type.calculateCacheSize(getApplication()));
-                //其余使用 LruCache (当达到最大容量时可根据 LRU 算法抛弃不合规数据)
-                default:
-                    return new IntelligentCache(type.calculateCacheSize(getApplication()));
-            }
-        }
-    };
     Cache<String, Object> mCache;
+    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int layoutResID=getLayoutId();
-        if (layoutResID != 0) {
-            setContentView(layoutResID);
-        }
+       try{
+           int layoutResID=getLayoutId();
+           if (layoutResID != 0) {
+               setContentView(layoutResID);
+               mUnbinder =ButterKnife.bind(this);
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
         initView(savedInstanceState);
         initData(savedInstanceState);
     }
@@ -58,10 +47,21 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     public Cache<String, Object> provideCache() {
         if (mCache == null) {
-            mCache = factory.build(CacheType.ACTIVITY_CACHE);
+            mCache = Const.getCacheFactory(getApplication()).build(CacheType.ACTIVITY_CACHE);
         }
         return mCache;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
+            mUnbinder.unbind();
+        this.mUnbinder = null;
+
+    }
+
+
 //    /**
 //     * 初始化ToolBar
 //     */
@@ -113,10 +113,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
 //        startActivityForResult(intent, requestCode);
 //    }
 //
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//    }
 //    /**
 //     * 沉浸式实现
 //     */
