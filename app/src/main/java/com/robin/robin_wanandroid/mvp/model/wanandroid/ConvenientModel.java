@@ -12,20 +12,20 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
-public class ConvenientModel extends BaseModel implements ConvenientContract.Model {
-   @Inject
-    public ConvenientModel(IRepositoryManager repositoryManager) {
-        super(repositoryManager);
-    }
-
-    @Override
-    public Observable<wendaBean> requestWenda(int page) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getWendaList(page))
-                .flatMap(new Function<Observable<wendaBean>, ObservableSource<wendaBean>>() {
-                    @Override
-                    public ObservableSource<wendaBean> apply(Observable<wendaBean> addCollectBeanObservable) throws Exception {
-                        return addCollectBeanObservable;
-                    }
-                });
-    }
-}
+//public class ConvenientModel extends BaseModel implements ConvenientContract.Model {
+//   @Inject
+//    public ConvenientModel(IRepositoryManager repositoryManager) {
+//        super(repositoryManager);
+//    }
+//
+//    @Override
+//    public Observable<wendaBean> requestWenda(int page) {
+//        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getWendaList(page))
+//                .flatMap(new Function<Observable<wendaBean>, ObservableSource<wendaBean>>() {
+//                    @Override
+//                    public ObservableSource<wendaBean> apply(Observable<wendaBean> addCollectBeanObservable) throws Exception {
+//                        return addCollectBeanObservable;
+//                    }
+//                });
+//    }
+//}

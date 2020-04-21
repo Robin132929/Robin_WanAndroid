@@ -1,34 +1,34 @@
-package com.robin.robin_wanandroid.ui.home.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
+import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.myViewPagerAdapter;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
-import com.robin.robin_wanandroid.mvp.presenter.wanandroid.MainPresenter;
+import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
+import com.robin.robin_wanandroid.mvp.presenter.common.MainActivityPresenter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
-public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements MainContract.View {
+public class WanAndroidMainFragment extends BaseFragment {
     @BindView(R.id.tl_tabs)
     TabLayout mTabLayout;
     @BindView(R.id.vp_content)
     ViewPager mViewPager;
-
-
-    public MainFragment() {
+    //TODO 懒加载
+    public WanAndroidMainFragment() {
     }
 
-    public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
+    public static WanAndroidMainFragment newInstance() {
+        WanAndroidMainFragment fragment = new WanAndroidMainFragment();
         return fragment;
     }
 
@@ -57,15 +57,15 @@ public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements
 
     }
 
-    @Override
-    public void lazyLoadData() {
-        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
-        Logger.i("view stub is " + getActivity().findViewById(R.id.top_layout));
-        if (getActivity().findViewById(R.id.top_layout) != null) {
-            getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
-        }
-        Logger.i("lazy load");
-    }
+//    @Override
+//    public void lazyLoadData() {
+//        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
+//        Logger.i("view stub is " + getActivity().findViewById(R.id.top_layout));
+//        if (getActivity().findViewById(R.id.top_layout) != null) {
+//            getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
+//        }
+//        Logger.i("lazy load");
+//    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -76,25 +76,5 @@ public class MainFragment extends BaseLazyLoadFragment<MainPresenter> implements
                 getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
             }
         }
-    }
-
-    @Override
-    public void showLogoutSuccess(boolean success) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showError() {
-
     }
 }

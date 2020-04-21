@@ -7,6 +7,7 @@ import com.robin.rbase.CommonBase.Cache.Cache;
 import com.robin.rbase.CommonBase.Cache.CacheType;
 import com.robin.rbase.CommonBase.delegate.IActivity;
 import com.robin.rbase.CommonBase.utils.Const;
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
                mUnbinder =ButterKnife.bind(this);
            }
        }catch (Exception e){
+           Logger.e("onCreate is error : "+e.getMessage());
            e.printStackTrace();
        }
         initView(savedInstanceState);

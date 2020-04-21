@@ -9,6 +9,7 @@ import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -21,23 +22,23 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class HomePresenter extends CommonPresenter<HomeContract.Model,HomeContract.View> implements HomeContract.Presenter {
+public class HomePresenter extends CommonPresenter<HomeContract.View> implements HomeContract.Presenter {
 
     @Inject
-    public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
-        super(model, rootView);
+    public HomePresenter(DataManager dataManager, HomeContract.View rootView) {
+        super(dataManager, rootView);
     }
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void onCreate() {
         //打开 App 时自动加载列表
-//        requestBanner(false);
+        requestBanner(false);
 //        requestTopArticle();
-//        requestArticle(0,false);
+        requestArticle(0,false);
     }
 
     @Override
     public void requestArticle(int page, boolean isSave) {
-       mModel.requestArticle(page,isSave)
+       mModel.getMainArt(page)
                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                .doOnSubscribe(new Consumer<Disposable>() {
@@ -51,18 +52,20 @@ public class HomePresenter extends CommonPresenter<HomeContract.Model,HomeContra
                 .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<MainArticleBean>(App.getmMyAppComponent().rxErrorHandler()) {
                     @Override
                     public void onNext(MainArticleBean dataBeans) {
+                        Logger.i("get main art is "+dataBeans.toString());
+                        mView.hideLoading();
                         mView.setArticle(dataBeans.getData(),isSave);
                     }
 
            @Override
            public void onComplete() {
                super.onComplete();
-            mView.hideLoading();
            }
 
            @Override
            public void onError(Throwable t) {
                super.onError(t);
+               Logger.e(" wan home is error "+t.getMessage());
                mView.showError();
            }
        });
@@ -70,7 +73,7 @@ public class HomePresenter extends CommonPresenter<HomeContract.Model,HomeContra
 
     @Override
     public void requestBanner(boolean isrefresh) {
-        mModel.requestBanner().subscribeOn(Schedulers.io())
+        mModel.getBanner().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<BannerBean>(App.getmMyAppComponent().rxErrorHandler()) {
             @Override

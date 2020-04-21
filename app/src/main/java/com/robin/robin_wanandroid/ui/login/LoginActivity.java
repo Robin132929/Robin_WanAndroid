@@ -16,13 +16,13 @@ import android.widget.Toast;
 import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.app.App;
-import com.robin.robin_wanandroid.base.MyBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.LoginContract;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.LoginPresenter;
 import com.robin.robin_wanandroid.util.Login.LoginHelper;
 import com.robin.robin_wanandroid.util.Login.Online;
 
-public class LoginActivity extends MyBaseActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends RobinBaseActivity<LoginPresenter> implements LoginContract.View {
     TextWatcher afterTextChangedListener = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.mvp.contract.wanandroid;
+package com.robin.robin_wanandroid.mvp.contract.common;
 
 import com.robin.rbase.MVP.MvpBase.IModel;
 import com.robin.rbase.MVP.MvpBase.IPresenter;

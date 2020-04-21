@@ -28,14 +28,14 @@ import com.robin.rbase.CommonBase.Cache.IntelligentCache;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.ShowMoreNavgationAdapter;
-import com.robin.robin_wanandroid.base.MyBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.mvp.contract.ContentContract;
 import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
 import com.robin.robin_wanandroid.mvp.presenter.ContentPresenter;
 
 import java.util.List;
 
-public class ContentActivity extends MyBaseActivity<ContentPresenter> implements ContentContract.View {
+public class ContentActivity extends RobinBaseActivity<ContentPresenter> implements ContentContract.View {
     private WebView webView;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerView;

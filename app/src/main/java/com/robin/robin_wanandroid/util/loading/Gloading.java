@@ -11,6 +11,8 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
+import com.robin.rbase.CommonUtils.Logger.Logger;
+
 /**
  * manage loading status view<br>
  * usage:<br>
@@ -245,6 +247,7 @@ public class Gloading {
                     return;
                 }
                 if (view != mCurStatusView || mWrapper.indexOfChild(view) < 0) {
+
                     if (mCurStatusView != null) {
                         mWrapper.removeView(mCurStatusView);
                     }
@@ -257,8 +260,12 @@ public class Gloading {
                         lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
                         lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
                     }
+
+                    Logger.i("gload is add "+(mCurStatusView==null));
                 } else if (mWrapper.indexOfChild(view) != mWrapper.getChildCount() - 1) {
                     // make sure loading status view at the front
+                    Logger.i("gload is already exist ");
+
                     view.bringToFront();
                 }
                 mCurStatusView = view;

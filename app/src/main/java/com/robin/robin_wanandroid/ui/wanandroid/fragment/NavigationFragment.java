@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.home.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.adapter.wanandroid.NavgationAdapter;
 import com.robin.robin_wanandroid.app.App;
-import com.robin.robin_wanandroid.base.BaseSimpleFragment;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
 import com.robin.robin_wanandroid.entity.NavgationSection;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.NavgationContract;
@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
-public class NavigationFragment extends BaseSimpleFragment<NavgationPresenter> implements NavgationContract.View, ScrollTopListener {
+public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> implements NavgationContract.View, ScrollTopListener {
     @Inject
     List<NavgationSection> data ;
     @BindView(R.id.navgation_rv)
@@ -157,13 +157,13 @@ public class NavigationFragment extends BaseSimpleFragment<NavgationPresenter> i
         super.onDestroy();
         data.clear();
     }
-
-    @Override
-    protected void lazyLoadData() {
-        Logger.i(" lazyLoadData nav: "+this);
-
-        mPresenter.requestNavgationData(false);
-    }
+//
+//    @Override
+//    protected void lazyLoadData() {
+//        Logger.i(" lazyLoadData nav: "+this);
+//
+//        mPresenter.requestNavgationData(false);
+//    }
 
     @Override
     public void scroll2Top() {

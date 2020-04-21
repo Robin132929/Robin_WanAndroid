@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.robin.common_customize_ui.multis_status_view.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gank_android_fragment_msv"
-    style="@style/MultiStatusView">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F8F8F8">
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gank_android_rv"
@@ -15,5 +12,3 @@
             android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-</com.robin.common_customize_ui.multis_status_view.MultiStateView>

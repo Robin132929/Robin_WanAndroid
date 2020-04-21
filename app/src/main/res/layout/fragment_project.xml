@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.robin.common_customize_ui.multis_status_view.MultiStateView
-    android:id="@+id/project_fragment_msv"
-    style="@style/MultiStatusView"
-    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_project"
@@ -76,5 +72,3 @@
         />
 
 </LinearLayout>
-
-</com.robin.common_customize_ui.multis_status_view.MultiStateView>

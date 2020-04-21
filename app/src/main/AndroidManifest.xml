@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.conveniententrance.activity.ConvenientEntranceActivity"></activity>
+        <activity android:name=".ui.common.activty.NavigationActivity"></activity>
+        <activity android:name=".ui.conveniententrance.activity.ConvenientEntranceActivity" />
         <activity android:name=".activity.ui.Main6Activity" />
         <activity android:name=".activity.ui.Main5Activity" />
         <activity android:name=".util.Login.LoginHelper" />
@@ -28,7 +29,7 @@
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.content.ContentActivity" />
         <activity android:name=".activity.Main4Activity" />
-        <activity android:name=".ui.home.activty.MainActivity">
+        <activity android:name=".ui.common.activty.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

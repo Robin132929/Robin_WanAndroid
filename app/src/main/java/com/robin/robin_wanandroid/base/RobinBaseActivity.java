@@ -1,28 +1,20 @@
 package com.robin.robin_wanandroid.base;
 
-import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.WindowManager;
-
-import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpActivity;
 import com.robin.rbase.MVP.MvpBase.BasePresenter;
-import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.util.SettingUtil;
+import com.robin.robin_wanandroid.util.loading.Gloading;
 import com.robin.robin_wanandroid.util.statusbarUtil.StatusBarUtil;
-import com.robin.robin_wanandroid.util.statusbarUtil.SystemBarTintManager;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class MyBaseActivity<P extends BasePresenter> extends BaseMvpActivity<P> {
-    private Unbinder unBinder;
-
+public abstract class RobinBaseActivity<P extends BasePresenter> extends BaseMvpActivity<P> {
+//    private Unbinder unBinder;
+    protected Gloading.Holder mHolder;
     public void initColor(@ColorInt int color){
         StatusBarUtil.setStatusBarColor(this, color);
 
@@ -45,14 +37,41 @@ public abstract class MyBaseActivity<P extends BasePresenter> extends BaseMvpAct
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (unBinder != null && unBinder != Unbinder.EMPTY) {
-            unBinder.unbind();
-            unBinder = null;
+
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().wrap(this).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
         }
     }
 
+    protected void onLoadRetry() {
+        // override this method in subclass to do retry task
+    }
+
+    public void showLoading() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoading();
+    }
+
+    public void showLoadSuccess() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadSuccess();
+    }
+
+    public void showLoadFailed() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadFailed();
+    }
+
+    public void showEmpty() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showEmpty();
+    }
 
 }

@@ -6,6 +6,7 @@ import com.robin.rbase.MVP.utils.RxLifecycleUtils;
 import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.NavgationContract;
 import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -18,21 +19,21 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class NavgationPresenter extends BasePresenter<NavgationContract.Model,NavgationContract.View> implements NavgationContract.Presenter {
+public class NavgationPresenter extends BasePresenter<DataManager,NavgationContract.View> implements NavgationContract.Presenter {
 
     @Inject
-    public NavgationPresenter(NavgationContract.Model model, NavgationContract.View rootView) {
+    public NavgationPresenter(DataManager model, NavgationContract.View rootView) {
         super(model, rootView);
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         //打开 App 时自动加载列表
-//       requestNavgationData();
+//       requestNavgationData(false);
     }
 
     @Override
     public void requestNavgationData(boolean isRefresh) {
-     mModel.requestNavgationData().subscribeOn(Schedulers.io())
+     mModel.getNavgationData().subscribeOn(Schedulers.io())
              .doOnSubscribe(new Consumer<Disposable>() {
                  @Override
                  public void accept(Disposable disposable) throws Exception {

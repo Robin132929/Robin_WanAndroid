@@ -1,12 +1,10 @@
 package com.robin.robin_wanandroid.adapter.wanandroid;
 
-
-
-import com.robin.robin_wanandroid.ui.home.fragment.HomeFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.KnowledgeStructureFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.NavigationFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.ProjectFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.WechatFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidHomeFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.NavigationFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.ProjectFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.WechatFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +31,7 @@ public class myViewPagerAdapter extends FragmentPagerAdapter {
         if (position==0){
            return new NavigationFragment();
         }else if (position==1){
-            return new HomeFragment();
+            return new WanAndroidHomeFragment();
         }else if (position==2){
           return new KnowledgeStructureFragment();
         }else if (position==3){
@@ -41,7 +39,7 @@ public class myViewPagerAdapter extends FragmentPagerAdapter {
         }else if (position==4){
           return new ProjectFragment();
         }
-        return new HomeFragment();
+        return new WanAndroidHomeFragment();
     }
 
     @Override

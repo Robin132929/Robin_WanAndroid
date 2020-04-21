@@ -5,7 +5,7 @@ import com.robin.robin_wanandroid.adapter.wanandroid.NavgationAdapter;
 import com.robin.robin_wanandroid.entity.NavgationSection;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.NavgationContract;
 import com.robin.robin_wanandroid.mvp.model.wanandroid.NavgationModel;
-import com.robin.robin_wanandroid.ui.home.fragment.NavigationFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.NavigationFragment;
 
 import java.util.ArrayList;
 import java.util.List;

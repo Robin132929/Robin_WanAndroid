@@ -1,6 +1,7 @@
 package com.robin.robin_wanandroid.mvp.presenter.wanandroid;
 
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseModel;
 import com.robin.rbase.MVP.MvpBase.BasePresenter;
 import com.robin.rbase.MVP.MvpBase.IModel;
 import com.robin.rbase.MVP.MvpBase.IView;
@@ -8,6 +9,7 @@ import com.robin.rbase.MVP.utils.RxLifecycleUtils;
 import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.CommonContract;
 import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -15,9 +17,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class CommonPresenter<M extends CommonContract.Model, V extends CommonContract.View> extends BasePresenter<M,V> implements CommonContract.Presenter {
-    public CommonPresenter(M model, V view) {
+public class CommonPresenter< V extends CommonContract.View> extends BasePresenter<DataManager,V> implements CommonContract.Presenter {
+    public CommonPresenter(DataManager model, V view) {
         super(model, view);
+    }
+
+    public CommonPresenter(V rootView) {
+        super(rootView);
     }
 
     @Override

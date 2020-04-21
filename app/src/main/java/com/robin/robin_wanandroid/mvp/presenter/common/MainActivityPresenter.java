@@ -1,9 +1,9 @@
-package com.robin.robin_wanandroid.mvp.presenter.wanandroid;
+package com.robin.robin_wanandroid.mvp.presenter.common;
 
 import com.robin.rbase.MVP.MvpBase.BasePresenter;
 import com.robin.rbase.MVP.utils.RxLifecycleUtils;
 import com.robin.robin_wanandroid.app.App;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
+import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
 import com.robin.robin_wanandroid.mvp.model.bean.LogoutResultBean;
 
 import javax.inject.Inject;
@@ -14,10 +14,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class MainPresenter extends BasePresenter<MainContract.Model,MainContract.View>implements MainContract.Presenter {
+public class MainActivityPresenter extends BasePresenter<MainContract.Model, MainContract.View>implements MainContract.Presenter {
 
      @Inject
-    public MainPresenter(MainContract.View view,MainContract.Model model) {
+    public MainActivityPresenter(MainContract.View view, MainContract.Model model) {
         super(model,view);
     }
 

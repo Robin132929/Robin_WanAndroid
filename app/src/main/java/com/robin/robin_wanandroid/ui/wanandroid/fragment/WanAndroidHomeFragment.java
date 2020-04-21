@@ -1,14 +1,6 @@
-package com.robin.robin_wanandroid.ui.home.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import io.reactivex.functions.Consumer;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,16 +12,13 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.robin.common_customize_ui.multis_status_view.MultiStateView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
-import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
-import com.robin.robin_wanandroid.contanst.Constant;
-import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.ui.conveniententrance.activity.ConvenientEntranceActivity;
 import com.robin.robin_wanandroid.adapter.wanandroid.HomeAdapter;
 import com.robin.robin_wanandroid.annotation.CheckLogin;
 import com.robin.robin_wanandroid.app.App;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
+import com.robin.robin_wanandroid.contanst.Constant;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.HomeContract;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
@@ -37,47 +26,57 @@ import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.HomePresenter;
 import com.robin.robin_wanandroid.rx.FootPrintEvent;
 import com.robin.robin_wanandroid.rx.RxBus;
+import com.robin.robin_wanandroid.ui.content.ContentActivity;
+import com.robin.robin_wanandroid.ui.conveniententrance.activity.ConvenientEntranceActivity;
+import com.robin.robin_wanandroid.util.loading.Gloading;
 import com.robin.robin_wanandroid.widget.BannerHolderView;
-import com.robin.robin_wanandroid.widget.CustomPopupWindow;
 
-//TODO 懒加载 已实现2019-10-23
-public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements HomeContract.View, View.OnClickListener, ScrollTopListener {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
+import io.reactivex.functions.Consumer;
+
+//TODO 懒加载
+public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> implements HomeContract.View, View.OnClickListener, ScrollTopListener {
     private static int index = 0;
-    LinearLayoutManager linearLayoutManager;
-    ConvenientBanner<BannerBean.DataBean> convenientBanner;
+    private LinearLayoutManager linearLayoutManager;
+    private ConvenientBanner<BannerBean.DataBean> convenientBanner;
+    private LinearLayout head_LinearLayout;
+    private LinearLayout head_LinearLayout_1;
+    private Button img1;
+    private Button img2;
+    private Button img3;
+    private Button img4;
+    private Button img5;
 
-    LinearLayout head_LinearLayout;
-    LinearLayout head_LinearLayout_1;
-    Button img1;
-    Button img2;
-    Button img3;
-    Button img4;
-    Button img5;
-    private CustomPopupWindow loadingView;
+    @BindView(R.id.home_rv)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     private BaseQuickAdapter mHomeAdapter;
-    private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private MultiStateView mMultiStateView;
 
-    public HomeFragment() {
+    public WanAndroidHomeFragment() {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
+    public static WanAndroidHomeFragment newInstance() {
+        WanAndroidHomeFragment fragment = new WanAndroidHomeFragment();
         return fragment;
     }
 
-
     @Override
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //TODO banner 实现方式
         LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.banner_view, null);
         convenientBanner = linearLayout.findViewById(R.id.convenient_banner);
         linearLayout.removeView(convenientBanner);
 
         mRecyclerView = view.findViewById(R.id.home_rv);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
-        mMultiStateView=view.findViewById(R.id.home_fragment_msv);
         head_LinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
         head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
         img1 = head_LinearLayout.findViewById(R.id.img1);
@@ -106,23 +105,22 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
 
         RxBusSubscriber();
 
-
         mRecyclerView.setAdapter(mHomeAdapter);
 
         mHomeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MainArticleBean.DataBean.DatasBean data = (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(App.getmMyAppComponent().application(),data.getTitle(), data.getLink());
+                ContentActivity.startActivity(App.getmMyAppComponent().application(), data.getTitle(), data.getLink());
             }
         });
         mHomeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Logger.i("iscollect : click ");
-                MainArticleBean.DataBean.DatasBean bean= (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
-                if (view.getId()==R.id.iv_like){
-                        collectAction(position, bean);
+                MainArticleBean.DataBean.DatasBean bean = (MainArticleBean.DataBean.DatasBean) adapter.getItem(position);
+                if (view.getId() == R.id.iv_like) {
+                    collectAction(position, bean);
                 }
             }
         });
@@ -141,11 +139,12 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
             }
         });
     }
+
     @CheckLogin(action = CheckLogin.Action.JUMP)
     private void collectAction(int position, MainArticleBean.DataBean.DatasBean bean) {
         bean.setCollect(!bean.isCollect());
-        mHomeAdapter.setData(position,bean);
-        Logger.i("iscollect "+bean.isCollect());
+        mHomeAdapter.setData(position, bean);
+        Logger.i("iscollect " + bean.isCollect());
         if (bean.isCollect()) {
             mPresenter.addCollectArticle(bean.getId());
         } else {
@@ -160,42 +159,27 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
 
     @Override
     public void showLoading() {
-       Logger.e("multistatusview :"+(mMultiStateView==null));
-        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
+        Logger.e("gload multistatusview :");
+        showLoadingView();
     }
 
     @Override
     public void hideLoading() {
-
-        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
+        showLoadSuccess();
     }
 
     @Override
     public void showError() {
-        if (mMultiStateView.getViewState()==MultiStateView.VIEW_STATE_ERROR){
-            return;
-        }
-        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
-
+        showLoadFailed();
     }
 
-//    @Override
-//    public void scollerToTop() {
-//        if (linearLayoutManager.findFirstVisibleItemPosition() > 20) {
-//            mRecyclerView.scrollToPosition(0);
-//        } else {
-//            mRecyclerView.smoothScrollToPosition(0);
-//        }
-//
-//    }
-
     @Override
-    public void setArticle(MainArticleBean.DataBean dataBean,boolean isRefresh) {
+    public void setArticle(MainArticleBean.DataBean dataBean, boolean isRefresh) {
         index = dataBean.getCurPage();
-        if (isRefresh&&dataBean.isOver()){
+        if (isRefresh && dataBean.isOver()) {
             mHomeAdapter.loadMoreEnd();
         }
-        if (!isRefresh){
+        if (!isRefresh) {
             mHomeAdapter.setNewData(dataBean.getDatas());
         }
         mHomeAdapter.addData(dataBean.getDatas());
@@ -220,7 +204,7 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        ContentActivity.startActivity(App.getmMyAppComponent().application(),banner.getData().get(position).getTitle(), banner.getData().get(position).getUrl());
+                        ContentActivity.startActivity(App.getmMyAppComponent().application(), banner.getData().get(position).getTitle(), banner.getData().get(position).getUrl());
                     }
                 });
         convenientBanner.startTurning();
@@ -230,7 +214,7 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img1:
-                ConvenientEntranceActivity.onStartActivty(Constant.WEN_DA,getContext());
+                ConvenientEntranceActivity.onStartActivty(Constant.WEN_DA, getContext());
                 Toast.makeText(getContext(), "每日问答", Toast.LENGTH_LONG).show();
                 break;
             case R.id.img2:
@@ -257,12 +241,13 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
         mHomeAdapter.setNewData(null);
     }
 
-    @Override
-    public void lazyLoadData() {
-        mPresenter.requestBanner(false);
-        mPresenter.requestTopArticle();
-        mPresenter.requestArticle(0,false);
-    }
+//    @Override
+//    public void lazyLoadData() {
+//        Logger.i("aaaa lazy");
+//        mPresenter.requestBanner(false);
+//        mPresenter.requestTopArticle();
+//        mPresenter.requestArticle(0,false);
+//    }
 
     @Override
     public void scroll2Top() {
@@ -273,15 +258,32 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
         }
     }
 
-    public void RxBusSubscriber(){
+    public void RxBusSubscriber() {
         RxBus.getInstance().toObservable(this, FootPrintEvent.class).subscribe(new Consumer<FootPrintEvent>() {
             @Override
             public void accept(FootPrintEvent footPrintEvent) throws Exception {
                 Logger.i(" rxbus is get the event");
-                mPresenter.addFootPrint(footPrintEvent.title,footPrintEvent.url);
+                mPresenter.addFootPrint(footPrintEvent.title, footPrintEvent.url);
             }
         });
 
     }
 
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onLoadRetry() {
+
+    }
 }

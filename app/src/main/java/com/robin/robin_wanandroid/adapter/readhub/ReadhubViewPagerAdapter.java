@@ -2,8 +2,8 @@ package com.robin.robin_wanandroid.adapter.readhub;
 
 
 
-import com.robin.robin_wanandroid.ui.home.fragment.HomeFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidHomeFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.KnowledgeStructureFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,13 +27,13 @@ public class ReadhubViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position==0){
-           return new HomeFragment();
+           return new WanAndroidHomeFragment();
         }else if (position==1){
-            return new HomeFragment();
+            return new WanAndroidHomeFragment();
         }else if (position==2){
           return new KnowledgeStructureFragment();
         }
-        return new HomeFragment();
+        return new WanAndroidHomeFragment();
     }
 
     @Override

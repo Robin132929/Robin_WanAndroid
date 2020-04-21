@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.robin.common_customize_ui.multis_status_view.MultiStateView
-    android:id="@+id/home_fragment_msv"
-    style="@style/MultiStatusView"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F8F8F8">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8">
 
-</com.robin.common_customize_ui.multis_status_view.MultiStateView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
 

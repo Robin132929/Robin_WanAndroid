@@ -2,7 +2,7 @@ package com.robin.robin_wanandroid.mvp.model.wanandroid;
 
 import com.robin.rbase.MVP.MvpBase.BaseModel;
 import com.robin.rbase.MVP.integration.IRepositoryManager;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
+import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
 import com.robin.robin_wanandroid.mvp.model.bean.LogoutResultBean;
 import com.robin.robin_wanandroid.mvp.model.service.Api;
 

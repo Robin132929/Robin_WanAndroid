@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.robin.common_customize_ui.multis_status_view.MultiStateView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.robin_wanandroid.R;
@@ -30,7 +29,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 public class GankMainFragment extends BaseLazyLoadFragment<GankMainPresenter> implements GankMainContract.View {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private MultiStateView mMultiStateView;
 
     private GankAndroidAdapter mGankAndroidAdapter;
     private List<GankAndroidBean.ResultsBean> data = new ArrayList<>();
@@ -55,7 +53,6 @@ public class GankMainFragment extends BaseLazyLoadFragment<GankMainPresenter> im
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.gank_android_rv);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
-        mMultiStateView = view.findViewById(R.id.gank_android_fragment_msv);
     }
 
     @Override
@@ -130,17 +127,14 @@ public class GankMainFragment extends BaseLazyLoadFragment<GankMainPresenter> im
 
     @Override
     public void showLoading() {
-        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
     }
 
     @Override
     public void hideLoading() {
-        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
     }
 
     @Override
     public void showError() {
-        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
     }
 
     @Override

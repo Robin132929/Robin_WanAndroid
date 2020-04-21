@@ -7,6 +7,7 @@ import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.FootPrintContract;
 import com.robin.robin_wanandroid.mvp.model.bean.FootPrintBean;
 import com.robin.robin_wanandroid.mvp.model.bean.GetCollectBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -16,9 +17,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class FootPrintPresenter extends BasePresenter<FootPrintContract.Model,FootPrintContract.View> implements FootPrintContract.Presenter {
+public class FootPrintPresenter extends BasePresenter<DataManager,FootPrintContract.View> implements FootPrintContract.Presenter {
    @Inject
-    public FootPrintPresenter(FootPrintContract.Model model, FootPrintContract.View rootView) {
+    public FootPrintPresenter(DataManager model, FootPrintContract.View rootView) {
         super(model, rootView);
     }
 
@@ -30,7 +31,7 @@ public class FootPrintPresenter extends BasePresenter<FootPrintContract.Model,Fo
 
     @Override
     public void getFootPrintList(int page, boolean isRefresh) {
-        mModel.getFootPrintList(page, isRefresh)
+        mModel.getFootPrintList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mView))

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.exoplayer2.C;
 import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
@@ -30,13 +31,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class CollectFragment extends BaseFragment implements CollectContract.View, PageType {
+public class CollectFragment extends BaseMvpFragment<CollectPresenter> implements CollectContract.View {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private CollectListAdapter mCollectListAdapter;
     private List<GetCollectBean.DataBean.DatasBean> datas = new ArrayList<>();
     private static int page_index=0;
-    private BasePresenter mPresenter;
 
     public CollectFragment() {
         Logger.i("page type "+this);
@@ -132,20 +132,5 @@ public class CollectFragment extends BaseFragment implements CollectContract.Vie
     @Override
     public void showError() {
 
-    }
-
-    @Override
-    public void initToolbar(ActionBar toolbar) {
-        toolbar.setTitle("收藏");
-    }
-
-    @Override
-    public void setData(Object data) {
-
-    }
-
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-      this.mPresenter=presenter;
     }
 }

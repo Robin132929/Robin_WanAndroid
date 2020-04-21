@@ -2,7 +2,7 @@ package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.KnowledgeStructureContract;
 import com.robin.robin_wanandroid.mvp.model.wanandroid.KnowledgeStructureModel;
-import com.robin.robin_wanandroid.ui.home.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.KnowledgeStructureFragment;
 
 import dagger.Module;
 import dagger.Provides;

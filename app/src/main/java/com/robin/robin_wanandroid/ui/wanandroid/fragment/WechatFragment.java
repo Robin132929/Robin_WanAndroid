@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.home.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
 
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.robin.common_customize_ui.multis_status_view.MultiStateView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
@@ -31,7 +30,7 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
     //ui
     private RecyclerView title_recycleView;
     private RecyclerView content_recycleView;
-    private MultiStateView mMultiStateView;
+//    private MultiStateView mMultiStateView;
 
 
     private int ID;
@@ -58,7 +57,7 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         title_recycleView = view.findViewById(R.id.title_recycle);
         content_recycleView = view.findViewById(R.id.content_recycle);
-        mMultiStateView=view.findViewById(R.id.wechat_fragment_msv);
+//        mMultiStateView=view.findViewById(R.id.wechat_fragment_msv);
     }
 
     @Override
@@ -107,17 +106,14 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
 
     @Override
     public void showLoading() {
-mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
     }
 
     @Override
     public void hideLoading() {
-mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
     }
 
     @Override
     public void showError() {
-mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
     }
 
     @Override

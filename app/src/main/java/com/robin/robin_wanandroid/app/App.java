@@ -16,7 +16,7 @@ import com.robin.robin_wanandroid.di.MyAppComponent;
 import com.robin.robin_wanandroid.util.Login.LoginHelper;
 import com.robin.robin_wanandroid.util.Login.RLogin;
 import com.robin.robin_wanandroid.util.loading.Gloading;
-import com.robin.robin_wanandroid.util.loading.GlobalLoadingStatusView;
+import com.robin.robin_wanandroid.util.loading.GloadingAdapter;
 
 import javax.inject.Inject;
 
@@ -51,16 +51,7 @@ public class App extends BaseApplication implements HasAndroidInjector{
             }
         });
 
-        Gloading.initDefault(new Gloading.Adapter() {
-            @Override
-            public View getView(Gloading.Holder holder, View convertView, int status) {
-
-                  convertView=new GlobalLoadingStatusView(holder.getContext());
-                  ((GlobalLoadingStatusView) convertView).setStatus(status);
-
-                return convertView;
-            }
-        });
+        Gloading.initDefault(new GloadingAdapter());
     }
     @Override
     protected void attachBaseContext(Context base) {

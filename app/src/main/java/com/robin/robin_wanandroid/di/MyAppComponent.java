@@ -13,6 +13,7 @@ import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.di.module.AllActivitysModule;
 import com.robin.robin_wanandroid.di.module.AllFragmentsModule;
 import com.robin.robin_wanandroid.di.module.EntityModule;
+import com.robin.robin_wanandroid.di.module.RobinAppModule;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +36,7 @@ import okhttp3.OkHttpClient;
 @Component(modules = {AndroidInjectionModule.class,
         AndroidSupportInjectionModule.class, AllActivitysModule.class, AppModule.class,
         ClientModule.class, GlobalConfigModule.class
-, AllFragmentsModule.class})
+, AllFragmentsModule.class, RobinAppModule.class})
 public interface MyAppComponent {
 
     /**

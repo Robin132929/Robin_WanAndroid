@@ -4,11 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.base.MyBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.mvp.contract.SearchContract;
 import com.robin.robin_wanandroid.mvp.model.bean.HotSearchBean;
 import com.robin.robin_wanandroid.mvp.presenter.SearchPresenter;
@@ -16,7 +15,7 @@ import com.robin.robin_wanandroid.mvp.presenter.SearchPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends MyBaseActivity<SearchPresenter> implements SearchContract.View {
+public class SearchActivity extends RobinBaseActivity<SearchPresenter> implements SearchContract.View {
     private List<HotSearchBean>  mHotSearchDatas=new ArrayList<>();
     private Toolbar mToolbar;
     private SearchView mSearchView;

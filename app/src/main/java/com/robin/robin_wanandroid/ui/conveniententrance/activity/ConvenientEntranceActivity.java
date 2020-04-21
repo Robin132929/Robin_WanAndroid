@@ -8,18 +8,17 @@ import android.view.MenuItem;
 import com.google.android.material.appbar.AppBarLayout;
 import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.base.MyBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.customize_interface.PageType;
 import com.robin.robin_wanandroid.customize_interface.RealPageFactory;
 import com.robin.robin_wanandroid.mvp.contract.ConvenientContract;
-import com.robin.robin_wanandroid.mvp.presenter.wanandroid.ConvenientPresenter;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 
-public class ConvenientEntranceActivity extends MyBaseActivity<ConvenientPresenter> implements ConvenientContract.View {
+public class ConvenientEntranceActivity extends RobinBaseActivity implements ConvenientContract.View {
     @BindView(R.id.general_toolbar)
     Toolbar generalToolbar;
     @BindView(R.id.app_bar_layout)
@@ -46,7 +45,7 @@ public class ConvenientEntranceActivity extends MyBaseActivity<ConvenientPresent
             ft.replace(R.id.page_content_fl, (BaseFragment)mPage);
             ft.show((BaseFragment)mPage);
             ft.commit();
-            mPage.setPresenter(mPresenter);
+//            mPage.setPresenter(mPresenter);
         }
     }
 

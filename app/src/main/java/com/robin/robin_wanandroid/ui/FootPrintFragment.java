@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
+import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.rbase.MVP.MvpBase.BasePresenter;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.FootListAdapter;
@@ -16,7 +17,7 @@ import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
 import com.robin.robin_wanandroid.mvp.contract.FootPrintContract;
 import com.robin.robin_wanandroid.mvp.model.bean.FootPrintBean;
 import com.robin.robin_wanandroid.mvp.model.bean.GetCollectBean;
-import com.robin.robin_wanandroid.mvp.presenter.wanandroid.ConvenientPresenter;
+import com.robin.robin_wanandroid.mvp.presenter.FootPrintPresenter;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
 
 import java.util.ArrayList;
@@ -30,14 +31,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
-public class FootPrintFragment extends BaseFragment implements ScrollTopListener, FootPrintContract.View, PageType {
+public class FootPrintFragment extends BaseMvpFragment<FootPrintPresenter> implements ScrollTopListener, FootPrintContract.View {
     @BindView(R.id.collect_rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.collect_srl)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private FootListAdapter mFootListAdapter;
     private List<FootPrintBean.DataBean> datas = new ArrayList<>();
-    ConvenientPresenter mPresenter;
 
     public FootPrintFragment() {
 
@@ -75,23 +75,6 @@ public class FootPrintFragment extends BaseFragment implements ScrollTopListener
         }, mRecyclerView);
         mRecyclerView.setAdapter(mFootListAdapter);
 //        mPresenter.
-    }
-
-
-    @Override
-    public void initToolbar(ActionBar toolbar) {
-        toolbar.setTitle("足迹");
-    }
-
-    @Override
-    public void setData(Object data,Object... args) {
-
-    }
-
-
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-     this.mPresenter= (ConvenientPresenter) presenter;
     }
 
     @Override

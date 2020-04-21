@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.home.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
 
@@ -21,7 +21,6 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
-import com.robin.common_customize_ui.multis_status_view.MultiStateView;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
@@ -50,7 +49,7 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
     ToggleButton btn_expand;
     ToggleButton btn_child_expand;
     ConvenientBanner<BannerBean.DataBean> convenientBanner;
-    private MultiStateView mMultiStateView;
+//    private MultiStateView mMultiStateView;
 
 
     CustomPopupWindow mExpandPopupWindow;
@@ -89,7 +88,7 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
         tb_show_child_window = view.findViewById(R.id.tb_show_child_window);
         convenientBanner=view.findViewById(R.id.nav_banner);
 
-        mMultiStateView=view.findViewById(R.id.knowledge_fragment_msv);
+//        mMultiStateView=view.findViewById(R.id.knowledge_fragment_msv);
 
         View  contentView= LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
 
@@ -275,17 +274,17 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
 
     @Override
     public void showLoading() {
- mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
+// mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
     }
 
     @Override
     public void hideLoading() {
-mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
+//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
     }
 
     @Override
     public void showError() {
-mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
+//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
     }
 
     @Override

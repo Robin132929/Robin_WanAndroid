@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.home.activty;
+package com.robin.robin_wanandroid.ui.common.activty;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -23,19 +23,20 @@ import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.rbase.CommonUtils.Utils.ToastUtils;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.contanst.Constant;
+import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
+import com.robin.robin_wanandroid.mvp.presenter.common.MainActivityPresenter;
+import com.robin.robin_wanandroid.ui.CollectFragment;
+import com.robin.robin_wanandroid.ui.FootPrintFragment;
 import com.robin.robin_wanandroid.ui.conveniententrance.activity.ConvenientEntranceActivity;
 import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.HomeFragment;
-import com.robin.robin_wanandroid.ui.home.fragment.MainFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidHomeFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidMainFragment;
 import com.robin.robin_wanandroid.ui.login.LoginActivity;
-import com.robin.robin_wanandroid.activity.SlidingMenuDetailActivity;
 import com.robin.robin_wanandroid.activity.ui.Main6Activity;
 import com.robin.robin_wanandroid.annotation.CheckLogin;
 import com.robin.robin_wanandroid.app.App;
-import com.robin.robin_wanandroid.base.MyBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.MainContract;
-import com.robin.robin_wanandroid.mvp.presenter.wanandroid.MainPresenter;
 import com.robin.robin_wanandroid.ui.BlankFragment;
 import com.robin.robin_wanandroid.rx.ColorEvent;
 import com.robin.robin_wanandroid.rx.LoginEvent;
@@ -63,12 +64,12 @@ import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class MainActivity extends MyBaseActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends RobinBaseActivity<MainActivityPresenter> implements MainContract.View {
     private static final String TAG = "MainActivity";
     @Inject
     protected List<Fragment> fragments;
 //    @Inject
-    MainFragment mMainFragment=new MainFragment();
+    WanAndroidMainFragment mMainFragment=new WanAndroidMainFragment();
     @BindView(R.id.search_btn)
     Button searchBtn;
     @BindView(R.id.toolbar)
@@ -108,13 +109,14 @@ public class MainActivity extends MyBaseActivity<MainPresenter> implements MainC
         if (toolbar != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Main6Activity.class));
-                Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
-            }
-        });
+        Logger.e("view is "+(toolbar==null)+"  "+(searchBtn==null)+"  "+(mainDl==null));
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, Main6Activity.class));
+//                Toast.makeText(MainActivity.this, "实现中。。。", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mainDl, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -278,12 +280,12 @@ public class MainActivity extends MyBaseActivity<MainPresenter> implements MainC
 
     @CheckLogin(action = CheckLogin.Action.JUMP)
     private void goFootPrint() {
-        ConvenientEntranceActivity.onStartActivty(Constant.FOOT_PRINT,MainActivity.this);
+        NavigationActivity.onStartActivty(FootPrintFragment.class,MainActivity.this);
     }
 
     @CheckLogin(action = CheckLogin.Action.JUMP)
     public void routerTocollect() {
-        ConvenientEntranceActivity.onStartActivty(Constant.COLLECT,MainActivity.this);
+        NavigationActivity.onStartActivty(CollectFragment.class,MainActivity.this);
     }
 
     private void logout() {
@@ -296,15 +298,15 @@ public class MainActivity extends MyBaseActivity<MainPresenter> implements MainC
         RxBus.getInstance().toObservable(this, LoginEvent.class).subscribe(new Consumer<LoginEvent>() {
             @Override
             public void accept(LoginEvent loginEvent) throws Exception {
-                MainFragment ma = (MainFragment) fragments.get(0);
+                WanAndroidMainFragment ma = (WanAndroidMainFragment) fragments.get(0);
 
                 if (loginEvent.isLogin) {
                     nav_username.setText(loginEvent.name);
-                    ma.lazyLoadData();
+//                    ma.lazyLoadData();
                     mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
                 } else {
                     nav_username.setText("登录");
-                    ma.lazyLoadData();
+//                    ma.lazyLoadData();
                     mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                 }
             }
@@ -312,13 +314,13 @@ public class MainActivity extends MyBaseActivity<MainPresenter> implements MainC
         RxBus.getInstance().toObservable(this, RefreshHomeEvent.class).subscribe(new Consumer<RefreshHomeEvent>() {
             @Override
             public void accept(RefreshHomeEvent refreshHomeEvent) throws Exception {
-                MainFragment ma = (MainFragment) fragments.get(0);
+                WanAndroidMainFragment ma = (WanAndroidMainFragment) fragments.get(0);
 
                 if (refreshHomeEvent.isRefresh) {
                     Logger.i("refesh home");
                     for (Fragment fragment : ma.getChildFragmentManager().getFragments()) {
-                        if (fragment instanceof HomeFragment) {
-                            ((HomeFragment) fragment).lazyLoadData();
+                        if (fragment instanceof WanAndroidHomeFragment) {
+//                            ((WanAndroidHomeFragment) fragment).lazyLoadData();
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.CollectContract;
 import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.GetCollectBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -15,10 +16,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class CollectPresenter extends CommonPresenter<CollectContract.Model,CollectContract.View> implements CollectContract.Presenter {
+public class CollectPresenter extends CommonPresenter<CollectContract.View> implements CollectContract.Presenter {
    @Inject
-    public CollectPresenter(CollectContract.Model model, CollectContract.View view) {
-        super(model, view);
+    public CollectPresenter(CollectContract.View view) {
+        super( view);
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
@@ -27,7 +28,7 @@ public class CollectPresenter extends CommonPresenter<CollectContract.Model,Coll
     }
     @Override
     public void getCollectList(int page, boolean isRefresh) {
-     mModel.getCollectList(page, isRefresh)
+     mModel.getCollectList(page)
              .subscribeOn(Schedulers.io())
              .observeOn(AndroidSchedulers.mainThread())
              .compose(RxLifecycleUtils.bindToLifecycle(mView))
@@ -42,7 +43,7 @@ public class CollectPresenter extends CommonPresenter<CollectContract.Model,Coll
 
     @Override
     public void removeCollectState(int id, int originId) {
-        mModel.removeCollectState(id, originId)
+        mModel.removeCollectArticle(id, originId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mView))

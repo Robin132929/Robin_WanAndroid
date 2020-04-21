@@ -32,7 +32,7 @@ public interface ConvenientContract extends CommonContract {
 
         void getCollectList(int page,boolean isRefresh);
         void removeCollectState(int id,int originId);
-        void getFootPrintList(int page ,boolean isRefresh);
+        void getFootPrintList();
 
     }
 }

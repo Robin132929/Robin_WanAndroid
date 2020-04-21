@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.base.MyBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.mvp.contract.SettingContract;
 import com.robin.robin_wanandroid.mvp.presenter.SettingPresenter;
 import com.robin.robin_wanandroid.ui.FootPrintFragment;
@@ -22,7 +22,7 @@ import com.robin.robin_wanandroid.ui.CollectFragment;
 import com.robin.robin_wanandroid.rx.ColorEvent;
 import com.robin.robin_wanandroid.rx.RxBus;
 
-public class SlidingMenuDetailActivity extends MyBaseActivity<SettingPresenter> implements SettingContract.View {
+public class SlidingMenuDetailActivity extends RobinBaseActivity<SettingPresenter> implements SettingContract.View {
     public static int TYPE_COLLECT=0x0001;
     private static int TYPE_SETTING=0x0002;
     private static int TYPE_ABOUT=0x0003;

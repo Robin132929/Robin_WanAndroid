@@ -32,12 +32,7 @@ public class CollectModel extends CommonModel implements CollectContract.Model {
     @Override
     public Observable<AddCollectBean> removeCollectState(int id, int originId) {
         return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).removeCollectArticle(id, originId))
-                .flatMap(new Function<Observable<AddCollectBean>, ObservableSource<AddCollectBean>>() {
-                    @Override
-                    public ObservableSource<AddCollectBean> apply(Observable<AddCollectBean> addCollectBeanObservable) throws Exception {
-                        return addCollectBeanObservable;
-                    }
-                });
+                .flatMap((Function<Observable<AddCollectBean>, ObservableSource<AddCollectBean>>) addCollectBeanObservable -> addCollectBeanObservable);
     }
 
 }
