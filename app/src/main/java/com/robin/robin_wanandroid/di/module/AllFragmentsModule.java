@@ -19,7 +19,7 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module
 public abstract class AllFragmentsModule {
-    @ContributesAndroidInjector(modules = HomeFragmentModule.class)
+    @ContributesAndroidInjector(modules = homeFragmentModule.class)
     abstract WanAndroidHomeFragment contributeHometInjector();
 
     @ContributesAndroidInjector(modules = NavgationFragmentModule.class)
@@ -52,8 +52,5 @@ public abstract class AllFragmentsModule {
     @ContributesAndroidInjector(modules =  FootPrintModule.class)
     abstract FootPrintFragment contributeFootPrintInjector();
 
-    @Provides
-    static HomeContract.View provideView(WanAndroidHomeFragment fragment) {
-        return fragment;
-    }
+
 }

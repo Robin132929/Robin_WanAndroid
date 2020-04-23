@@ -13,11 +13,6 @@ import io.reactivex.Observable;
 
 
 public interface KnowledgeStructureContract {
-    interface Model extends IModel {
-        Observable<KnowledgeStructureBean> requestStructureList();
-        Observable<KnowledgeArticleBean> requestStructureItem(int page,int cid);
-        Observable<BannerBean> requestBanner();
-    }
 
     interface View extends IView {
         void setStructureList1st(KnowledgeStructureBean bean);

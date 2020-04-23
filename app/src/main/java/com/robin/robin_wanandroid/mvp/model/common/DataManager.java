@@ -1,6 +1,5 @@
 package com.robin.robin_wanandroid.mvp.model.common;
 
-import com.robin.rbase.MVP.integration.IRepositoryManager;
 import com.robin.rbase.MVP.integration.RepositoryManager;
 import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
@@ -25,6 +24,7 @@ import com.robin.robin_wanandroid.mvp.model.http.HttpHelperImpl;
 import com.robin.robin_wanandroid.mvp.model.http.WanAndroidApi;
 import com.robin.robin_wanandroid.mvp.model.pref.PreHelperImpl;
 import com.robin.robin_wanandroid.mvp.model.pref.PrefHelper;
+import com.robin.robin_wanandroid.mvp.model.service.Api;
 
 import javax.inject.Inject;
 
@@ -32,9 +32,10 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 import io.rx_cache2.DynamicKey;
+import io.rx_cache2.DynamicKeyGroup;
 import io.rx_cache2.EvictDynamicKey;
+import io.rx_cache2.EvictProvider;
 import io.rx_cache2.Reply;
-
 public class DataManager extends com.robin.rbase.MVP.MvpBase.BaseModel implements HttpHelper.WanAndroidApi, DbHelper, PrefHelper {
     private DbHelper mDbHelper;
     private PrefHelper mPreferenceHelper;
@@ -72,37 +73,104 @@ public class DataManager extends com.robin.rbase.MVP.MvpBase.BaseModel implement
 
     @Override
     public Observable<NavgationBean> getNavgationData() {
-        return null;
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(WanAndroidApi.class).getNavgationData())
+                .flatMap((Function<Observable<NavgationBean>, ObservableSource<NavgationBean>>)
+                        navgationBeanObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .getNavgationData(navgationBeanObservable)
+                                .map(Reply::getData));
     }
 
     @Override
     public Observable<KnowledgeStructureBean> getKnowledgeStructure() {
-        return null;
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class).getKnowledgeStructure())
+                .flatMap((Function<Observable<KnowledgeStructureBean>, ObservableSource<KnowledgeStructureBean>>)
+                        knowledgeStructureBeanObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
+                        .getKnowledgeStructure(knowledgeStructureBeanObservable)
+                        .map(Reply::getData));
     }
 
     @Override
     public Observable<KnowledgeArticleBean> getKnowledgeStructureItem(int page, int cid) {
-        return null;
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(Api.class).getKnowledgeStructureItem(page, cid))
+                .flatMap((Function<Observable<KnowledgeArticleBean>, ObservableSource<KnowledgeArticleBean>>)
+                        knowledgeArticleBeanObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
+                        .getKnowledgeStructureItem(knowledgeArticleBeanObservable,
+                                new DynamicKeyGroup(page,cid),new EvictDynamicKey(false))
+                        .map(Reply::getData));
     }
 
     @Override
     public Observable<WechatTitleBean> getWechatTitle() {
-        return null;
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getWechatTitle())
+                .flatMap(new Function<Observable<WechatTitleBean>, ObservableSource<WechatTitleBean>>() {
+                    @Override
+                    public ObservableSource<WechatTitleBean> apply(Observable<WechatTitleBean> wechatTitleBeanObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .getWechatTitle(wechatTitleBeanObservable)
+                                .map(new Function<Reply<WechatTitleBean>, WechatTitleBean>() {
+                                    @Override
+                                    public WechatTitleBean apply(Reply<WechatTitleBean> wechatTitleBeanReply) throws Exception {
+                                        return wechatTitleBeanReply.getData();
+                                    }
+                                });
+                    }
+                });
     }
 
     @Override
     public Observable<WechatContentBean> getWechatContent(int id, int page) {
-        return null;
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getWechatContent(id, page))
+                .flatMap(new Function<Observable<WechatContentBean>, ObservableSource<WechatContentBean>>() {
+                    @Override
+                    public ObservableSource<WechatContentBean> apply(Observable<WechatContentBean> wechatContentBeanObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .getWechatContent(wechatContentBeanObservable,new DynamicKeyGroup(page,id),new EvictDynamicKey(false))
+                                .map(new Function<Reply<WechatContentBean>, WechatContentBean>() {
+                                    @Override
+                                    public WechatContentBean apply(Reply<WechatContentBean> wechatContentBeanReply) throws Exception {
+                                        return wechatContentBeanReply.getData();
+                                    }
+                                });
+                    }
+                });
     }
 
     @Override
     public Observable<ProjectCategoryBean> getProjectCategory() {
-        return null;
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getProjectCategory())
+                .flatMap(new Function<Observable<ProjectCategoryBean>, ObservableSource<ProjectCategoryBean>>() {
+                    @Override
+                    public ObservableSource<ProjectCategoryBean> apply(Observable<ProjectCategoryBean> projectCategoryBeanObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class).getProjectCategory(projectCategoryBeanObservable)
+                                .map(new Function<Reply<ProjectCategoryBean>, ProjectCategoryBean>() {
+                                    @Override
+                                    public ProjectCategoryBean apply(Reply<ProjectCategoryBean> projectCategoryBeanReply) throws Exception {
+                                        return projectCategoryBeanReply.getData();
+                                    }
+                                });
+                    }
+                });
     }
 
     @Override
     public Observable<ProjectItemBean> getProjectItem(int page, int cid) {
-        return null;
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getProjectItem(page, cid))
+                .flatMap(new Function<Observable<ProjectItemBean>, ObservableSource<ProjectItemBean>>() {
+                    @Override
+                    public ObservableSource<ProjectItemBean> apply(Observable<ProjectItemBean> projectItemBeanObservable) throws Exception {
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                                .getProjectItem(projectItemBeanObservable,new DynamicKeyGroup(page,cid),new EvictProvider(false))
+                                .map(new Function<Reply<ProjectItemBean>, ProjectItemBean>() {
+                                    @Override
+                                    public ProjectItemBean apply(Reply<ProjectItemBean> projectItemBeanReply) throws Exception {
+                                        return projectItemBeanReply.getData();
+                                    }
+                                });
+                    }
+                });
     }
 
     @Override

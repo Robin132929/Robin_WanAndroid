@@ -36,7 +36,7 @@ import okhttp3.OkHttpClient;
 @Component(modules = {AndroidInjectionModule.class,
         AndroidSupportInjectionModule.class, AllActivitysModule.class, AppModule.class,
         ClientModule.class, GlobalConfigModule.class
-, AllFragmentsModule.class, RobinAppModule.class})
+, AllFragmentsModule.class})
 public interface MyAppComponent {
 
     /**

@@ -25,21 +25,24 @@ public class NavgationPresenter extends BasePresenter<DataManager,NavgationContr
     public NavgationPresenter(DataManager model, NavgationContract.View rootView) {
         super(model, rootView);
     }
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void onCreate() {
         //打开 App 时自动加载列表
-//       requestNavgationData(false);
+       requestNavgationData(false);
+
+
     }
 
     @Override
     public void requestNavgationData(boolean isRefresh) {
+        mView.showLoading();
      mModel.getNavgationData().subscribeOn(Schedulers.io())
              .doOnSubscribe(new Consumer<Disposable>() {
                  @Override
                  public void accept(Disposable disposable) throws Exception {
-                     if (!isRefresh){
-                         mView.showLoading();
-                     }
+//                     if (!isRefresh){
+//                         mView.showLoading();
+//                     }
                  }
              })
              .doFinally(new Action() {
@@ -59,9 +62,9 @@ public class NavgationPresenter extends BasePresenter<DataManager,NavgationContr
          @Override
          public void onComplete() {
              super.onComplete();
-             if (!isRefresh){
+
                  mView.hideLoading();
-             }
+
          }
 
          @Override

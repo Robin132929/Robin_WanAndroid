@@ -9,10 +9,6 @@ import com.robin.robin_wanandroid.mvp.model.bean.WechatTitleBean;
 import io.reactivex.Observable;
 
 public interface WechatContract {
-    interface Model extends IModel {
-        Observable<WechatTitleBean> requestWechatTitle();
-        Observable<WechatContentBean> requestWechatContent(int id,int page,boolean isRefresh);
-    }
 
     interface View extends IView {
         void setWechatTitle(WechatTitleBean bean);

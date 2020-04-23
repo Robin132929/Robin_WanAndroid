@@ -6,6 +6,7 @@ import com.robin.robin_wanandroid.app.App;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.WechatContract;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatContentBean;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatTitleBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -17,27 +18,29 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class WechatPresenter extends BasePresenter<WechatContract.Model,WechatContract.View> implements WechatContract.Presenter {
+public class WechatPresenter extends BasePresenter<DataManager,WechatContract.View> implements WechatContract.Presenter {
     @Inject
-    public WechatPresenter(WechatContract.Model model, WechatContract.View rootView) {
+    public WechatPresenter(DataManager model, WechatContract.View rootView) {
         super(model, rootView);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void onCreate() {
         //打开 App 时自动加载列表
-//        requestWechatTitle();
-//        requestWechatContent(408,1,false);
+        requestWechatTitle();
+        requestWechatContent(408,1,false);
     }
 
     @Override
     public void requestWechatTitle() {
-        mModel.requestWechatTitle().subscribeOn(Schedulers.io())
+        mView.showLoading();
+        mModel.getWechatTitle().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mView))
                 .subscribe(new ErrorHandleSubscriber<WechatTitleBean>(App.getmMyAppComponent().rxErrorHandler()) {
                     @Override
                     public void onNext(WechatTitleBean wechatTitleBean) {
+                        mView.hideLoading();
                         mView.setWechatTitle(wechatTitleBean);
                     }
                 });
@@ -46,12 +49,13 @@ public class WechatPresenter extends BasePresenter<WechatContract.Model,WechatCo
 
     @Override
     public void requestWechatContent(int id, int page, boolean isRefresh) {
-    mModel.requestWechatContent(id, page, isRefresh).subscribeOn(Schedulers.io())
+        mView.showLoading();
+    mModel.getWechatContent(id, page).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
                 public void accept(Disposable disposable) throws Exception {
-                    mView.showLoading();
+//                    mView.showLoading();
                 }
             })
             .compose(RxLifecycleUtils.bindToLifecycle(mView))

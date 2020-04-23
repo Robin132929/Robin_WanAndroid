@@ -1,16 +1,11 @@
 package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -22,25 +17,32 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
 import com.robin.rbase.CommonUtils.Logger.Logger;
-import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
-import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.adapter.wanandroid.KnowledgeStruteItemAdapter;
 import com.robin.robin_wanandroid.adapter.wanandroid.KnowledgeListAdapter;
 import com.robin.robin_wanandroid.adapter.wanandroid.KnowledgeListChildAdapter;
+import com.robin.robin_wanandroid.adapter.wanandroid.KnowledgeStruteItemAdapter;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.KnowledgeStructureContract;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.KnowledgeArticleBean;
 import com.robin.robin_wanandroid.mvp.model.bean.KnowledgeStructureBean;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.KnowledgeStructurePresenter;
+import com.robin.robin_wanandroid.ui.content.ContentActivity;
+import com.robin.robin_wanandroid.util.loading.Gloading;
 import com.robin.robin_wanandroid.widget.BannerHolderView;
 import com.robin.robin_wanandroid.widget.CustomPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeStructurePresenter> implements KnowledgeStructureContract.View , ScrollTopListener {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+
+public class KnowledgeStructureFragment extends RobinBaseFragment<KnowledgeStructurePresenter> implements KnowledgeStructureContract.View, ScrollTopListener {
     RecyclerView konwledge_rv;
     RecyclerView konwledge_child_rv;
     RecyclerView konwledge_list_rv;
@@ -49,8 +51,6 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
     ToggleButton btn_expand;
     ToggleButton btn_child_expand;
     ConvenientBanner<BannerBean.DataBean> convenientBanner;
-//    private MultiStateView mMultiStateView;
-
 
     CustomPopupWindow mExpandPopupWindow;
     RecyclerView mPopopWindowRecycleView;
@@ -61,11 +61,13 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
     KnowledgeListChildAdapter knowledgeListChildAdapter_expand;
     KnowledgeStruteItemAdapter mKnowledgeStruteItemAdapter;
     KnowledgeListAdapter knowledgeListAdapter;
-    KnowledgeListAdapter   knowledgeListAdapter1;
+    KnowledgeListAdapter knowledgeListAdapter1;
 
     List<KnowledgeStructureBean.DataBean.ChildrenBean> mChildDataList = new ArrayList<>();
     List<KnowledgeArticleBean.DataBean.DatasBean> mArticleDataList = new ArrayList<>();
     List<KnowledgeStructureBean.DataBean> mStructureDataList = new ArrayList<>();
+    @BindView(R.id.ll_konwledge_content)
+    LinearLayout llKonwledgeContent;
 
     private CustomPopupWindow.LayoutGravity layoutGravity;
 
@@ -86,13 +88,11 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
 
         tb_show_window = view.findViewById(R.id.tb_show_window);
         tb_show_child_window = view.findViewById(R.id.tb_show_child_window);
-        convenientBanner=view.findViewById(R.id.nav_banner);
+        convenientBanner = view.findViewById(R.id.nav_banner);
 
-//        mMultiStateView=view.findViewById(R.id.knowledge_fragment_msv);
+        View contentView = LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
 
-        View  contentView= LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
-
-        mExpandPopupWindow=CustomPopupWindow.builder()
+        mExpandPopupWindow = CustomPopupWindow.builder()
                 .contentView(contentView)
                 .isFocus(true)
                 .parentView(konwledge_list_rv)
@@ -101,19 +101,19 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
                 .customListener(new CustomPopupWindow.CustomPopupWindowListener() {
                     @Override
                     public void initPopupView(View contentView) {
-                        btn_expand=contentView.findViewById(R.id.expand_tb);
+                        btn_expand = contentView.findViewById(R.id.expand_tb);
                         btn_expand.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                if (isChecked){
+                                if (isChecked) {
                                     mExpandPopupWindow.dismiss();
                                 }
                             }
                         });
-                     mPopopWindowRecycleView=contentView.findViewById(R.id.data_list);
-                     mPopopWindowRecycleView.setLayoutManager(new FlowLayoutManager());
-                     knowledgeListAdapter1 = new KnowledgeListAdapter(R.layout.top_nav_item, mStructureDataList);
-                     mPopopWindowRecycleView.setAdapter(knowledgeListAdapter1);
+                        mPopopWindowRecycleView = contentView.findViewById(R.id.data_list);
+                        mPopopWindowRecycleView.setLayoutManager(new FlowLayoutManager());
+                        knowledgeListAdapter1 = new KnowledgeListAdapter(R.layout.top_nav_item, mStructureDataList);
+                        mPopopWindowRecycleView.setAdapter(knowledgeListAdapter1);
                     }
                 }).build();
         mExpandPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -124,8 +124,8 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
             }
         });
 
-        View  contentView1= LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
-        mChildExpandPopupWindow=CustomPopupWindow.builder()
+        View contentView1 = LayoutInflater.from(mContext).inflate(R.layout.popup_list, null, false);
+        mChildExpandPopupWindow = CustomPopupWindow.builder()
                 .contentView(contentView1)
                 .isFocus(true)
                 .parentView(konwledge_child_rv)
@@ -134,18 +134,18 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
                 .customListener(new CustomPopupWindow.CustomPopupWindowListener() {
                     @Override
                     public void initPopupView(View contentView) {
-                        btn_child_expand=contentView.findViewById(R.id.expand_tb);
+                        btn_child_expand = contentView.findViewById(R.id.expand_tb);
                         btn_child_expand.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                if (isChecked){
+                                if (isChecked) {
                                     mChildExpandPopupWindow.dismiss();
                                 }
                             }
                         });
-                        mChildPopopWindowRecycleView=contentView.findViewById(R.id.data_list);
+                        mChildPopopWindowRecycleView = contentView.findViewById(R.id.data_list);
                         mChildPopopWindowRecycleView.setLayoutManager(new FlowLayoutManager());
-                        knowledgeListChildAdapter_expand= new KnowledgeListChildAdapter(R.layout.top_nav_item, mChildDataList);
+                        knowledgeListChildAdapter_expand = new KnowledgeListChildAdapter(R.layout.top_nav_item, mChildDataList);
                         mChildPopopWindowRecycleView.setAdapter(knowledgeListChildAdapter_expand);
                     }
                 }).build();
@@ -170,15 +170,15 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
         konwledge_child_rv.setLayoutManager(linearLayoutManager1);
         konwledge_list_rv.setLayoutManager(new LinearLayoutManager(mContext));
 
-        layoutGravity=new CustomPopupWindow.LayoutGravity(CustomPopupWindow.LayoutGravity.ALIGN_LEFT| CustomPopupWindow.LayoutGravity.TO_BOTTOM);
+        layoutGravity = new CustomPopupWindow.LayoutGravity(CustomPopupWindow.LayoutGravity.ALIGN_LEFT | CustomPopupWindow.LayoutGravity.TO_BOTTOM);
 
         tb_show_window.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     knowledgeListAdapter1.notifyDataSetChanged();
-                    mExpandPopupWindow.showBashOfAnchor(konwledge_rv,layoutGravity,0,-konwledge_rv.getHeight());
-                }else {
+                    mExpandPopupWindow.showBashOfAnchor(konwledge_rv, layoutGravity, 0, -konwledge_rv.getHeight());
+                } else {
                     konwledge_rv.setLayoutManager(linearLayoutManager);
 
                 }
@@ -187,10 +187,10 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
         tb_show_child_window.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     knowledgeListChildAdapter_expand.notifyDataSetChanged();
-                    mChildExpandPopupWindow.showBashOfAnchor(konwledge_child_rv,layoutGravity,0,-konwledge_child_rv.getHeight());
-                }else {
+                    mChildExpandPopupWindow.showBashOfAnchor(konwledge_child_rv, layoutGravity, 0, -konwledge_child_rv.getHeight());
+                } else {
                     konwledge_child_rv.setLayoutManager(linearLayoutManager1);
 
                 }
@@ -212,7 +212,7 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
                 knowledgeListAdapter.notifyItemChanged(knowledgeListAdapter.getLast());
                 mChildDataList.clear();
                 mChildDataList.addAll(dataBean.getChildren());
-                mPresenter.requestStructureItem(0,dataBean.getChildren().get(0).getId(),false);
+                mPresenter.requestStructureItem(0, dataBean.getChildren().get(0).getId(), false);
                 knowledgeListChildAdapter.notifyDataSetChanged();
 
             }
@@ -225,7 +225,7 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
                 Toast.makeText(mContext, "click nav1", Toast.LENGTH_LONG).show();
                 mChildDataList.clear();
                 mChildDataList.addAll(dataBean.getChildren());
-                mPresenter.requestStructureItem(0,dataBean.getChildren().get(0).getId(),false);
+                mPresenter.requestStructureItem(0, dataBean.getChildren().get(0).getId(), false);
                 knowledgeListChildAdapter.notifyDataSetChanged();
                 mExpandPopupWindow.dismiss();
 
@@ -237,16 +237,16 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
         knowledgeListChildAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                KnowledgeStructureBean.DataBean.ChildrenBean bean= (KnowledgeStructureBean.DataBean.ChildrenBean) adapter.getItem(position);
-                mPresenter.requestStructureItem(0,bean.getId(),false);
+                KnowledgeStructureBean.DataBean.ChildrenBean bean = (KnowledgeStructureBean.DataBean.ChildrenBean) adapter.getItem(position);
+                mPresenter.requestStructureItem(0, bean.getId(), false);
             }
         });
 
         knowledgeListChildAdapter_expand.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                KnowledgeStructureBean.DataBean.ChildrenBean bean= (KnowledgeStructureBean.DataBean.ChildrenBean) adapter.getItem(position);
-                mPresenter.requestStructureItem(0,bean.getId(),false);
+                KnowledgeStructureBean.DataBean.ChildrenBean bean = (KnowledgeStructureBean.DataBean.ChildrenBean) adapter.getItem(position);
+                mPresenter.requestStructureItem(0, bean.getId(), false);
                 mChildExpandPopupWindow.dismiss();
                 mChildPopopWindowRecycleView.scrollToPosition(position);
                 konwledge_child_rv.scrollToPosition(position);
@@ -256,8 +256,8 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
         mKnowledgeStruteItemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-               KnowledgeArticleBean.DataBean.DatasBean bean= (KnowledgeArticleBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
+                KnowledgeArticleBean.DataBean.DatasBean bean = (KnowledgeArticleBean.DataBean.DatasBean) adapter.getItem(position);
+                ContentActivity.startActivity(mContext, bean.getTitle(), bean.getLink());
             }
         });
         konwledge_rv.setAdapter(knowledgeListAdapter);
@@ -274,22 +274,23 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
 
     @Override
     public void showLoading() {
-// mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
+        Logger.i("konw re show");
+        showLoadingView();
     }
 
     @Override
     public void hideLoading() {
-//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
+        showLoadSuccess();
     }
 
     @Override
     public void showError() {
-//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
+        showLoadFailed();
     }
 
     @Override
     public void setStructureList1st(KnowledgeStructureBean bean) {
-        Logger.i("KnowledgeStructureBean size is :"+bean.getData().size());
+        Logger.i("KnowledgeStructureBean size is :" + bean.getData().size());
         knowledgeListAdapter.setNewData(bean.getData());
         knowledgeListAdapter1.setNewData(bean.getData());
     }
@@ -297,33 +298,33 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
     @Override
     public void setStructureList2st(List<KnowledgeStructureBean.DataBean> dataBean) {
         mChildDataList.addAll(dataBean.get(0).getChildren());
-     knowledgeListChildAdapter.notifyDataSetChanged();
-     knowledgeListChildAdapter_expand.notifyDataSetChanged();
+        knowledgeListChildAdapter.notifyDataSetChanged();
+        knowledgeListChildAdapter_expand.notifyDataSetChanged();
     }
 
     @Override
-    public void setStructureItem(KnowledgeArticleBean bean, int page,boolean refresh) {
-        if ((refresh&&bean.getData().getSize()>0)){
+    public void setStructureItem(KnowledgeArticleBean bean, int page, boolean refresh) {
+        if ((refresh && bean.getData().getSize() > 0)) {
             mKnowledgeStruteItemAdapter.addData(bean.getData().getDatas());
             mKnowledgeStruteItemAdapter.loadMoreComplete();
-        }else {
+        } else {
             mArticleDataList.clear();
             mArticleDataList.addAll(bean.getData().getDatas());
             mKnowledgeStruteItemAdapter.notifyDataSetChanged();
         }
-        if (bean.getData().isOver()){
+        if (bean.getData().isOver()) {
             mKnowledgeStruteItemAdapter.loadMoreEnd();
         }
         mKnowledgeStruteItemAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                if (bean.getData().isOver()){
+                if (bean.getData().isOver()) {
                     mKnowledgeStruteItemAdapter.setEnableLoadMore(false);
-                }else {
+                } else {
                     mPresenter.requestStructureItem(bean.getData().getCurPage(), bean.getData().getDatas().get(0).getChapterId(), true);
                 }
             }
-        },konwledge_list_rv);
+        }, konwledge_list_rv);
 
     }
 
@@ -350,15 +351,40 @@ public class KnowledgeStructureFragment extends BaseLazyLoadFragment<KnowledgeSt
         convenientBanner.startTurning();
     }
 
-    @Override
-    protected void lazyLoadData() {
-        Logger.i(" lazyLoadData:");
-        mPresenter.requestStructureList();
-        mPresenter.requestBanner();
-    }
+//    @Override
+//    protected void lazyLoadData() {
+//        Logger.i(" lazyLoadData:");
+//        mPresenter.requestStructureList();
+//        mPresenter.requestBanner();
+//    }
 
     @Override
     public void scroll2Top() {
         konwledge_rv.scrollToPosition(0);
+    }
+
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().cover(llKonwledgeContent).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onLoadRetry() {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.e("fragment  pause "+this.toString());
+
     }
 }

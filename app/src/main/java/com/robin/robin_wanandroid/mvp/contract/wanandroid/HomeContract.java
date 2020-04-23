@@ -12,14 +12,6 @@ import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
 import io.reactivex.Observable;
 
 public interface HomeContract extends CommonContract {
-    interface Model extends CommonContract.Model {
-        Observable<BannerBean> requestBanner();
-        Observable<MainArticleBean> requestArticle(int page,boolean isSave);
-        Observable<TopArticleBean> requestTopArticle();
-//        Observable<wendaBean>  requestDailyInterviewQuestion(int page, boolean isRefresh);
-
-
-    }
 
     interface View extends CommonContract.View {
         void setArticle(MainArticleBean.DataBean dataBean,boolean isRefresh);

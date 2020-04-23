@@ -1,37 +1,39 @@
 package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
-import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
-import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.WechatContentAdapter;
 import com.robin.robin_wanandroid.adapter.wanandroid.WechatTitleAdapter;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
 import com.robin.robin_wanandroid.customize_interface.ScrollTopListener;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.WechatContract;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatContentBean;
 import com.robin.robin_wanandroid.mvp.model.bean.WechatTitleBean;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.WechatPresenter;
+import com.robin.robin_wanandroid.ui.content.ContentActivity;
+import com.robin.robin_wanandroid.util.loading.Gloading;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implements WechatContract.View , ScrollTopListener {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+
+public class WechatFragment extends RobinBaseFragment<WechatPresenter> implements WechatContract.View, ScrollTopListener {
+    @BindView(R.id.ll_wechat_content)
+    LinearLayout llWechatContent;
     //ui
     private RecyclerView title_recycleView;
     private RecyclerView content_recycleView;
-//    private MultiStateView mMultiStateView;
-
 
     private int ID;
     private int PAGE;
@@ -57,7 +59,6 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         title_recycleView = view.findViewById(R.id.title_recycle);
         content_recycleView = view.findViewById(R.id.content_recycle);
-//        mMultiStateView=view.findViewById(R.id.wechat_fragment_msv);
     }
 
     @Override
@@ -82,21 +83,20 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
         mWechatContentAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mPresenter.requestWechatContent(ID, PAGE+1, true);
+                mPresenter.requestWechatContent(ID, PAGE + 1, true);
             }
         }, content_recycleView);
         mWechatContentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-            WechatContentBean.DataBean.DatasBean bean= (WechatContentBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
+                WechatContentBean.DataBean.DatasBean bean = (WechatContentBean.DataBean.DatasBean) adapter.getItem(position);
+                ContentActivity.startActivity(mContext, bean.getTitle(), bean.getLink());
             }
         });
         content_recycleView.setLayoutManager(linearLayoutManager1);
         content_recycleView.setAdapter(mWechatContentAdapter);
 
     }
-
 
 
     @Override
@@ -106,14 +106,17 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
 
     @Override
     public void showLoading() {
+        showLoadingView();
     }
 
     @Override
     public void hideLoading() {
+        showLoadSuccess();
     }
 
     @Override
     public void showError() {
+        showLoadFailed();
     }
 
     @Override
@@ -126,7 +129,7 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
     public void setWechatContent(WechatContentBean bean, boolean isRefresh) {
         ID = bean.getData().getDatas().get(0).getChapterId();
         PAGE = bean.getData().getCurPage();
-        if (bean.getData().isOver()){
+        if (bean.getData().isOver()) {
             mWechatContentAdapter.loadMoreEnd();
         }
         if (isRefresh) {
@@ -141,14 +144,39 @@ public class WechatFragment extends BaseLazyLoadFragment<WechatPresenter> implem
         Logger.i("siaze : " + bean.getData().getDatas().size());
     }
 
-    @Override
-    protected void lazyLoadData() {
-        mPresenter.requestWechatTitle();
-        mPresenter.requestWechatContent(408,1,false);
-    }
+//    @Override
+//    protected void lazyLoadData() {
+//        mPresenter.requestWechatTitle();
+//        mPresenter.requestWechatContent(408,1,false);
+//    }
 
     @Override
     public void scroll2Top() {
         content_recycleView.scrollToPosition(0);
+    }
+
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().wrap( content_recycleView).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onLoadRetry() {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.e("fragment  pause "+this.toString());
+
     }
 }

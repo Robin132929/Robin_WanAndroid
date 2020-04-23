@@ -1,19 +1,19 @@
 package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.bigkoo.convenientbanner.holder.Holder;
-import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.adapter.ImageNetAdapter;
 import com.robin.robin_wanandroid.adapter.wanandroid.HomeAdapter;
 import com.robin.robin_wanandroid.annotation.CheckLogin;
 import com.robin.robin_wanandroid.app.App;
@@ -29,33 +29,44 @@ import com.robin.robin_wanandroid.rx.RxBus;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.ui.conveniententrance.activity.ConvenientEntranceActivity;
 import com.robin.robin_wanandroid.util.loading.Gloading;
-import com.robin.robin_wanandroid.widget.BannerHolderView;
+import com.youth.banner.Banner;
+import com.youth.banner.indicator.CircleIndicator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
 //TODO 懒加载
 public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> implements HomeContract.View, View.OnClickListener, ScrollTopListener {
     private static int index = 0;
+    @BindView(R.id.banner)
+    Banner banner;
+    @BindView(R.id.section_title_tv)
+    TextView sectionTitleTv;
+    @BindView(R.id.section_refresh_tv)
+    Button sectionRefreshTv;
+    @BindView(R.id.bt_daily)
+    Button btDaily;
+    @BindView(R.id.bt_review)
+    Button btReview;
+    @BindView(R.id.bt_score)
+    Button btScore;
+    @BindView(R.id.bt_more)
+    Button btMore;
     private LinearLayoutManager linearLayoutManager;
     private ConvenientBanner<BannerBean.DataBean> convenientBanner;
     private LinearLayout head_LinearLayout;
     private LinearLayout head_LinearLayout_1;
-    private Button img1;
-    private Button img2;
-    private Button img3;
-    private Button img4;
-    private Button img5;
+
 
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+//    @BindView(R.id.swipe_refresh_layout)
+//    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private BaseQuickAdapter mHomeAdapter;
 
@@ -71,19 +82,15 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
     @Override
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //TODO banner 实现方式
-        LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.banner_view, null);
-        convenientBanner = linearLayout.findViewById(R.id.convenient_banner);
-        linearLayout.removeView(convenientBanner);
-
-        mRecyclerView = view.findViewById(R.id.home_rv);
-        mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
-        head_LinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
-        head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
-        img1 = head_LinearLayout.findViewById(R.id.img1);
-        img2 = head_LinearLayout.findViewById(R.id.img2);
-        img3 = head_LinearLayout.findViewById(R.id.img3);
-        img4 = head_LinearLayout.findViewById(R.id.img4);
-        img5 = head_LinearLayout.findViewById(R.id.img5);
+//        LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.banner_view, null);
+//        convenientBanner = linearLayout.findViewById(R.id.convenient_banner);
+//        linearLayout.removeView(convenientBanner);
+//        head_LinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
+//        head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
+//        img1 = head_LinearLayout.findViewById(R.id.img1);
+//        img2 = head_LinearLayout.findViewById(R.id.img2);
+//        img4 = head_LinearLayout.findViewById(R.id.img4);
+//        img5 = head_LinearLayout.findViewById(R.id.img5);
 
     }
 
@@ -93,15 +100,15 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mHomeAdapter = new HomeAdapter(R.layout.home_recycle_item);
         mHomeAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-        mHomeAdapter.setHeaderView(convenientBanner);
-        mHomeAdapter.setHeaderView(head_LinearLayout, 1);
-        mHomeAdapter.setHeaderView(head_LinearLayout_1, 2);
+//        mHomeAdapter.setHeaderView(convenientBanner);
+//        mHomeAdapter.setHeaderView(head_LinearLayout, 1);
+//        mHomeAdapter.setHeaderView(head_LinearLayout_1, 2);
 
-        img1.setOnClickListener(this);
-        img2.setOnClickListener(this);
-        img3.setOnClickListener(this);
-        img4.setOnClickListener(this);
-        img5.setOnClickListener(this);
+        btDaily.setOnClickListener(this);
+        btReview.setOnClickListener(this);
+//        img3.setOnClickListener(this);
+        btScore.setOnClickListener(this);
+        btMore.setOnClickListener(this);
 
         RxBusSubscriber();
 
@@ -130,14 +137,17 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
                 mPresenter.requestArticle(index++, true);
             }
         }, mRecyclerView);
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.requestArticle(0, false);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
+//
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                mPresenter.requestArticle(0, false);
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+        mPresenter.requestBanner(false);
+//        requestTopArticle();
+        mPresenter.requestArticle(0, false);
     }
 
     @CheckLogin(action = CheckLogin.Action.JUMP)
@@ -187,27 +197,30 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
     }
 
     @Override
-    public void setBanner(BannerBean banner, boolean isrefresh) {
-
-        convenientBanner.setPages(new CBViewHolderCreator() {
-            @Override
-            public Holder createHolder(View itemView) {
-                return new BannerHolderView(itemView, getContext());
-            }
-
-            @Override
-            public int getLayoutId() {
-                return R.layout.item_banner_view;
-            }
-        }, banner.getData()).setPageIndicator(new int[]{R.drawable.ic_circle_normal, R.drawable.ic_circle_press})
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
-                .setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        ContentActivity.startActivity(App.getmMyAppComponent().application(), banner.getData().get(position).getTitle(), banner.getData().get(position).getUrl());
-                    }
-                });
-        convenientBanner.startTurning();
+    public void setBanner(BannerBean bannerbean, boolean isrefresh) {
+        Logger.i( "setBanner: "+bannerbean.getData().get(0).getImagePath());
+        ImageNetAdapter adapter = new ImageNetAdapter(bannerbean.getData());
+        banner.setAdapter(adapter);
+        banner.setIndicator(new CircleIndicator(mContext));
+//        convenientBanner.setPages(new CBViewHolderCreator() {
+//            @Override
+//            public Holder createHolder(View itemView) {
+//                return new BannerHolderView(itemView, getContext());
+//            }
+//
+//            @Override
+//            public int getLayoutId() {
+//                return R.layout.item_banner_view;
+//            }
+//        }, banner.getData()).setPageIndicator(new int[]{R.drawable.ic_circle_normal, R.drawable.ic_circle_press})
+//                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+//                .setOnItemClickListener(new OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(int position) {
+//                        ContentActivity.startActivity(App.getmMyAppComponent().application(), banner.getData().get(position).getTitle(), banner.getData().get(position).getUrl());
+//                    }
+//                });
+//        convenientBanner.startTurning();
     }
 
     @Override
@@ -220,9 +233,9 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
             case R.id.img2:
                 Toast.makeText(getContext(), "面试集锦", Toast.LENGTH_LONG).show();
                 break;
-            case R.id.img3:
-                Toast.makeText(getContext(), "常用网址", Toast.LENGTH_LONG).show();
-                break;
+//            case R.id.img3:
+//                Toast.makeText(getContext(), "常用网址", Toast.LENGTH_LONG).show();
+//                break;
             case R.id.img4:
                 Toast.makeText(getContext(), "积分墙", Toast.LENGTH_LONG).show();
                 break;
@@ -238,7 +251,7 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mHomeAdapter.setNewData(null);
+//        mHomeAdapter.setNewData(null);
     }
 
 //    @Override
@@ -284,6 +297,13 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
 
     @Override
     protected void onLoadRetry() {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.e("fragment  pause " + this.toString());
 
     }
 }

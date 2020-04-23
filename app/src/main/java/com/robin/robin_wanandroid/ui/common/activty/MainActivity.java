@@ -74,10 +74,10 @@ public class MainActivity extends RobinBaseActivity<MainActivityPresenter> imple
     Button searchBtn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.app_bar_layout)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.fl_content_container)
-    FrameLayout flContentContainer;
+//    @BindView(R.id.app_bar_layout)
+//    AppBarLayout appBarLayout;
+//    @BindView(R.id.fl_content_container)
+//    FrameLayout flContentContainer;
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView mBottomNavigationView;
     @BindView(R.id.float_action_btn)
@@ -378,4 +378,9 @@ public class MainActivity extends RobinBaseActivity<MainActivityPresenter> imple
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Logger.e("activity pause");
+    }
 }

@@ -31,9 +31,9 @@ public class HomePresenter extends CommonPresenter<HomeContract.View> implements
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void onCreate() {
         //打开 App 时自动加载列表
-        requestBanner(false);
-//        requestTopArticle();
-        requestArticle(0,false);
+//        requestBanner(false);
+////        requestTopArticle();
+//        requestArticle(0,false);
     }
 
     @Override

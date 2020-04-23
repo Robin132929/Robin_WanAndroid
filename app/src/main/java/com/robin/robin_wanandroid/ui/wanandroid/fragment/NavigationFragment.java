@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.adapter.wanandroid.NavgationAdapter;
 import com.robin.robin_wanandroid.app.App;
@@ -30,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
-public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> implements NavgationContract.View, ScrollTopListener {
+public class NavigationFragment extends RobinBaseFragment<NavgationPresenter> implements NavgationContract.View, ScrollTopListener {
     @Inject
     List<NavgationSection> data ;
     @BindView(R.id.navgation_rv)
@@ -39,7 +40,6 @@ public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> impl
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Inject
     NavgationAdapter navgationAdapter;
-    Gloading.Holder holder;
     private static int StartConut=0;
 
     public NavigationFragment() {
@@ -50,7 +50,6 @@ public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> impl
 
     @Override
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        holder = Gloading.getDefault().wrap(mRecyclerView);
     }
 
     @Override
@@ -58,7 +57,6 @@ public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> impl
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
         gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-
 //        navgationAdapter = new NavgationAdapter(R.layout.item_section_content, R.layout.navgation_section_head, data);
         navgationAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -100,22 +98,17 @@ public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> impl
 
     @Override
     public void showLoading() {
-//    loadingView.show();
-        holder.showLoading();
+       showLoadingView();
     }
 
     @Override
     public void hideLoading() {
-        holder.showLoadSuccess();
-
-//loadingView.dismiss();
-
+        showLoadSuccess();
     }
 
     @Override
     public void showError() {
-//loadingView.setContentView(LayoutInflater.from(mContext).inflate(R.layout.test_progress, null, false));
-        holder.showLoadFailed();
+showLoadFailed();
     }
 
     @Override
@@ -168,5 +161,30 @@ public class NavigationFragment extends BaseMvpFragment<NavgationPresenter> impl
     @Override
     public void scroll2Top() {
         mRecyclerView.scrollToPosition(0);
+    }
+
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+ if (mHolder==null){
+     //bind status view to activity root view by default
+     mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(new Runnable() {
+         @Override
+         public void run() {
+             onLoadRetry();
+         }
+     });
+ }
+    }
+
+    @Override
+    protected void onLoadRetry() {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.e("fragment  pause "+this.toString());
+
     }
 }

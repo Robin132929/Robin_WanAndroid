@@ -7,6 +7,7 @@ import com.robin.robin_wanandroid.mvp.contract.wanandroid.ProjectContract;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectCategoryBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectItemBean;
+import com.robin.robin_wanandroid.mvp.model.common.DataManager;
 
 import javax.inject.Inject;
 
@@ -18,22 +19,23 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
-public class ProjectPresenter extends BasePresenter<ProjectContract.Model,ProjectContract.View> implements ProjectContract.Presenter {
+public class ProjectPresenter extends BasePresenter<DataManager,ProjectContract.View> implements ProjectContract.Presenter {
     @Inject
-    public ProjectPresenter(ProjectContract.Model model, ProjectContract.View rootView) {
+    public ProjectPresenter(DataManager model, ProjectContract.View rootView) {
         super(model, rootView);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void onCreate() {
         //打开 App 时自动加载列表
-//        getProjectCategory();
-//        getProjectitem(1,294,false);
-//        getBanner();
+        getProjectCategory();
+        getProjectitem(1,294,false);
+        getBanner();
     }
 
     @Override
     public void getProjectCategory() {
+        mView.showLoading();
      mModel.getProjectCategory().subscribeOn(Schedulers.io())
              .observeOn(AndroidSchedulers.mainThread())
              .compose(RxLifecycleUtils.bindToLifecycle(mView))
@@ -47,7 +49,7 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.Model,Projec
 
     @Override
     public void getProjectitem(int page, int cid, boolean isRefresh) {
-     mModel.getProjectitem(page, cid, isRefresh).subscribeOn(Schedulers.io())
+     mModel.getProjectItem(page, cid).subscribeOn(Schedulers.io())
              .observeOn(AndroidSchedulers.mainThread())
              .compose(RxLifecycleUtils.bindToLifecycle(mView))
              .doOnSubscribe(new Consumer<Disposable>() {

@@ -9,9 +9,6 @@ import com.robin.robin_wanandroid.mvp.model.bean.NavgationBean;
 import io.reactivex.Observable;
 
 public interface NavgationContract {
-    interface Model extends IModel {
-        Observable<NavgationBean> requestNavgationData();
-    }
 
     interface View extends IView {
         void setNavgationData(NavgationBean navgationData);

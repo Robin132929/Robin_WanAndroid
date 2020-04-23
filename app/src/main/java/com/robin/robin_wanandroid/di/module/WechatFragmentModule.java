@@ -1,7 +1,6 @@
 package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.WechatContract;
-import com.robin.robin_wanandroid.mvp.model.wanandroid.WechatModel;
 import com.robin.robin_wanandroid.ui.wanandroid.fragment.WechatFragment;
 
 import dagger.Module;
@@ -14,8 +13,8 @@ abstract class WechatFragmentModule {
         return fragment;
     }
 
-    @Provides
-    static  WechatContract.Model provideModel(WechatModel Model) {
-        return Model;
-    }
+//    @Provides
+//    static  WechatContract.Model provideModel(WechatModel Model) {
+//        return Model;
+//    }
 }

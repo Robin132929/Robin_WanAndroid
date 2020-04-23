@@ -3,7 +3,10 @@ package com.robin.robin_wanandroid;
 import org.junit.Test;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static android.util.Log.println;
 import static org.junit.Assert.*;
@@ -192,5 +195,60 @@ root.right=null;
         }
 
             return ldel&&rdel;
+    }
+
+    public boolean checkStraightLine(int[][] coordinates) {
+        DecimalFormat df=new DecimalFormat("0.00");
+
+       df.format( (double) (coordinates[0][1]-coordinates[1][1])/(coordinates[0][0]-coordinates[1][0]));
+      double l=  (coordinates[0][1]-coordinates[1][1])/(coordinates[0][0]-coordinates[1][0]);
+        for (int i = 0; i <coordinates.length ; i++) {
+            double n= (coordinates[0][1]-coordinates[i][1])/(coordinates[0][0]-coordinates[i][0]);
+         if (n!=l){
+             return false;
+         }
+        }
+        return true;
+    }
+
+    public List<String> generateParenthesis(int n) {
+      List<String> result=new ArrayList<>();
+      String s="";
+      dfs(result,0,0,s,2*n);
+      return result;
+
+    }
+    public void dfs(List<String> list,int left,int right,String s,int total){
+        if (s.length()==total){
+            list.add(s);
+            return;
+        }
+        if (2*left+1<=total){
+            dfs(list,left+1,right,s+"(",total);
+        }
+        if (right+1<=left){
+            dfs(list,left,right+1,s+")",total);
+
+        }
+
+        return;
+    }
+    public boolean judgeCircle(String moves) {
+      int left=0,up=0;
+        for (char move : moves.toCharArray()) {
+            if (move=='R'){
+                left--;
+            }
+            if (move=='L'){
+                left++;
+            }
+            if (move=='U'){
+                up++;
+            }
+            if (move=='D'){
+                up--;
+            }
+        }
+        return left==0&&up==0;
     }
 }

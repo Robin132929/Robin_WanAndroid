@@ -11,11 +11,6 @@ import io.reactivex.Observable;
 
 
 public interface ProjectContract {
-    interface Model extends IModel {
-        Observable<ProjectCategoryBean> getProjectCategory();
-        Observable<ProjectItemBean> getProjectitem(int page,int cid,boolean isRefresh);
-        Observable<BannerBean> getBanner();
-    }
 
     interface View extends IView {
         void setProjectCategory(ProjectCategoryBean bean);

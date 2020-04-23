@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.ProjectCategoryAdapter;
@@ -27,6 +28,7 @@ import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectCategoryBean;
 import com.robin.robin_wanandroid.mvp.model.bean.ProjectItemBean;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.ProjectPresenter;
+import com.robin.robin_wanandroid.util.loading.Gloading;
 import com.robin.robin_wanandroid.widget.BannerHolderView;
 import com.robin.robin_wanandroid.widget.CustomPopupWindow;
 
@@ -39,7 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-public class ProjectFragment extends BaseLazyLoadFragment<ProjectPresenter> implements ProjectContract.View, ScrollTopListener {
+public class ProjectFragment extends RobinBaseFragment<ProjectPresenter> implements ProjectContract.View, ScrollTopListener {
 
     private RecyclerView mCategory_RecyclerView;
     private RecyclerView mItem_RecyclerView;
@@ -47,7 +49,6 @@ public class ProjectFragment extends BaseLazyLoadFragment<ProjectPresenter> impl
     private ToggleButton mToggleButton;
     private ConvenientBanner<BannerBean.DataBean> mConvenientBanner;
     private CustomPopupWindow mExpandPopupWindow;
-//    private MultiStateView mMultiStateView;
 
     private List<ProjectCategoryBean.DataBean> mCategory_list;
     private List<ProjectItemBean.DataBean.DatasBean> mItem_list;
@@ -108,7 +109,6 @@ public class ProjectFragment extends BaseLazyLoadFragment<ProjectPresenter> impl
             }
         });
 
-//        mMultiStateView=view.findViewById(R.id.project_fragment_msv);
     }
 
     @Override
@@ -213,28 +213,49 @@ public class ProjectFragment extends BaseLazyLoadFragment<ProjectPresenter> impl
 
     @Override
     public void showLoading() {
-//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
-    }
+showLoadingView();    }
 
     @Override
     public void hideLoading() {
-//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
-    }
+showLoadSuccess();    }
 
     @Override
     public void showError() {
-//mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR );
-    }
+showLoadFailed();    }
 
-    @Override
-    protected void lazyLoadData() {
-        mPresenter.getProjectCategory();
-        mPresenter.getProjectitem(1,294,false);
-        mPresenter.getBanner();
-    }
+//    @Override
+//    protected void lazyLoadData() {
+//        mPresenter.getProjectCategory();
+//        mPresenter.getProjectitem(1,294,false);
+//        mPresenter.getBanner();
+//    }
 
     @Override
     public void scroll2Top() {
         mItem_RecyclerView.scrollToPosition(0);
+    }
+
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder==null){
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().cover(ll_project).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onLoadRetry() {
+
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.e("fragment  pause "+this.toString());
+
     }
 }

@@ -42,7 +42,6 @@ public class WanAndroidMainFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(4);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.selectTab(mTabLayout.getTabAt(1));
-
     }
 
     @Override
@@ -67,14 +66,21 @@ public class WanAndroidMainFragment extends BaseFragment {
 //        Logger.i("lazy load");
 //    }
 
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden) {
+//            getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
+//            if (getActivity().findViewById(R.id.top_layout) != null) {
+//                getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
+//            }
+//        }
+//    }
+
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
-            if (getActivity().findViewById(R.id.top_layout) != null) {
-                getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
-            }
-        }
+    public void onPause() {
+        super.onPause();
+        Logger.e("fragment  pause "+this.toString());
+
     }
 }

@@ -1,7 +1,6 @@
 package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.ProjectContract;
-import com.robin.robin_wanandroid.mvp.model.wanandroid.ProjectModel;
 import com.robin.robin_wanandroid.ui.wanandroid.fragment.ProjectFragment;
 
 import dagger.Module;
@@ -14,8 +13,8 @@ abstract class ProjectFragmentModule {
         return fragment;
     }
 
-    @Provides
-    static  ProjectContract.Model provideModel(ProjectModel Model) {
-        return Model;
-    }
+//    @Provides
+//    static  ProjectContract.Model provideModel(ProjectModel Model) {
+//        return Model;
+//    }
 }

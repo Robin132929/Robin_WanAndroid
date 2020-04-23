@@ -1,79 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/section_head_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/viewBackground"
     >
 
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <Button
         android:id="@+id/img1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:layout_weight="1"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:background="@null"
-        android:scaleType="fitXY"
         android:drawableTop="@drawable/luobo"
-        android:text="每日问答" />
+        android:scaleType="fitXY"
+        android:text="每日问答"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
 
     <Button
         android:id="@+id/img2"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-
-        android:background="@null"
-        android:scaleType="fitXY"
-        android:drawableTop="@drawable/tiantong"
+        android:layout_marginTop="24dp"
         android:layout_toRightOf="@id/img1"
-        android:text="面试集锦"
-        />
-
-    <Button
-        android:id="@+id/img3"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-
         android:background="@null"
-        android:drawableTop="@drawable/yinliao"
-        android:layout_toRightOf="@id/img2"
-        android:text="收藏"
-        />
+        android:drawableTop="@drawable/tiantong"
+        android:scaleType="fitXY"
+        android:text="面试集锦"
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        tools:layout_editor_absoluteX="118dp" />
 
     <Button
         android:id="@+id/img4"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@id/img2"
+        android:layout_weight="1"
         android:background="@null"
         android:drawableTop="@drawable/yumi"
-        android:layout_toRightOf="@id/img3"
         android:text="积分墙"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        tools:layout_editor_absoluteX="206dp" />
+
     <Button
-    android:id="@+id/img5"
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-
+        android:id="@+id/img5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="28dp"
+        android:layout_weight="1"
         android:background="@null"
-    android:drawableTop="@drawable/xuegao"
+        android:drawableTop="@drawable/xuegao"
         android:text="更多"
-    />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/section_title_tv"
+        android:layout_width="309dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="128dp"
+        android:layout_weight="5"
+        android:gravity="bottom"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_6"
+        android:text="最新文章"
+        android:textSize="@dimen/dp_16"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
+
+    <Button
+        android:id="@+id/section_refresh_tv"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:drawableRight="@drawable/refresh"
+        android:gravity="center_vertical"
+        android:text="加载"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 

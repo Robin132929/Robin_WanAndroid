@@ -97,6 +97,8 @@ dependencies {
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
 
+
+    implementation 'com.youth.banner:banner:2.0.8'
 }
 
 
