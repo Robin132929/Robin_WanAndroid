@@ -5,7 +5,11 @@ import org.junit.Test;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import static android.util.Log.println;
@@ -250,5 +254,142 @@ root.right=null;
             }
         }
         return left==0&&up==0;
+    }
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        LinkedList<TreeNode> nodes=new LinkedList<>();
+        List<List<Integer>> list=new ArrayList<>();
+        LinkedList<Integer> ceng=new LinkedList<>();
+        TreeNode currentNode=null;
+        nodes.add(root);
+        nodes.add(null);
+        boolean left=true;
+        if (nodes.size()>0){
+            currentNode=nodes.pollFirst();
+            if (currentNode!=null){
+                if (left){
+                    System.out.println("ceng1 :"+currentNode.val);
+
+                    ceng.addLast(currentNode.val);
+                }else {
+                    System.out.println("ceng2 :"+currentNode.val);
+
+                    ceng.addFirst(currentNode.val);
+                }
+                if (currentNode.left!=null){
+                    nodes.add(currentNode.left);
+                }
+                if (currentNode.right!=null){
+                    nodes.add(currentNode.right);
+                }
+            }else {
+                for (Integer integer : ceng) {
+                    System.out.println("ceng :"+integer);
+
+                }
+                list.add(ceng);
+                ceng= new LinkedList<>();
+                if (nodes.size()>0){
+                    nodes.add(null);
+
+                }
+                left=!left;
+            }
+
+        }
+
+  return list;
+    }
+
+    public char nextGreatestLetter(char[] letters, char target) {
+        for (char letter : letters) {
+            if (target-letter<0){
+                return letter;
+            }
+        }
+        return letters[0];
+    }
+    public int lengthOfLastWord(String s) {
+   if (s.length()==0){
+       return 0;
+   }
+   if (s.lastIndexOf(" ")==s.length()-1){
+       return 0;
+   }
+       String[] word=  s.split(" ");
+   if (word.length==0){
+       return 0;
+   }else {
+       return word[word.length-1].length();
+   }
+
+    }
+
+    public int[] kWeakestRows(int[][] mat, int k) {
+     int row=mat.length;
+     int[] result=new int[row];
+     int []  re=new int[k];
+        int total=0;
+        for (int i = 0; i < row; i++) {
+            for (int j : mat[i]) {
+                total=total+j;
+            }
+
+            result[i]=total*1000+i;
+            total=0;
+        }
+      Arrays.sort(result);
+        for (int i = 0; i < re.length; i++) {
+            re[i]=result[i]%1000;
+        }
+        return re;
+    }
+
+    public TreeNode mirrorTree(TreeNode root) {
+       if (root==null){
+           return null;
+       }
+       if (root.right==null&&root.left==null) {
+           return root;
+       }
+       TreeNode temp=null;
+           temp=root.left;
+           root.left=root.right;
+           root.right=temp;
+
+
+       if (root.left!=null){
+           mirrorTree(root.left);
+       }
+       if (root.right!=null){
+           mirrorTree(root.right);
+       }
+
+       return root;
+    }
+  List<Integer> list=new ArrayList<>();
+    public TreeNode balanceBST(TreeNode root) {
+       mid(root);
+       return buildBST(list,0,list.size()-1);
+    }
+
+    public TreeNode buildBST(List<Integer> list,int start,int end) {
+        if (start>end){
+            return null;
+        }
+        int mid =start+((start+end)>>1);
+        TreeNode root =new TreeNode(list.get(mid));
+       root.left= buildBST(list,0,mid-1);
+        root.right=buildBST(list, mid+1, end);
+
+        return root;
+    }
+
+    public void mid(TreeNode root){
+        if (root!=null){
+            mid(root.left) ;
+            list.add(root.val);
+            mid(root.right);
+        }
     }
 }

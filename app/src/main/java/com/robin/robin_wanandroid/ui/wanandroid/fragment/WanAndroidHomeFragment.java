@@ -40,33 +40,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 //TODO 懒加载
 public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> implements HomeContract.View, View.OnClickListener, ScrollTopListener {
     private static int index = 0;
-    @BindView(R.id.banner)
-    Banner banner;
-    @BindView(R.id.section_title_tv)
-    TextView sectionTitleTv;
-    @BindView(R.id.section_refresh_tv)
-    Button sectionRefreshTv;
-    @BindView(R.id.bt_daily)
-    Button btDaily;
-    @BindView(R.id.bt_review)
-    Button btReview;
-    @BindView(R.id.bt_score)
-    Button btScore;
-    @BindView(R.id.bt_more)
-    Button btMore;
     private LinearLayoutManager linearLayoutManager;
     private ConvenientBanner<BannerBean.DataBean> convenientBanner;
     private LinearLayout head_LinearLayout;
     private LinearLayout head_LinearLayout_1;
-
-
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
-//    @BindView(R.id.swipe_refresh_layout)
-//    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private BaseQuickAdapter mHomeAdapter;
 
@@ -81,16 +66,20 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
 
     @Override
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //TODO banner 实现方式
-//        LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.banner_view, null);
+        mHomeAdapter = new HomeAdapter(R.layout.home_recycle_item);
+
+        LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.banner_view, null);
 //        convenientBanner = linearLayout.findViewById(R.id.convenient_banner);
 //        linearLayout.removeView(convenientBanner);
 //        head_LinearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.home_section_head, null);
-//        head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
-//        img1 = head_LinearLayout.findViewById(R.id.img1);
-//        img2 = head_LinearLayout.findViewById(R.id.img2);
-//        img4 = head_LinearLayout.findViewById(R.id.img4);
-//        img5 = head_LinearLayout.findViewById(R.id.img5);
+        head_LinearLayout_1 = (LinearLayout) getLayoutInflater().inflate(R.layout.home_head_2_layout, null);
+        TextView tv=head_LinearLayout_1.findViewById(R.id.section_title_tv);
+        Button bt=head_LinearLayout_1.findViewById(R.id.section_refresh_tv);
+        head_LinearLayout_1.removeView(tv);
+        head_LinearLayout_1.removeView(bt);
+        mHomeAdapter.addHeaderView(tv,0,LinearLayout.HORIZONTAL);
+        mHomeAdapter.addHeaderView(bt,1,LinearLayout.HORIZONTAL);
+        mHomeAdapter.getHeaderLayout().setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
     }
 
@@ -98,17 +87,11 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
     public void initData(@Nullable Bundle savedInstanceState) {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mHomeAdapter = new HomeAdapter(R.layout.home_recycle_item);
         mHomeAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
 //        mHomeAdapter.setHeaderView(convenientBanner);
 //        mHomeAdapter.setHeaderView(head_LinearLayout, 1);
 //        mHomeAdapter.setHeaderView(head_LinearLayout_1, 2);
 
-        btDaily.setOnClickListener(this);
-        btReview.setOnClickListener(this);
-//        img3.setOnClickListener(this);
-        btScore.setOnClickListener(this);
-        btMore.setOnClickListener(this);
 
         RxBusSubscriber();
 
@@ -200,8 +183,8 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
     public void setBanner(BannerBean bannerbean, boolean isrefresh) {
         Logger.i( "setBanner: "+bannerbean.getData().get(0).getImagePath());
         ImageNetAdapter adapter = new ImageNetAdapter(bannerbean.getData());
-        banner.setAdapter(adapter);
-        banner.setIndicator(new CircleIndicator(mContext));
+//        banner.setAdapter(adapter);
+//        banner.setIndicator(new CircleIndicator(mContext));
 //        convenientBanner.setPages(new CBViewHolderCreator() {
 //            @Override
 //            public Holder createHolder(View itemView) {
@@ -286,7 +269,7 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter> imp
     protected void initLoadingStatusViewIfNeed() {
         if (mHolder == null) {
             //bind status view to activity root view by default
-            mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(new Runnable() {
+            mHolder = Gloading.getDefault().cover(mRecyclerView).withRetry(new Runnable() {
                 @Override
                 public void run() {
                     onLoadRetry();

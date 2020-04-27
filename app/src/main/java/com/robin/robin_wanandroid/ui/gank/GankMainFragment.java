@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
+import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.gank.GankAndroidAdapter;
 import com.robin.robin_wanandroid.mvp.contract.gank.GankMainContract;
@@ -26,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class GankMainFragment extends BaseLazyLoadFragment<GankMainPresenter> implements GankMainContract.View {
+public class GankMainFragment extends BaseMvpFragment<GankMainPresenter> implements GankMainContract.View {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -37,17 +38,17 @@ public class GankMainFragment extends BaseLazyLoadFragment<GankMainPresenter> im
     public GankMainFragment() {
     }
 
-    @Override
-    protected void lazyLoadData() {
-        Logger.i("lazy load gank");
-        mPresenter.getAndroidData(20, 1, false);
-        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
-        Activity activity=getActivity();
-       View view= activity.findViewById(R.id.view_stub);
-       view.setVisibility(View.VISIBLE);
-       activity.findViewById(R.id.top_layout).setVisibility(View.VISIBLE);
-        Logger.i("activty :"+getActivity().getClass().getSimpleName()+" toolbar :");
-    }
+//    @Override
+//    protected void lazyLoadData() {
+//        Logger.i("lazy load gank");
+//        mPresenter.getAndroidData(20, 1, false);
+//        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
+//        Activity activity=getActivity();
+//       View view= activity.findViewById(R.id.view_stub);
+//       view.setVisibility(View.VISIBLE);
+//       activity.findViewById(R.id.top_layout).setVisibility(View.VISIBLE);
+//        Logger.i("activty :"+getActivity().getClass().getSimpleName()+" toolbar :");
+//    }
 
     @Override
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

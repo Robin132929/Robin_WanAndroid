@@ -167,7 +167,7 @@ showLoadFailed();
     protected void initLoadingStatusViewIfNeed() {
  if (mHolder==null){
      //bind status view to activity root view by default
-     mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(new Runnable() {
+     mHolder = Gloading.getDefault().cover(mSwipeRefreshLayout).withRetry(new Runnable() {
          @Override
          public void run() {
              onLoadRetry();

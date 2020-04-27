@@ -5,7 +5,7 @@
     android:id="@+id/main_dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.common.activty.MainActivity"
+    tools:context=".ui.common.activty.WanAndroidMainActivity"
     tools:openDrawer="start">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -13,36 +13,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="@null">
-            <Button
-                android:id="@+id/search_btn"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_18"
-                android:paddingLeft="@dimen/dp_12"
-                android:gravity="left|center_vertical"
-                android:background="@drawable/bg_serachview"
-                android:drawableLeft="@drawable/ic_search"
-                android:text="输入搜索内容"
-                />
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:minHeight="?attr/actionBarSize"-->
+<!--            android:theme="@style/Base.ThemeOverlay.AppCompat.Light"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"-->
+<!--            app:title="@null">-->
+<!--            <Button-->
+<!--                android:id="@+id/search_btn"-->
+<!--                android:layout_width="250dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="left"-->
+<!--                android:layout_marginTop="@dimen/dp_10"-->
+<!--                android:layout_marginBottom="@dimen/dp_10"-->
+<!--                android:paddingRight="@dimen/dp_18"-->
+<!--                android:paddingLeft="@dimen/dp_12"-->
+<!--                android:gravity="left|center_vertical"-->
+<!--                android:background="@drawable/bg_serachview"-->
+<!--                android:drawableLeft="@drawable/ic_search"-->
+<!--                android:text="输入搜索内容"-->
+<!--                />-->
 
 
-        </androidx.appcompat.widget.Toolbar>
+<!--        </androidx.appcompat.widget.Toolbar>-->
 <!--        <include layout="@layout/layout_toolbar" />-->
 
-        <include layout="@layout/fl_container"
-
-            />
+        <include layout="@layout/fl_container" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
@@ -71,15 +69,15 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nv_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/viewBackground"
-        app:headerLayout="@layout/sideslip_nav_header"
-        app:itemIconTint="@color/item_nav_color_tv"
-        app:itemTextColor="@color/item_nav_color_tv"
-        app:menu="@menu/menu_sideslip_nav" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nv_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:background="@color/viewBackground"-->
+<!--        app:headerLayout="@layout/sideslip_nav_header"-->
+<!--        app:itemIconTint="@color/item_nav_color_tv"-->
+<!--        app:itemTextColor="@color/item_nav_color_tv"-->
+<!--        app:menu="@menu/menu_sideslip_nav" />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -31,20 +31,20 @@ public class myViewPagerAdapter extends FragmentPagerAdapter {
         if (position==0){
            return new NavigationFragment();
         }else if (position==1){
-            return new WanAndroidHomeFragment();
-        }else if (position==2){
-          return new KnowledgeStructureFragment();
-        }else if (position==3){
-          return new WechatFragment();
-        }else if (position==4){
-          return new ProjectFragment();
-        }
+            return new WanAndroidHomeFragment();}
+//        }else if (position==2){
+//          return new KnowledgeStructureFragment();
+//        }else if (position==3){
+//          return new WechatFragment();
+//        }else if (position==4){
+//          return new ProjectFragment();
+//        }
         return new WanAndroidHomeFragment();
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return 2;
     }
 
     @Nullable

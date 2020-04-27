@@ -52,5 +52,6 @@ public abstract class AllFragmentsModule {
     @ContributesAndroidInjector(modules =  FootPrintModule.class)
     abstract FootPrintFragment contributeFootPrintInjector();
 
-
+    @ContributesAndroidInjector(modules =  WanAndroidMainFragmentModule.class)
+    abstract WanAndroidMainFragment contributeWanAndroidMainFragment();
 }

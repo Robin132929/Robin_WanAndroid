@@ -1,9 +1,10 @@
 package com.robin.robin_wanandroid.di.module;
 
 
+import com.robin.robin_wanandroid.ui.common.activty.MainActivity;
 import com.robin.robin_wanandroid.ui.content.ContentActivity;
 import com.robin.robin_wanandroid.ui.login.LoginActivity;
-import com.robin.robin_wanandroid.ui.common.activty.MainActivity;
+import com.robin.robin_wanandroid.ui.common.activty.WanAndroidMainActivity;
 import com.robin.robin_wanandroid.activity.SlidingMenuDetailActivity;
 
 import dagger.Module;
@@ -14,7 +15,7 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class AllActivitysModule {
 
     @ContributesAndroidInjector(modules = MainActivityModule.class)
-    abstract MainActivity contributeMainActivitytInjector();
+    abstract WanAndroidMainActivity contributeMainActivitytInjector();
 
     @ContributesAndroidInjector(modules = LoginActivityModule.class)
     abstract LoginActivity contributeLoginActivitytInjector();
@@ -27,4 +28,8 @@ public abstract class AllActivitysModule {
 
 //    @ContributesAndroidInjector(modules = HomeConvenientButtonContentActivityModule.class)
 //    abstract ConvenientEntranceActivity contributeHomeConvenientButtonContentActivityInjector();
+
+//
+//    @ContributesAndroidInjector(modules = MainActivityModule1.class)
+//    abstract MainActivity MainActivitytInjector();
 }

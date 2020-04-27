@@ -3,6 +3,7 @@ package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
 import com.robin.robin_wanandroid.ui.common.activty.MainActivity;
+import com.robin.robin_wanandroid.ui.common.activty.WanAndroidMainActivity;
 import com.robin.robin_wanandroid.mvp.model.wanandroid.MainModel;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidMainFragment;
@@ -32,7 +33,7 @@ abstract class MainActivityModule {
         return new WanAndroidMainFragment();
     }
     @Provides
-    static MainContract.View provideView(MainActivity activity) {
+    static MainContract.View provideView(WanAndroidMainActivity activity) {
         return activity;
     }
 //    @Binds
@@ -41,6 +42,11 @@ abstract class MainActivityModule {
 static MainContract.Model provideModel(MainModel homeModel) {
     return homeModel;
 }
+//    @Provides
+//    static MainActivity provideMainActivtyView(MainActivity activity) {
+//        return activity;
+//    }
+
 //
 //    @Binds
 //    abstract IRepositoryManager bindRepositoryManagers(RepositoryManager repositoryManager);

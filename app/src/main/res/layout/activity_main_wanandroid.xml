@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_wanandroid_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <include layout="@layout/fl_container" />
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bottom_navigation_view"-->
+<!--            style="@style/Widget.Design.BottomNavigationView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:background="@color/viewBackground"-->
+<!--            app:elevation="@dimen/dp_16"-->
+<!--            app:itemIconTint="@drawable/nav_item_color_state"-->
+<!--            app:itemTextColor="@drawable/nav_item_color_state"-->
+<!--            app:menu="@menu/bottom_navigation_main" />-->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/float_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_60"
+            app:layout_behavior=".widget.BottomNavigationBehavior"
+            app:srcCompat="@drawable/ic_arrow_upward_white_24dp" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

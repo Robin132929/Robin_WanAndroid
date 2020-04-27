@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.ui.Main5Activity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="activty 5"
-        android:id="@+id/btn_5"
-        />
+   <include layout="@layout/fl_container"/>
 
 </LinearLayout>
+<!--<merge>-->
+<!--    -->
+<!--</merge>-->

@@ -1,29 +1,57 @@
 package com.robin.robin_wanandroid.ui.wanandroid.fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
-import com.robin.rbase.CommonBase.Fragment.BaseFragment;
-import com.robin.rbase.CommonUtils.Logger.Logger;
-import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.robin_wanandroid.R;
+import com.robin.robin_wanandroid.adapter.ImageNetAdapter;
 import com.robin.robin_wanandroid.adapter.wanandroid.myViewPagerAdapter;
-import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
-import com.robin.robin_wanandroid.mvp.presenter.common.MainActivityPresenter;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
+import com.robin.robin_wanandroid.mvp.contract.wanandroid.WanAndroidMainFragmentContract;
+import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
+import com.robin.robin_wanandroid.mvp.presenter.wanandroid.WanAndroidMainFragmentPresenter;
+import com.robin.robin_wanandroid.util.loading.Gloading;
+import com.youth.banner.Banner;
+import com.youth.banner.indicator.CircleIndicator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class WanAndroidMainFragment extends BaseFragment {
+public class WanAndroidMainFragment extends RobinBaseFragment<WanAndroidMainFragmentPresenter>
+        implements WanAndroidMainFragmentContract.View {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.banner)
+    Banner banner;
+    @BindView(R.id.section_head_ll)
+    RelativeLayout sectionHeadLl;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.tl_tabs)
     TabLayout mTabLayout;
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
     @BindView(R.id.vp_content)
     ViewPager mViewPager;
-    //TODO 懒加载
+    @BindView(R.id.cl_wanandroid_content)
+    CoordinatorLayout clWanandroidContent;
+
+    private ImageNetAdapter bannerAdapter;
+
     public WanAndroidMainFragment() {
     }
 
@@ -34,6 +62,11 @@ public class WanAndroidMainFragment extends BaseFragment {
 
     @Override
     public void initView(@NonNull View view, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //初始化toolbar
+        if (toolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -42,45 +75,75 @@ public class WanAndroidMainFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(4);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.selectTab(mTabLayout.getTabAt(1));
+        mPresenter.getBannerData();
+
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_main;
+        return R.layout.fragment_home_wanandroid;
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Logger.i("visable load");
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
+
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            mHolder = Gloading.getDefault().wrap(clWanandroidContent).withRetry(this::onLoadRetry);
+        }
+    }
+
+    @Override
+    protected void onLoadRetry() {
 
     }
 
-//    @Override
-//    public void lazyLoadData() {
-//        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
-//        Logger.i("view stub is " + getActivity().findViewById(R.id.top_layout));
-//        if (getActivity().findViewById(R.id.top_layout) != null) {
-//            getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
-//        }
-//        Logger.i("lazy load");
-//    }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden) {
-//            getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
-//            if (getActivity().findViewById(R.id.top_layout) != null) {
-//                getActivity().findViewById(R.id.top_layout).setVisibility(View.GONE);
-//            }
-//        }
-//    }
+    @Override
+    public void showBanner(BannerBean bannerBean) {
+        if (bannerAdapter == null) {
+            bannerAdapter = new ImageNetAdapter(bannerBean.getData());
+            banner.setAdapter(bannerAdapter);
+            banner.setIndicator(new CircleIndicator(mContext));
+            return;
+        }
+        banner.setDatas(bannerBean.getData());
+    }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Logger.e("fragment  pause "+this.toString());
+    public void showLoading() {
+        mHolder.showLoading();
+    }
 
+    @Override
+    public void hideLoading() {
+        mHolder.showLoadSuccess();
+    }
+
+    @Override
+    public void showError() {
+        mHolder.showLoadFailed();
+    }
+
+    @OnClick({R.id.bt_daily, R.id.bt_review, R.id.bt_score, R.id.bt_more, R.id.search_btn})
+    public void onBtClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_daily:
+                break;
+            case R.id.bt_review:
+                break;
+            case R.id.bt_score:
+                break;
+            case R.id.bt_more:
+                break;
+            case R.id.search_btn:
+                break;
+            default:
+                break;
+        }
     }
 }

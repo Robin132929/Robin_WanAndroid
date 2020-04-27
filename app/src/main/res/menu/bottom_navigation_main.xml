@@ -19,17 +19,17 @@
         android:icon="@drawable/ic_navigation_black_24dp"
         android:title="@string/navigation"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_wechat"
-        android:enabled="true"
-        android:icon="@drawable/ic_wechat_black_24dp"
-        android:title="@string/wechat"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_project"
-        android:enabled="true"
-        android:icon="@drawable/ic_project_black_24dp"
-        android:title="@string/project"
-        app:showAsAction="ifRoom" />
+<!--    <item-->
+<!--        android:id="@+id/action_wechat"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_wechat_black_24dp"-->
+<!--        android:title="@string/wechat"-->
+<!--        app:showAsAction="ifRoom" />-->
+<!--    <item-->
+<!--        android:id="@+id/action_project"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_project_black_24dp"-->
+<!--        android:title="@string/project"-->
+<!--        app:showAsAction="ifRoom" />-->
 
 </menu>
