@@ -1,11 +1,24 @@
 package com.robin.robin_wanandroid.base;
 
+import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
 import com.robin.rbase.MVP.MvpBase.IPresenter;
 import com.robin.robin_wanandroid.util.loading.Gloading;
 
 public abstract class RobinBaseFragment<P extends IPresenter> extends BaseMvpFragment<P> {
     protected Gloading.Holder mHolder;
+    protected boolean isFirstLoad=true;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Logger.e("onresume11111 "+this+" "+isHidden());
+
+        if (isFirstLoad&&!isHidden()){
+          lazyLoad();
+          isFirstLoad=false;
+        }
+    }
 
     protected abstract void initLoadingStatusViewIfNeed();
 
@@ -30,5 +43,7 @@ public abstract class RobinBaseFragment<P extends IPresenter> extends BaseMvpFra
         initLoadingStatusViewIfNeed();
         mHolder.showEmpty();
     }
+    protected void lazyLoad(){
 
+    }
 }

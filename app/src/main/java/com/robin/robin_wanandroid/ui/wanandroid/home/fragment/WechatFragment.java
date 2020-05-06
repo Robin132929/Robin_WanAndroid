@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.wanandroid.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.home.fragment;
 
 import android.os.Bundle;
 import android.view.View;

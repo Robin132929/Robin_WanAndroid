@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.conveniententrance.activity;
+package com.robin.robin_wanandroid.ui.wanandroid.conveniententrance;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,10 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.base.RobinBaseActivity;
+import com.robin.robin_wanandroid.base.RobinBaseFragment;
 import com.robin.robin_wanandroid.customize_interface.PageType;
 import com.robin.robin_wanandroid.customize_interface.RealPageFactory;
+import com.robin.robin_wanandroid.factory.ConvenientEntranceFactory;
 import com.robin.robin_wanandroid.mvp.contract.ConvenientContract;
 
 import androidx.annotation.Nullable;
@@ -18,16 +20,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 
-public class ConvenientEntranceActivity extends RobinBaseActivity implements ConvenientContract.View {
+public class ConvenientEntranceActivity extends RobinBaseActivity {
     @BindView(R.id.general_toolbar)
     Toolbar generalToolbar;
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
+    private RobinBaseFragment currentFragment;
 
-    private PageType mPage;
-    private RealPageFactory realPageFactory = new RealPageFactory();
-
-    public static void onStartActivty(String clz, Context context) {
+    public static void onStartActivty(Class<? extends RobinBaseFragment > clz, Context context) {
         Intent intent = new Intent(context, ConvenientEntranceActivity.class);
         intent.putExtra("class", clz);
         context.startActivity(intent);
@@ -35,24 +35,20 @@ public class ConvenientEntranceActivity extends RobinBaseActivity implements Con
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        String clz = intent.getStringExtra("class");
-        //TODO  如何避免mPageType为空情况下的crash
-        mPage = realPageFactory.creatPage(clz);
-        if (mPage != null) {
-            initToolbar(generalToolbar);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.page_content_fl, (BaseFragment)mPage);
-            ft.show((BaseFragment)mPage);
-            ft.commit();
-//            mPage.setPresenter(mPresenter);
-        }
-    }
-
-    private void initToolbar(Toolbar toolbar) {
-        setSupportActionBar(toolbar);
+        //toolbar
+        setSupportActionBar(generalToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mPage.initToolbar(getSupportActionBar());
+
+        Intent intent = getIntent();
+        Class clz = intent.getParcelableExtra("class");
+        currentFragment=ConvenientEntranceFactory.creatFragment(clz);
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fl_page_content, currentFragment);
+            ft.show(currentFragment);
+            ft.commit();
+            //TODO title设置
+//        generalToolbar.setTitle(currentFragment.getTitle());
     }
 
     @Override
@@ -75,25 +71,5 @@ public class ConvenientEntranceActivity extends RobinBaseActivity implements Con
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void setData(Object data,Object... agrs) {
-        mPage.setData(data);
     }
 }

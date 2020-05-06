@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/convenient_entrance_layout"
-    tools:context=".ui.conveniententrance.activity.ConvenientEntranceActivity">
+    >
 
     <include layout="@layout/general_toolbar_layout" />
 
     <FrameLayout
-        android:id="@+id/page_content_fl"
+        android:id="@+id/fl_page_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

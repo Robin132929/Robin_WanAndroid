@@ -15,12 +15,10 @@ public interface HomeContract extends CommonContract {
 
     interface View extends CommonContract.View {
         void setArticle(MainArticleBean.DataBean dataBean,boolean isRefresh);
-        void setBanner(BannerBean banner,boolean isRefresh);
     }
 
     interface Presenter extends CommonContract.Presenter {
         void requestArticle(int page,boolean isSave);
-        void requestBanner(boolean isrefresh);
         void requestTopArticle();
 //        void requestDailyInterviewQuestion(int page,boolean isRefresh);
 

@@ -29,7 +29,7 @@ public class GlobalLoadingStatusView extends LinearLayout implements View.OnClic
     public GlobalLoadingStatusView(Context context,Runnable retryTask) {
         super(context);
         setOrientation(VERTICAL);
-//        setGravity(Gravity.CENTER_VERTICAL);
+        setGravity(Gravity.CENTER_VERTICAL);
         LayoutInflater.from(context).inflate(R.layout.loading_view, this, true);
         mImageView = findViewById(R.id.pb_load);
         mTextView = findViewById(R.id.text);

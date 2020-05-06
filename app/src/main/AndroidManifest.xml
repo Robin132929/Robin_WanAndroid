@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.common.activty.MainActivity">
+        <activity android:name=".ui.wanandroid.home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.common.activty.NavigationActivity" />
-        <activity android:name=".ui.conveniententrance.activity.ConvenientEntranceActivity" />
+        <activity android:name=".ui.wanandroid.conveniententrance.ConvenientEntranceActivity" />
         <activity android:name=".activity.ui.Main6Activity" />
         <activity android:name=".activity.ui.Main5Activity">
 

@@ -25,7 +25,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
 //        println("12.345-6.A".split("\\.|-".toRegex()));
-
+        int [] a=new int[]{2,3,1,2,4,9,6,5,7};
+        int [] b=sort(a);
+        for (int i = 0; i < b.length; i++) {
+            System.out.println(i+"     " +b[i]);
+        }
     }
 
     public boolean exist(char[][] board, String word) {
@@ -391,5 +395,148 @@ root.right=null;
             list.add(root.val);
             mid(root.right);
         }
+    }
+
+
+//    public List<String> readBinaryWatch(int num) {
+//        List<String> result=new ArrayList<>();
+//        for (int i = 0; i <12 ; i++) {
+//            for (int j = 0; j <60 ; j++) {
+//                if (count(i)+count(j)=num){
+//                    result.add(i+":"+(j<10 ? "0"+j:j));
+//                }
+//            }
+//        }
+//        return result;
+//    }
+
+    public int count(int n){
+        int count=0;
+        while (n!=0){
+            n=n&(n-1);
+            count++;
+        }
+        return count;
+    }
+
+    public List<Integer> countSmaller(int[] nums) {
+       int len=nums.length;
+        List<Integer> result=new ArrayList<>();
+       int num=0;
+        for (int i = 0; i < len; i++) {
+            for (int i1 = i; i1 < len; i1++) {
+                if (nums[i1]<nums[i]){
+                    num++;
+                }
+            }
+            result.add(num);
+            num=0;
+        }
+        return result;
+    }
+
+    public int cuttingRope(int n) {
+       if (n==2){
+           return 1;
+       }
+       if (n==3){
+           return 2;
+       }
+       int result=1;
+       int num=n/3;
+      if (n%3==2){
+          return (int) (Math.pow(3,num-1))*4;
+       }else {
+          return (int) Math.pow(3,num);
+      }
+    }
+    public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+      int times=minutesToTest/minutesToDie;
+      int temp=buckets/times;
+      int n=temp,num=0;
+      while (n!=0){
+          n=n/2;
+          num++;
+      }
+      if (Math.pow(2,num)*times>=buckets){
+          return num;
+      }else {
+          return num+1;
+      }
+
+    }
+
+    public int[] sort(int[] a) {
+        int len = a.length;
+        final int MAX = 256;
+        int[] c = new int[MAX];
+        int[] b = new int[MAX];
+
+        for (int i = 0; i < len; i++) {
+            c[a[i]]++;
+        }
+
+        for (int i = 1; i < MAX; i++) {
+            c[i] += c[i-1];
+            System.out.println("    "+c[i]);
+        }
+
+        for (int i = len - 1; i >= 0; i--) {
+            b[c[a[i]] - 1] = a[i];
+            System.out.println("  "+(c[a[i]] - 1)+"    "+a[i]);//2,3,1,2,4,9,6,5,7
+            c[a[i]]--;
+        }
+
+        for (int i = 0; i < len; i++) {
+            a[i] = b[i];
+        }
+        return a;
+    }
+
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        List<Integer> a1=new ArrayList<>();
+        List<Integer> a2=new ArrayList<>();
+        List<Integer> result=new ArrayList<>();
+        mid(root1,a1);
+        mid(root2,a2);
+        int i=0,j=0;
+        while (i<a1.size()||j<a2.size()){
+            if (a1.get(i)>=a2.get(j)){
+
+                result.add(a2.get(j));
+                j++;
+            }else {
+
+                result.add(a1.get(i));
+                i++;
+            }
+        }
+
+        while (i!=a1.size()){
+            result.add(a1.get(i));
+            i++;
+        }
+
+        while (j!=a2.size()){
+            result.add(a2.get(j));
+            j++;
+        }
+
+        return result;
+    }
+
+    public List<Integer> mid(TreeNode root ,List<Integer> a){
+        if (root==null){
+            return null;
+        }
+        if (root.left!=null){
+            mid(root.left,a);
+        }
+        a.add(root.val);
+        if (root.right!=null){
+            mid(root.right,a);
+        }
+
+   return a;
     }
 }

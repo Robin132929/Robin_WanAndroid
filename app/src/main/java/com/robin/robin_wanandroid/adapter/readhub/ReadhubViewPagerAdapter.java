@@ -2,8 +2,8 @@ package com.robin.robin_wanandroid.adapter.readhub;
 
 
 
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidHomeFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidHomeFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.KnowledgeStructureFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

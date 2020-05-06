@@ -13,12 +13,7 @@ public class GloadingAdapter implements Gloading.Adapter {
             loadingStatusView= (GlobalLoadingStatusView) convertView;
         }
         if (loadingStatusView==null){
-            loadingStatusView=new GlobalLoadingStatusView(holder.getContext(), new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            });
+            loadingStatusView=new GlobalLoadingStatusView(holder.getContext(),holder.getRetryTask());
         }
         loadingStatusView.setStatus(status);
         return loadingStatusView;

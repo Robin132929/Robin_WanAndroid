@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.wanandroid.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.home.fragment;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +17,11 @@ import com.robin.robin_wanandroid.base.RobinBaseFragment;
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.WanAndroidMainFragmentContract;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.presenter.wanandroid.WanAndroidMainFragmentPresenter;
+import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.ConvenientEntranceActivity;
+import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.fragment.InterviewFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.fragment.SquareFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.fragment.TodoFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.fragment.WendaFragment;
 import com.robin.robin_wanandroid.util.loading.Gloading;
 import com.youth.banner.Banner;
 import com.youth.banner.indicator.CircleIndicator;
@@ -67,6 +72,8 @@ public class WanAndroidMainFragment extends RobinBaseFragment<WanAndroidMainFrag
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         }
         setHasOptionsMenu(true);
+        banner.setBannerRound2(20.0f);
+
     }
 
     @Override
@@ -75,8 +82,6 @@ public class WanAndroidMainFragment extends RobinBaseFragment<WanAndroidMainFrag
         mViewPager.setOffscreenPageLimit(4);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.selectTab(mTabLayout.getTabAt(1));
-        mPresenter.getBannerData();
-
     }
 
     @Override
@@ -100,7 +105,7 @@ public class WanAndroidMainFragment extends RobinBaseFragment<WanAndroidMainFrag
 
     @Override
     protected void onLoadRetry() {
-
+      //TODO 重试
     }
 
     @Override
@@ -116,34 +121,45 @@ public class WanAndroidMainFragment extends RobinBaseFragment<WanAndroidMainFrag
 
     @Override
     public void showLoading() {
-        mHolder.showLoading();
+      showLoadingView();
     }
 
     @Override
     public void hideLoading() {
-        mHolder.showLoadSuccess();
+        showLoadSuccess();
     }
 
     @Override
     public void showError() {
-        mHolder.showLoadFailed();
+        showLoadFailed();
     }
 
     @OnClick({R.id.bt_daily, R.id.bt_review, R.id.bt_score, R.id.bt_more, R.id.search_btn})
     public void onBtClick(View view) {
         switch (view.getId()) {
             case R.id.bt_daily:
+                ConvenientEntranceActivity.onStartActivty(WendaFragment.class,mContext);
                 break;
             case R.id.bt_review:
+                ConvenientEntranceActivity.onStartActivty(InterviewFragment.class,mContext);
                 break;
             case R.id.bt_score:
+                ConvenientEntranceActivity.onStartActivty(SquareFragment.class,mContext);
                 break;
             case R.id.bt_more:
+                ConvenientEntranceActivity.onStartActivty(TodoFragment.class,mContext);
                 break;
             case R.id.search_btn:
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void lazyLoad() {
+        super.lazyLoad();
+        showLoading();
+        mPresenter.getBannerData();
     }
 }

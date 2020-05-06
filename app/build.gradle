@@ -99,6 +99,7 @@ dependencies {
 
 
     implementation 'com.youth.banner:banner:2.0.8'
+    implementation 'com.google.android:flexbox:2.0.0'
 }
 
 

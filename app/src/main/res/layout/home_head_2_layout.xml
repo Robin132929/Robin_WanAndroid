@@ -3,6 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="30dp"
+    android:background="@color/Grey400"
     >
         <TextView
             android:id="@+id/section_title_tv"

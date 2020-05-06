@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import butterknife.Unbinder;
 
 public abstract class RobinBaseActivity<P extends BasePresenter> extends BaseMvpActivity<P> {
-//    private Unbinder unBinder;
     protected Gloading.Holder mHolder;
     public void initColor(@ColorInt int color){
         StatusBarUtil.setStatusBarColor(this, color);

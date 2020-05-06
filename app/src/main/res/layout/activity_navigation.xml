@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/convenient_entrance_layout"
-    tools:context=".ui.conveniententrance.activity.ConvenientEntranceActivity">
+    tools:context=".ui.wanandroid.conveniententrance.ConvenientEntranceActivity">
 
     <include layout="@layout/general_toolbar_layout" />
 

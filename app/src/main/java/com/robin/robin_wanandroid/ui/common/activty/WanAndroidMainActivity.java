@@ -24,10 +24,10 @@ import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
 import com.robin.robin_wanandroid.mvp.presenter.common.MainActivityPresenter;
 import com.robin.robin_wanandroid.ui.CollectFragment;
 import com.robin.robin_wanandroid.ui.FootPrintFragment;
-import com.robin.robin_wanandroid.ui.conveniententrance.activity.ConvenientEntranceActivity;
 import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidHomeFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidMainFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.ConvenientEntranceActivity;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidHomeFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidMainFragment;
 import com.robin.robin_wanandroid.ui.login.LoginActivity;
 import com.robin.robin_wanandroid.annotation.CheckLogin;
 import com.robin.robin_wanandroid.app.App;
@@ -258,7 +258,7 @@ public class WanAndroidMainActivity extends RobinBaseActivity<MainActivityPresen
                         recreate();
                         break;
                     case R.id.nav_setting:
-                        ConvenientEntranceActivity.onStartActivty(Constant.SETTING, WanAndroidMainActivity.this);
+//                        ConvenientEntranceActivity.onStartActivty( WanAndroidMainActivity.class,getApplicationContext());
                         break;
                     case R.id.nav_logout:
                         if (LoginHelper.getInstance().getState().getType() == Online.LOGIN) {

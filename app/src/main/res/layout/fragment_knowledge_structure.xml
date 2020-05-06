@@ -2,89 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_konwledge_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/ll_konwledge_content"
-    tools:context=".ui.wanandroid.fragment.KnowledgeStructureFragment">
+    tools:context=".ui.wanandroid.home.fragment.KnowledgeStructureFragment">
 
-    <com.bigkoo.convenientbanner.ConvenientBanner
-        android:id="@+id/nav_banner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#08FFFFFF"
-        app:autoTurningTime="2000"
-        android:visibility="invisible"
-        app:canLoop="true" />
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/recycle_konwledge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:orientation="horizontal">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/konwledge_rv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            />
-        <LinearLayout
-            android:layout_width="28dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:background="#08FFFFFF">
-            <ToggleButton
-                android:id="@+id/tb_show_window"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="right|center_vertical"
-                android:background="@null"
-                android:foreground="@drawable/bg_top_nav_btn"
-                android:gravity="right|center_vertical"
-                android:padding="8dp"
-                android:textOff="@null"
-                android:textOn="@null" />
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_weight="10" />
+
+        <ToggleButton
+            android:id="@+id/tb_show_window"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_weight="1"
+            android:background="@null"
+            android:foreground="@drawable/bg_top_nav_btn"
+            android:gravity="right|center_vertical"
+            android:padding="8dp"
+            android:textOff="@null"
+            android:textOn="@null" />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:layout_below="@+id/recycle_konwledge"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_below="@+id/recycle_konwledge"
         android:background="#000000" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/recycle_konwledge_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:orientation="horizontal">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/konwledge_child_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <LinearLayout
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:background="@color/White">
-            <ToggleButton
-                android:id="@+id/tb_show_child_window"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:foreground="@drawable/bg_top_nav_btn"
-                android:gravity="center"
-                android:padding="8dp"
-                android:textOff="@null"
-                android:textOn="@null" />
-        </LinearLayout>
-    </RelativeLayout>
+
+        <ToggleButton
+            android:id="@+id/tb_show_child_window"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:foreground="@drawable/bg_top_nav_btn"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textOff="@null"
+            android:textOn="@null" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/konwledge_list_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 package com.robin.robin_wanandroid.di.module;
 
 import com.robin.robin_wanandroid.mvp.contract.wanandroid.WechatContract;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WechatFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WechatFragment;
 
 import dagger.Module;
 import dagger.Provides;

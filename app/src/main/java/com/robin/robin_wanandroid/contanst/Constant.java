@@ -15,7 +15,7 @@ public class Constant {
      * 首页
      */
     //问答
-    public static final String WEN_DA="com.robin.robin_wanandroid.ui.conveniententrance.fragment.WendaFragment";
+    public static final String WEN_DA="com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.fragment.WendaFragment";
     //面试
     //收藏
     //积分墙

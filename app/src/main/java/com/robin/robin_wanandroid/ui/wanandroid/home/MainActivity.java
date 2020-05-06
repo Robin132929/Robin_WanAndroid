@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.common.activty;
+package com.robin.robin_wanandroid.ui.wanandroid.home;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,10 +8,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.robin.rbase.CommonBase.Activity.BaseActivity;
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
 import com.robin.robin_wanandroid.ui.readhub.ReadhubMainFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidMainFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidMainFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
 
@@ -35,7 +33,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
      initBottomNavigationView();
-     getSupportFragmentManager().beginTransaction().add(R.id.fl_content_container,fragments.get(0)).commit();
+     getSupportFragmentManager().beginTransaction().add(R.id.fl_content_container,fragments.get(0)).show(fragments.get(0)).commit();
     }
 
     private void initBottomNavigationView() {

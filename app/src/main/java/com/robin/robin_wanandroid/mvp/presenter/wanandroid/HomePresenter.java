@@ -23,18 +23,19 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 public class HomePresenter extends CommonPresenter<HomeContract.View> implements HomeContract.Presenter {
-
+    private boolean isFirstLoad=true;
     @Inject
     public HomePresenter(DataManager dataManager, HomeContract.View rootView) {
         super(dataManager, rootView);
     }
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    void onCreate() {
-        //打开 App 时自动加载列表
-//        requestBanner(false);
-////        requestTopArticle();
-//        requestArticle(0,false);
-    }
+//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+//    void onCreate() {
+//        //自动进行懒加载
+//        if (isFirstLoad){
+//            requestArticle(0,false);
+//         isFirstLoad=false;
+//        }
+//    }
 
     @Override
     public void requestArticle(int page, boolean isSave) {
@@ -69,20 +70,6 @@ public class HomePresenter extends CommonPresenter<HomeContract.View> implements
                mView.showError();
            }
        });
-    }
-
-    @Override
-    public void requestBanner(boolean isrefresh) {
-        mModel.getBanner().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<BannerBean>(App.getmMyAppComponent().rxErrorHandler()) {
-            @Override
-            public void onNext(BannerBean dataBeans) {
-                Logger.i("banner "+dataBeans.getData().get(0).toString());
-
-                mView.setBanner(dataBeans,isrefresh);
-            }
-        });
     }
 
     @Override

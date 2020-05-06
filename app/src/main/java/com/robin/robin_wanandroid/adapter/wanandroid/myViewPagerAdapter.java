@@ -1,10 +1,10 @@
 package com.robin.robin_wanandroid.adapter.wanandroid;
 
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WanAndroidHomeFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.KnowledgeStructureFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.NavigationFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.ProjectFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.fragment.WechatFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidHomeFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.NavigationFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.ProjectFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WechatFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class myViewPagerAdapter extends FragmentPagerAdapter {
 
     public myViewPagerAdapter( @NonNull FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @NonNull
@@ -31,20 +31,20 @@ public class myViewPagerAdapter extends FragmentPagerAdapter {
         if (position==0){
            return new NavigationFragment();
         }else if (position==1){
-            return new WanAndroidHomeFragment();}
-//        }else if (position==2){
-//          return new KnowledgeStructureFragment();
-//        }else if (position==3){
-//          return new WechatFragment();
-//        }else if (position==4){
-//          return new ProjectFragment();
-//        }
+            return new WanAndroidHomeFragment();
+        }else if (position==2){
+          return new KnowledgeStructureFragment();
+        }else if (position==3){
+          return new WechatFragment();
+        }else if (position==4){
+          return new ProjectFragment();
+        }
         return new WanAndroidHomeFragment();
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 5;
     }
 
     @Nullable

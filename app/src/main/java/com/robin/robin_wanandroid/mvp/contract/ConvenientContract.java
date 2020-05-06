@@ -1,38 +1,26 @@
 package com.robin.robin_wanandroid.mvp.contract;
 
-import com.robin.robin_wanandroid.mvp.contract.wanandroid.CommonContract;
-import com.robin.robin_wanandroid.mvp.model.bean.AddCollectBean;
-import com.robin.robin_wanandroid.mvp.model.bean.FootPrintBean;
-import com.robin.robin_wanandroid.mvp.model.bean.GetCollectBean;
+import com.robin.rbase.MVP.MvpBase.IPresenter;
+import com.robin.rbase.MVP.MvpBase.IView;
 import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
 
-import io.reactivex.Observable;
+public interface ConvenientContract{
 
-public interface ConvenientContract extends CommonContract {
-    interface Model extends CommonContract.Model {
-        Observable<wendaBean> requestWendaList(int page);
-        Observable<GetCollectBean> getCollectList(int page, boolean isRefresh);
-        Observable<AddCollectBean> removeCollectState(int id, int originId);
-        Observable<FootPrintBean> getFootPrintList(int page , boolean isRefresh);
-
+    interface View extends IView {
+        void showWenda(wendaBean.DataBean dataBean);
+        void showReceview();
+        void showSquare();
+        void showTodo();
     }
 
-    interface View extends CommonContract.View {
-        void setData(Object data,Object... args);
-    }
-
-    interface Presenter extends CommonContract.Presenter {
+    interface Presenter extends IPresenter {
         //问答
-        void request_WendaList(int page);
-        void loadMore_wenda(int page);
-        void refresh_wenda();
-
+        void requestWenda(int page);
         //面试集锦
-//        void request
-
-        void getCollectList(int page,boolean isRefresh);
-        void removeCollectState(int id,int originId);
-        void getFootPrintList();
-
+        void requestReceview();
+        //广场
+        void requestSquare();
+        //待办清单
+        void requestTodo();
     }
 }
