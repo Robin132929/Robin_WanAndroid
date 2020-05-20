@@ -1,10 +1,12 @@
-package com.robin.robin_wanandroid.ui;
+package com.robin.robin_wanandroid.ui.wanandroid.history;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.android.exoplayer2.C;
 import com.robin.rbase.CommonBase.Fragment.BaseFragment;
 import com.robin.rbase.CommonUtils.Logger.Logger;
@@ -60,20 +62,20 @@ public class CollectFragment extends BaseMvpFragment<CollectPresenter> implement
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mCollectListAdapter = new CollectListAdapter(R.layout.item_collect_list, datas);
-        mCollectListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mCollectListAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 GetCollectBean.DataBean.DatasBean bean= (GetCollectBean.DataBean.DatasBean) adapter.getItem(position);
                 ContentActivity.startActivity(App.getmMyAppComponent().application(), bean.getTitle(),bean.getLink());
             }
         });
-        mCollectListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                mPresenter.getCollectList(page_index,false);
-            }
-        }, mRecyclerView);
-        mCollectListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//        mCollectListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//                mPresenter.getCollectList(page_index,false);
+//            }
+//        }, mRecyclerView);
+        mCollectListAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 GetCollectBean.DataBean.DatasBean bean= (GetCollectBean.DataBean.DatasBean) adapter.getItem(position);
@@ -104,11 +106,11 @@ public class CollectFragment extends BaseMvpFragment<CollectPresenter> implement
         } else {
             mCollectListAdapter.addData(bean.getData().getDatas());
         }
-        if (bean.getData().getDatas().size() < bean.getData().getSize()) {
-            mCollectListAdapter.loadMoreEnd(true);
-        } else {
-            mCollectListAdapter.loadMoreComplete();
-        }
+//        if (bean.getData().getDatas().size() < bean.getData().getSize()) {
+//            mCollectListAdapter.loadMoreEnd(true);
+//        } else {
+//            mCollectListAdapter.loadMoreComplete();
+//        }
     }
 
     @Override

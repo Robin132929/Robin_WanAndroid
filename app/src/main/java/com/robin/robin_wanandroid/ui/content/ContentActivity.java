@@ -36,11 +36,11 @@ import com.robin.robin_wanandroid.mvp.presenter.ContentPresenter;
 import java.util.List;
 
 public class ContentActivity extends RobinBaseActivity<ContentPresenter> implements ContentContract.View {
+    private static List<NavgationBean.DataBean.ArticlesBean> mArticlesBean;
+    private static int Tag;
     private WebView webView;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerView;
-    private static List<NavgationBean.DataBean.ArticlesBean> mArticlesBean;
-    private static int Tag;
     private ShowMoreNavgationAdapter mShowMoreNavgationAdapter;
     private LinearLayout linearLayout;
 //    @Override
@@ -58,6 +58,89 @@ public class ContentActivity extends RobinBaseActivity<ContentPresenter> impleme
 //
 //       }
 //    }
+
+    public static void loadData(WebView webView, String content) {
+        webView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);//这种写法可以正确解码
+    }
+
+    public static void startActivity(Context context, List<NavgationBean.DataBean.ArticlesBean> ArticlesBean) {
+        Tag = 1;
+        mArticlesBean = ArticlesBean;
+        Intent intent = new Intent(context, ContentActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @NonNull
+    @Override
+    public Cache<String, Object> provideCache() {
+        return new IntelligentCache<>(4 * 1024);
+    }
+
+    @Override
+    public void initView(@Nullable Bundle savedInstanceState) {
+        linearLayout = findViewById(R.id.ll_content);
+        mToolbar = findViewById(R.id.toolbar);
+        mToolbar.findViewById(R.id.search_btn).setVisibility(View.GONE);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (Tag == 0) {
+            webView = new WebView(this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        this.addContentView(webView,lp);
+            linearLayout.addView(webView, lp);
+        }
+        if (Tag == 1) {
+            mRecyclerView = new RecyclerView(this);
+//        mRecyclerView.setPadding(0,getSupportActionBar().getHeight(),0,0);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        this.addContentView(webView,lp);
+            linearLayout.addView(mRecyclerView, lp);
+        }
+
+        Logger.i("current resurse content " + getResources().toString());
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_content;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+
+
+        if (Tag == 0) {
+            initWebView(this, webView);
+            Intent intent = getIntent();
+            String url = intent.getStringExtra("url");
+            String title = intent.getStringExtra("title");
+//            if (!TextUtils.isEmpty(url) && !TextUtils.isEmpty(title)) {
+//                mPresenter.addFootPrint(title, url);
+//            }
+            if (url != null) {
+                Logger.i("url is " + url);
+                webView.loadUrl(url);
+
+            }
+        }
+        if (Tag == 1) {
+            Logger.i("art is :" + mArticlesBean.size());
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+            mRecyclerView.setLayoutManager(gridLayoutManager);
+            mShowMoreNavgationAdapter = new ShowMoreNavgationAdapter(R.layout.item_section_content, mArticlesBean);
+//            mShowMoreNavgationAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                    NavgationBean.DataBean.ArticlesBean articlesBean = (NavgationBean.DataBean.ArticlesBean) adapter.getItem(position);
+//                    startActivity(ContentActivity.this, articlesBean.getTitle(), articlesBean.getLink());
+//                }
+//            });
+            mRecyclerView.setAdapter(mShowMoreNavgationAdapter);
+        }
+    }
 
     public static void initWebView(final Context context, final WebView webBase) {
         WebSettings webSettings = webBase.getSettings();
@@ -145,79 +228,13 @@ public class ContentActivity extends RobinBaseActivity<ContentPresenter> impleme
         });
     }
 
-    public static void loadData(WebView webView, String content) {
-        webView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);//这种写法可以正确解码
-    }
-
-    @NonNull
-    @Override
-    public Cache<String, Object> provideCache() {
-        return new IntelligentCache<>(4*1024);
-    }
-
-    @Override
-    public void initView(@Nullable Bundle savedInstanceState) {
-        linearLayout=findViewById(R.id.ll_content);
-    mToolbar=findViewById(R.id.toolbar);
-        mToolbar.findViewById(R.id.search_btn).setVisibility(View.GONE);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        if (Tag==0){
-        webView=new WebView(this);
-        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        this.addContentView(webView,lp);
-            linearLayout.addView(webView,lp);
-    }
-    if (Tag==1){
-        mRecyclerView=new RecyclerView(this);
-//        mRecyclerView.setPadding(0,getSupportActionBar().getHeight(),0,0);
-        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        this.addContentView(webView,lp);
-        linearLayout.addView(mRecyclerView,lp);
-    }
-
-        Logger.i("current resurse content "+ getResources().toString());
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_content;
-    }
-
-    @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
-
-
-        if (Tag==0){
-            initWebView(this,webView);
-        Intent intent=getIntent();
-       String url= intent.getStringExtra("url");
-       String title= intent.getStringExtra("title");
-       if (!TextUtils.isEmpty(url)&& !TextUtils.isEmpty(title)){
-           mPresenter.addFootPrint(title,url);
-       }
-       if (url!=null){
-           Logger.i("url is "+url);
-           webView.loadUrl(url);
-
-       }
-        }
-        if (Tag==1){
-            Logger.i("art is :"+mArticlesBean.size());
-            GridLayoutManager gridLayoutManager=new GridLayoutManager(this,2);
-            mRecyclerView.setLayoutManager(gridLayoutManager);
-            mShowMoreNavgationAdapter=new ShowMoreNavgationAdapter(R.layout.item_section_content,mArticlesBean);
-            mShowMoreNavgationAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    NavgationBean.DataBean.ArticlesBean articlesBean= (NavgationBean.DataBean.ArticlesBean) adapter.getItem(position);
-                    startActivity(ContentActivity.this,articlesBean.getTitle(),articlesBean.getLink());
-                }
-            });
-            mRecyclerView.setAdapter(mShowMoreNavgationAdapter);
-        }
+    public static void startActivity(Context context, String title, String url) {
+        Tag = 0;
+        Intent intent = new Intent(context, ContentActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("url", url);
+        intent.putExtra("title", title);
+        context.startActivity(intent);
     }
 
     @Override
@@ -225,22 +242,6 @@ public class ContentActivity extends RobinBaseActivity<ContentPresenter> impleme
         return true;
     }
 
-    public static void startActivity(Context context,String title,String url){
-        Tag=0;
-        Intent intent=new Intent(context,ContentActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("url",url);
-        intent.putExtra("title",title);
-        context.startActivity(intent);
-    }
-
-    public static void startActivity(Context context, List<NavgationBean.DataBean.ArticlesBean> ArticlesBean){
-        Tag=1;
-        mArticlesBean=ArticlesBean;
-        Intent intent=new Intent(context,ContentActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

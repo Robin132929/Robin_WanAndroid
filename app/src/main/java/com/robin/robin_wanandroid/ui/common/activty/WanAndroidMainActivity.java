@@ -19,13 +19,11 @@ import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.CommonUtils.Utils.PreferUtil;
 import com.robin.rbase.CommonUtils.Utils.ToastUtils;
 import com.robin.robin_wanandroid.R;
-import com.robin.robin_wanandroid.contanst.Constant;
 import com.robin.robin_wanandroid.mvp.contract.common.MainContract;
 import com.robin.robin_wanandroid.mvp.presenter.common.MainActivityPresenter;
-import com.robin.robin_wanandroid.ui.CollectFragment;
-import com.robin.robin_wanandroid.ui.FootPrintFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.CollectFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.FootPrintFragment;
 import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.conveniententrance.ConvenientEntranceActivity;
 import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidHomeFragment;
 import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidMainFragment;
 import com.robin.robin_wanandroid.ui.login.LoginActivity;
@@ -189,11 +187,11 @@ public class WanAndroidMainActivity extends RobinBaseActivity<MainActivityPresen
                         showAndhideFragment(PrePosition, 0);
                         PrePosition = 0;
                         break;
-                    case R.id.action_knowledge_system:
+                    case R.id.action_explore:
                         showAndhideFragment(PrePosition, 1);
                         PrePosition = 1;
                         break;
-                    case R.id.action_navigation:
+                    case R.id.action_history:
                         showAndhideFragment(PrePosition, 2);
                         PrePosition = 2;
                         break;

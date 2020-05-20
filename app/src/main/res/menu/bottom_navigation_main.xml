@@ -8,23 +8,23 @@
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_knowledge_system"
+        android:id="@+id/action_explore"
         android:enabled="true"
         android:icon="@drawable/ic_apps_black_24dp"
-        android:title="@string/knowledge_system"
+        android:title="@string/explore"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_navigation"
+        android:id="@+id/action_history"
         android:enabled="true"
         android:icon="@drawable/ic_navigation_black_24dp"
-        android:title="@string/navigation"
+        android:title="@string/history"
         app:showAsAction="ifRoom" />
-<!--    <item-->
-<!--        android:id="@+id/action_wechat"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_wechat_black_24dp"-->
-<!--        android:title="@string/wechat"-->
-<!--        app:showAsAction="ifRoom" />-->
+    <item
+        android:id="@+id/action_mine"
+        android:enabled="true"
+        android:icon="@drawable/ic_wechat_black_24dp"
+        android:title="@string/mine"
+        app:showAsAction="ifRoom" />
 <!--    <item-->
 <!--        android:id="@+id/action_project"-->
 <!--        android:enabled="true"-->

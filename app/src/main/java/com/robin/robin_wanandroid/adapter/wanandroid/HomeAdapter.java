@@ -8,12 +8,10 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseSectionMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.robin.rbase.CommonUtils.Utils.ContextUtil;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.app.App;
-import com.robin.robin_wanandroid.entity.HomeSectionMutipleItem;
 import com.robin.robin_wanandroid.mvp.model.bean.BannerBean;
 import com.robin.robin_wanandroid.mvp.model.bean.MainArticleBean;
 import com.robin.robin_wanandroid.util.GlideUtils;
@@ -39,7 +37,7 @@ public class HomeAdapter extends BaseQuickAdapter<MainArticleBean.DataBean.Datas
         if (item.getEnvelopePic().isEmpty() || (item.getEnvelopePic() == null)) {
             helper.setGone(R.id.iv_article_thumbnail, false);
         }else {
-           GlideUtils.showBannerImage(mContext,helper.getView(R.id.iv_article_thumbnail),item.getEnvelopePic());
+           GlideUtils.showBannerImage(App.getmMyAppComponent().application(),helper.getView(R.id.iv_article_thumbnail),item.getEnvelopePic());
         }
         if (item.isFresh()){
             helper.getView(R.id.tv_article_fresh).setVisibility(View.VISIBLE);
@@ -52,8 +50,8 @@ public class HomeAdapter extends BaseQuickAdapter<MainArticleBean.DataBean.Datas
             tag.setText(item.getTags().get(0).getName());
         }
 
-        helper.setImageResource(R.id.iv_like,item.isCollect() ? R.drawable.ic_like:R.drawable.ic_like_not)
-        .addOnClickListener(R.id.iv_like);
+        helper.setImageResource(R.id.iv_like,item.isCollect() ? R.drawable.ic_like:R.drawable.ic_like_not);
+//        .addOnClickListener(R.id.iv_like);
 
     }
 }

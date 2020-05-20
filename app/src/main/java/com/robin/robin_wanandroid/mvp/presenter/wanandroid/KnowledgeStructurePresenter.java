@@ -30,8 +30,8 @@ public class KnowledgeStructurePresenter extends BasePresenter<DataManager,Knowl
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void onCreate() {
         //打开 App 时自动加载列表
-        requestStructureList();
-        requestBanner();
+//        requestStructureList();
+//        requestBanner();
 //        requestStructureItem(0,60);
     }
     @Override
@@ -46,7 +46,7 @@ public class KnowledgeStructurePresenter extends BasePresenter<DataManager,Knowl
                         mView.hideLoading();
                         requestStructureItem(0,knowledgeStructureBean.getData().get(0).getChildren().get(0).getId(),false);
                         mView.setStructureList1st(knowledgeStructureBean);
-                        mView.setStructureList2st(knowledgeStructureBean.getData());
+                        mView.setStructureList2st(knowledgeStructureBean.getData().get(0));
 
                     }
                     @Override
@@ -70,7 +70,7 @@ public class KnowledgeStructurePresenter extends BasePresenter<DataManager,Knowl
                 .subscribe(new ErrorHandleSubscriber<KnowledgeArticleBean>(App.getmMyAppComponent().rxErrorHandler()) {
                     @Override
                     public void onNext(KnowledgeArticleBean knowledgeArticleBean) {
-                        Logger.i("request item"+knowledgeArticleBean.getErrorMsg()+"   " +page+ " "+cid+ " "+knowledgeArticleBean.getData().getSize());
+                        Logger.i("request item"+knowledgeArticleBean.getErrorMsg()+"   " +page+ " "+cid+ " "+knowledgeArticleBean.toString());
 //                   mView.hideLoading();
                     mView.setStructureItem(knowledgeArticleBean,knowledgeArticleBean.getData().getCurPage()-1,More);
                     }
@@ -90,15 +90,15 @@ public class KnowledgeStructurePresenter extends BasePresenter<DataManager,Knowl
 
     }
 
-    @Override
-    public void requestBanner() {
-        mModel.getBanner().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<BannerBean>(App.getmMyAppComponent().rxErrorHandler()) {
-            @Override
-            public void onNext(BannerBean dataBeans) {
-                mView.setBanner(dataBeans);
-            }
-        });
-    }
+//    @Override
+//    public void requestBanner() {
+//        mModel.getBanner().subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<BannerBean>(App.getmMyAppComponent().rxErrorHandler()) {
+//            @Override
+//            public void onNext(BannerBean dataBeans) {
+//                mView.setBanner(dataBeans);
+//            }
+//        });
+//    }
 }

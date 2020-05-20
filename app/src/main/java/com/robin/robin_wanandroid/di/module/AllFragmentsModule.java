@@ -1,14 +1,16 @@
 package com.robin.robin_wanandroid.di.module;
 
-import com.robin.robin_wanandroid.ui.CollectFragment;
-import com.robin.robin_wanandroid.ui.FootPrintFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.ExploreFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.WechatArticleListFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.CollectFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.FootPrintFragment;
 import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
 import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidHomeFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.KnowledgeStructureFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.KnowledgeStructureFragment;
 import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidMainFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.NavigationFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.ProjectFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WechatFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.NavigationFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.ProjectFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.WechatFragment;
 import com.robin.robin_wanandroid.ui.readhub.ReadhubMainFragment;
 
 
@@ -52,4 +54,10 @@ public abstract class AllFragmentsModule {
 
     @ContributesAndroidInjector(modules =  WanAndroidMainFragmentModule.class)
     abstract WanAndroidMainFragment contributeWanAndroidMainFragment();
+
+    @ContributesAndroidInjector(modules =  WanAndroidExploreFragmentModule.class)
+    abstract ExploreFragment contributeWanAndroidExploreFragment();
+
+    @ContributesAndroidInjector(modules =  WechatArticlelistFragmentModule.class)
+    abstract WechatArticleListFragment contributeWechatArticlelistExploreFragment();
 }

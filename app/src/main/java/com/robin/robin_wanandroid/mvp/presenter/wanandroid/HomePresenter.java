@@ -45,12 +45,11 @@ public class HomePresenter extends CommonPresenter<HomeContract.View> implements
                .doOnSubscribe(new Consumer<Disposable>() {
                    @Override
                    public void accept(Disposable disposable) throws Exception {
-                       if (page<1) {
-                           mView.showLoading();
-                       }
+
                    }
                })
-                .compose(RxLifecycleUtils.bindToLifecycle(mView)).subscribe(new ErrorHandleSubscriber<MainArticleBean>(App.getmMyAppComponent().rxErrorHandler()) {
+                .compose(RxLifecycleUtils.bindToLifecycle(mView))
+               .subscribe(new ErrorHandleSubscriber<MainArticleBean>(App.getmMyAppComponent().rxErrorHandler()) {
                     @Override
                     public void onNext(MainArticleBean dataBeans) {
                         Logger.i("get main art is "+dataBeans.toString());

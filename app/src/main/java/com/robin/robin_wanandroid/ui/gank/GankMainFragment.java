@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.rbase.MVP.MvpBase.BaseMvpFragment;
@@ -62,15 +63,15 @@ public class GankMainFragment extends BaseMvpFragment<GankMainPresenter> impleme
         mGankAndroidAdapter = new GankAndroidAdapter(R.layout.item_gank_android_layout, data);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mGankAndroidAdapter);
-        mGankAndroidAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                Logger.i("page is "+page);
-                mPresenter.getAndroidData(20, page, false);
-            }
-        }, mRecyclerView);
+//        mGankAndroidAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//                Logger.i("page is "+page);
+//                mPresenter.getAndroidData(20, page, false);
+//            }
+//        }, mRecyclerView);
 
-        mGankAndroidAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mGankAndroidAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
@@ -116,11 +117,11 @@ public class GankMainFragment extends BaseMvpFragment<GankMainPresenter> impleme
         if (data.size() < 20) {
             mGankAndroidAdapter.addData(data);
             page++;
-            mGankAndroidAdapter.loadMoreEnd();
+//            mGankAndroidAdapter.loadMoreEnd();
         } else {
             mGankAndroidAdapter.addData(data);
             page++;
-            mGankAndroidAdapter.loadMoreComplete();
+//            mGankAndroidAdapter.loadMoreComplete();
         }
         Logger.i("page is set "+page);
 

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.robin.rbase.CommonUtils.Utils.ContextUtil;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.mvp.model.bean.KnowledgeArticleBean;

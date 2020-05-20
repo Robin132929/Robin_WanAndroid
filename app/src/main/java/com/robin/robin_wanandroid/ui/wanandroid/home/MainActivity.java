@@ -10,7 +10,10 @@ import com.robin.rbase.CommonBase.Activity.BaseActivity;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.ui.gank.GankMainFragment;
 import com.robin.robin_wanandroid.ui.readhub.ReadhubMainFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.ExploreFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.HistoryFragment;
 import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidMainFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.mine.MineFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +48,20 @@ public class MainActivity extends BaseActivity {
                 int ViewId = item.getItemId();
                 switch (ViewId) {
                     case R.id.action_home:
+                        //首页
                         conversionPage(0);
                         break;
-                    case R.id.action_knowledge_system:
+                    case R.id.action_explore:
+                        //探索
                         conversionPage(1);
                         break;
-                    case R.id.action_navigation:
+                    case R.id.action_history:
+                        //足迹
                         conversionPage(2);
+                        break;
+                    case R.id.action_mine:
+                        //我的
+                        conversionPage(3);
                         break;
                     default:
                         break;
@@ -95,8 +105,9 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         fragments.add(new WanAndroidMainFragment());
-        fragments.add(new GankMainFragment());
-        fragments.add(new ReadhubMainFragment());
+        fragments.add(new ExploreFragment());
+        fragments.add(new HistoryFragment());
+        fragments.add(new MineFragment());
     }
 
     @Override

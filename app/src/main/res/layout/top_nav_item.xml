@@ -7,12 +7,12 @@
     android:gravity="center"
     android:singleLine="true"
     android:layout_marginLeft="8dp"
-
     android:padding="@dimen/dp_8"
     android:textSize="@dimen/textSize_small_10"
     android:clickable="true"
     android:background="@drawable/bg_top_navgation"
     android:id="@+id/show_text"
+    android:layout_marginTop="@dimen/dp_6"
    >
 
 </TextView>

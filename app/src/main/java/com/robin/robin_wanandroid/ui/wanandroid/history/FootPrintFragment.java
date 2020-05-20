@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui;
+package com.robin.robin_wanandroid.ui.wanandroid.history;
 
 import android.os.Bundle;
 import android.view.View;
@@ -61,18 +61,18 @@ public class FootPrintFragment extends BaseMvpFragment<FootPrintPresenter> imple
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mFootListAdapter = new FootListAdapter(R.layout.item_collect_list, datas);
-        mFootListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GetCollectBean.DataBean.DatasBean bean = (GetCollectBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(App.getmMyAppComponent().application(), bean.getTitle(), bean.getLink());
-            }
-        });
-        mFootListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-            }
-        }, mRecyclerView);
+//        mFootListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                GetCollectBean.DataBean.DatasBean bean = (GetCollectBean.DataBean.DatasBean) adapter.getItem(position);
+//                ContentActivity.startActivity(App.getmMyAppComponent().application(), bean.getTitle(), bean.getLink());
+//            }
+//        });
+//        mFootListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//            }
+//        }, mRecyclerView);
         mRecyclerView.setAdapter(mFootListAdapter);
 //        mPresenter.
     }

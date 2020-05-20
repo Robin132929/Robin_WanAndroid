@@ -16,9 +16,9 @@ import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.base.RobinBaseActivity;
 import com.robin.robin_wanandroid.mvp.contract.SettingContract;
 import com.robin.robin_wanandroid.mvp.presenter.SettingPresenter;
-import com.robin.robin_wanandroid.ui.FootPrintFragment;
-import com.robin.robin_wanandroid.ui.SettingFragment;
-import com.robin.robin_wanandroid.ui.CollectFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.FootPrintFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.mine.SettingFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.history.CollectFragment;
 import com.robin.robin_wanandroid.rx.ColorEvent;
 import com.robin.robin_wanandroid.rx.RxBus;
 

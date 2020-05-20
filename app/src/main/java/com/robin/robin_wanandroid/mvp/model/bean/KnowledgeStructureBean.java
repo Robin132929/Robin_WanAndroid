@@ -143,6 +143,15 @@ public class KnowledgeStructureBean {
             private boolean userControlSetTop;
             private int visible;
             private List<?> children;
+            private boolean isSelect;
+
+            public boolean isSelect() {
+                return isSelect;
+            }
+
+            public void setSelect(boolean select) {
+                isSelect = select;
+            }
 
             public int getCourseId() {
                 return courseId;

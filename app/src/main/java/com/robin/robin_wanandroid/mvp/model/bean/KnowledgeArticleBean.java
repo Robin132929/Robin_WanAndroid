@@ -397,6 +397,62 @@ public class KnowledgeArticleBean {
             public void setTags(List<Tag> tags) {
                 this.tags = tags;
             }
+
+            @Override
+            public String toString() {
+                return "DatasBean{" +
+                        "apkLink='" + apkLink + '\'' +
+                        ", audit=" + audit +
+                        ", author='" + author + '\'' +
+                        ", chapterId=" + chapterId +
+                        ", chapterName='" + chapterName + '\'' +
+                        ", collect=" + collect +
+                        ", courseId=" + courseId +
+                        ", desc='" + desc + '\'' +
+                        ", envelopePic='" + envelopePic + '\'' +
+                        ", fresh=" + fresh +
+                        ", id=" + id +
+                        ", link='" + link + '\'' +
+                        ", niceDate='" + niceDate + '\'' +
+                        ", niceShareDate='" + niceShareDate + '\'' +
+                        ", origin='" + origin + '\'' +
+                        ", prefix='" + prefix + '\'' +
+                        ", projectLink='" + projectLink + '\'' +
+                        ", publishTime=" + publishTime +
+                        ", shareDate=" + shareDate +
+                        ", shareUser='" + shareUser + '\'' +
+                        ", superChapterId=" + superChapterId +
+                        ", superChapterName='" + superChapterName + '\'' +
+                        ", title='" + title + '\'' +
+                        ", type=" + type +
+                        ", userId=" + userId +
+                        ", visible=" + visible +
+                        ", zan=" + zan +
+                        ", tags=" + tags +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "curPage=" + curPage +
+                    ", offset=" + offset +
+                    ", over=" + over +
+                    ", pageCount=" + pageCount +
+                    ", size=" + size +
+                    ", total=" + total +
+                    ", datas=" + datas +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "KnowledgeArticleBean{" +
+                "data=" + data +
+                ", errorCode=" + errorCode +
+                ", errorMsg='" + errorMsg + '\'' +
+                '}';
     }
 }

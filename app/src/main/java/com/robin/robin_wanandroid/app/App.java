@@ -2,7 +2,6 @@ package com.robin.robin_wanandroid.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import com.robin.rbase.CommonBase.App.BaseApplication;
 import com.robin.rbase.CommonBase.App.ConfigModule;

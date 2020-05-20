@@ -220,7 +220,13 @@ public class DataManager extends com.robin.rbase.MVP.MvpBase.BaseModel implement
 
     @Override
     public Observable<FootPrintBean> getFootPrintList() {
-        return null;
+        return Observable.just(mRepositoryManager.obtainRetrofitService(Api.class).getFootPrintList())
+                .flatMap(new Function<Observable<FootPrintBean>, ObservableSource<FootPrintBean>>() {
+            @Override
+            public ObservableSource<FootPrintBean> apply(Observable<FootPrintBean> footPrintBeanObservable) throws Exception {
+                return footPrintBeanObservable;
+            }
+        });
     }
 
     private static class INSTANCE {

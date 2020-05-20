@@ -1,7 +1,7 @@
 package com.robin.robin_wanandroid.adapter.wanandroid;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.mvp.model.bean.wendaBean;
 

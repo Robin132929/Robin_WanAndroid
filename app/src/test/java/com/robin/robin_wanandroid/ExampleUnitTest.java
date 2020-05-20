@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -499,6 +500,7 @@ root.right=null;
         List<Integer> result=new ArrayList<>();
         mid(root1,a1);
         mid(root2,a2);
+        a1.size()
         int i=0,j=0;
         while (i<a1.size()||j<a2.size()){
             if (a1.get(i)>=a2.get(j)){
@@ -538,5 +540,244 @@ root.right=null;
         }
 
    return a;
+    }
+    public class ListNode {
+      int val;
+      ListNode next;
+     ListNode(int x) { val = x; }
+ }
+    public boolean isPalindrome(ListNode head) {
+      ListNode slow=head;
+      ListNode fast=head;
+      while (slow!=null&&fast!=null){
+          slow=slow.next;
+          fast=fast.next.next;
+      }
+      ListNode pre =null;
+      while (slow!=null){
+          ListNode curr=slow.next;
+          curr=pre;
+          pre=slow;
+          slow=curr;
+      }
+
+      ListNode content=head;
+      while (pre !=null){
+          if (pre.val!=content.val){
+              return false;
+          }
+          pre=pre.next;
+          content=content.next;
+      }
+
+      return true;
+    }
+
+    public void setZeroes(int[][] matrix) {
+      int[][] matriy=new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int i1 = 0; i1 < matrix[0].length; i1++) {
+                if (matrix[i][i1]==0){
+                    matriy[i][i1]=1;
+                }
+            }
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int i1 = 0; i1 < matrix[0].length; i1++) {
+                if (matriy[i][i1]==1){
+                    for (int i2 = 0; i2 < matrix.length; i2++) {
+                        matrix[i2][i1]=0;
+                    }
+                    for (int i2 = 0; i2 < matrix[i1].length; i2++) {
+                        matrix[i][i2]=0;
+                    }
+                }
+            }
+        }
+    }
+    public int[] shortestToChar(String S, char C) {
+         int len= S.length();
+         int[] res=new int[len];
+         int pre=Integer.MIN_VALUE/2;
+        for (int i = 0; i < len; i++) {
+            if (S.charAt(i)==C) pre =i;
+            res[i]=i-pre;
+        }
+        pre =Integer.MAX_VALUE/2;
+        for (int i = len-1; i >=0; i--) {
+            if (S.charAt(i)==C) pre=i;
+            res[i]=Math.min(pre-i,res[i]);
+        }
+        return res;
+    }
+    public int minMutation(String start, String end, String[] bank) {
+        boolean isCan=false;
+        for (int i = 0; i < bank.length; i++) {
+            if (bank[i].equals(end)){
+                isCan=true;
+                break;
+            }
+        }
+        if (!isCan){
+            return  -1;
+        }
+        int count=0;
+        isCan=false;
+     char[] sp= start.toCharArray();
+        for (int i = 0; i < start.length(); i++) {
+            if (start.charAt(i)!=end.charAt(i)){
+                sp[i]=end.charAt(i);
+                for (int j = 0; j < bank.length; j++) {
+                    System.out.println("-111111111111"+String.valueOf(sp));
+
+                    if (bank[i].equals(sp.toString())){
+                        count++;
+                        isCan=true;
+                        break;
+                    }
+                }
+                if (!isCan){
+                    return -1;
+                }
+            }
+        }
+        return count;
+        if (current.equals(end))
+            minStepCount = Math.min(stepCount, minStepCount);
+        for (String str: bank) {
+            int diff = 0;
+            for (int i = 0; i < str.length(); i++){
+                if (current.charAt(i) != str.charAt(i))
+                    if (++diff > 1) break;
+            }
+
+            if (diff == 1 && !step.contains(str)) {
+                step.add(str);
+                dfs(step, stepCount + 1, str, end, bank);
+                step.remove(str);
+            }
+        }
+    }
+
+    private void dfs (HashSet<String> step, int stepCount,
+                      String current, String end, String[] bank) {
+
+        if (current.equals(end)){
+            minStepCount = Math.min(stepCount, minStepCount);
+            return;
+        }
+        for (String s : bank) {
+            int count=0;
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i)!=current.charAt(i)){
+                    count++;
+                    if (count>1){
+                        break;
+                    }
+                }
+            }
+
+            if (count==1&&!step.contains(s)){
+                step.add(s);
+                dfs(step, stepCount+1, s, end, bank);
+                step.remove(s);
+            }
+            int minStepCount = Integer.MAX_VALUE;
+        }
+    }
+    public int maxWidthRamp(int[] A) {
+     int left=0,right=A.length-1;
+      int ans=0;
+     while (left<right){
+         if (A[left] > A[right]) {
+             left++;
+         }else {
+             ans=right-left;
+         }
+         if (A[left])
+     }
+     return right-left;
+    }
+ //123456780    221
+ public int maxWidthRamp(int[] A) {
+
+     int len=A.length;
+     Integer [] b=new Integer[len];
+     for (int i = 0; i < b.length; i++) {
+         b[i]=i;
+     }
+
+
+     Arrays.sort(b, new Comparator<Integer>() {
+         @Override
+         public int compare(Integer i, Integer j) {
+             return ((Integer) A[i]).compareTo(A[j]);
+         }
+     });
+
+     int ans = 0;
+     int m = len;
+     for (int i: b) {
+      ans=Math.max(ans,i-m);
+      m=Math.min(i,m);
+     }
+
+     return ans;
+ }
+    public int getDecimalValue(ListNode head) {
+     ListNode cur=head,next=head.next;
+     if (head==null){
+         return -1;
+     }
+        ListNode temp=null;
+        while (next!=null){
+         cur.next=temp;
+         temp=next.next;
+         next.next=cur;
+         cur=next;
+         next=temp;
+     }
+        ListNode h=cur;
+     int ans=0;
+     int i=0;
+        while (h!=null){
+           ans+= h.val*Math.pow(2,i);
+           h=h.next;
+        }
+
+        return ans;
+    }
+
+    public int findTargetSumWays(int[] nums, int S) {
+    int[][] dp=new int[nums.length][2001];
+    dp[0][nums[0]+1000]=1;
+    dp[0][-nums[0]+1000]+=1;
+
+    for (int i=1;i<=nums.length;i++){
+        for (int j = -1000; j <=1000 ; j++) {
+            if (dp[i-1][j+1000]>0){
+                dp[i][j+1000+nums[i]]+=dp[i-1][j+1000];
+                dp[i][j+1000-nums[i]]+=dp[i-1][j+1000];
+            }
+        }
+    }
+      return S>1000 ?0:dp[nums.length-1][S+1000];
+    }
+    public int longestOnes(int[] A, int K) {
+     int l=0,ans=0;
+        int i = 0;
+        for (; i <A.length ; i++) {
+            if (A[i]==0){
+                if (K>0){
+                    K--;
+                }else {
+                    ans=Math.max(ans,i-l);
+                    while (A[l++]==1);
+                }
+            }
+        }
+
+        return Math.max(ans,i-l);
     }
 }

@@ -5,11 +5,11 @@ public class Constant {
      * 侧边栏
      */
     //收藏
-    public static final String COLLECT="com.robin.robin_wanandroid.ui.CollectFragment";
+    public static final String COLLECT="com.robin.robin_wanandroid.ui.wanandroid.history.CollectFragment";
     //浏览历史
-    public static final String FOOT_PRINT="com.robin.robin_wanandroid.ui.FootPrintFragment";
+    public static final String FOOT_PRINT="com.robin.robin_wanandroid.ui.wanandroid.history.FootPrintFragment";
     //设置
-    public static final String SETTING="com.robin.robin_wanandroid.ui.SettingFragment";
+    public static final String SETTING="com.robin.robin_wanandroid.ui.wanandroid.mine.SettingFragment";
 
     /**
      * 首页

@@ -1,10 +1,7 @@
 package com.robin.robin_wanandroid.adapter.wanandroid;
 
 import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WanAndroidHomeFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.KnowledgeStructureFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.NavigationFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.ProjectFragment;
-import com.robin.robin_wanandroid.ui.wanandroid.home.fragment.WechatFragment;
+import com.robin.robin_wanandroid.ui.wanandroid.explore.NavigationFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,32 +26,32 @@ public class myViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position==0){
-           return new NavigationFragment();
+           return new WanAndroidHomeFragment();
         }else if (position==1){
-            return new WanAndroidHomeFragment();
-        }else if (position==2){
-          return new KnowledgeStructureFragment();
-        }else if (position==3){
-          return new WechatFragment();
-        }else if (position==4){
-          return new ProjectFragment();
+            return new NavigationFragment();
+//        }else if (position==2){
+//          return new KnowledgeStructureFragment();
+//        }else if (position==3){
+//          return new WechatFragment();
+//        }else if (position==4){
+//          return new ProjectFragment();
         }
         return new WanAndroidHomeFragment();
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return 2;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
        if (position==0){
-           return "导航";
+           return "推荐";
        }
         if (position==1){
-            return "推荐";
+            return "广场";
         }
         if (position==2){
             return "体系";

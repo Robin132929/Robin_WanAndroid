@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.wanandroid.HomeAdapter;
@@ -28,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-//TODO 懒加载
 public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
         implements HomeContract.View, ScrollTopListener {
 
@@ -56,10 +57,10 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
     public void initData(@Nullable Bundle savedInstanceState) {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mHomeAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mHomeAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecyclerView.setAdapter(mHomeAdapter);
 
-        mHomeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mHomeAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MainArticleBean.DataBean.DatasBean data =
@@ -68,7 +69,7 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
                         App.getmMyAppComponent().application(), data.getTitle(), data.getLink());
             }
         });
-        mHomeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mHomeAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 Logger.i("iscollect : click ");
@@ -79,12 +80,13 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
                 }
             }
         });
-        mHomeAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                mPresenter.requestArticle(index++, true);
-            }
-        }, mRecyclerView);
+        //todo 加载更多
+//        mHomeAdapter.addLoadMoreModule()setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//                mPresenter.requestArticle(index++, true);
+//            }
+//        }, mRecyclerView);
 
         RxBusSubscriber();
     }
@@ -125,13 +127,13 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
     public void setArticle(MainArticleBean.DataBean dataBean, boolean isRefresh) {
         index = dataBean.getCurPage();
         if (isRefresh && dataBean.isOver()) {
-            mHomeAdapter.loadMoreEnd();
+//            mHomeAdapter.loadMoreEnd();
         }
         if (!isRefresh) {
             mHomeAdapter.setNewData(dataBean.getDatas());
         }
         mHomeAdapter.addData(dataBean.getDatas());
-        mHomeAdapter.loadMoreComplete();
+//        mHomeAdapter.loadMoreComplete();
     }
 
     @Override
@@ -165,7 +167,7 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
     protected void initLoadingStatusViewIfNeed() {
         if (mHolder == null) {
             //bind status view to activity root view by default
-            mHolder = Gloading.getDefault().cover(mRecyclerView).withRetry(this::onLoadRetry);
+            mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(this::onLoadRetry);
         }
     }
 
@@ -177,6 +179,7 @@ public class WanAndroidHomeFragment extends RobinBaseFragment<HomePresenter>
     @Override
     protected void lazyLoad() {
         super.lazyLoad();
+        showLoading();
         mPresenter.requestArticle(0,true);
     }
 }

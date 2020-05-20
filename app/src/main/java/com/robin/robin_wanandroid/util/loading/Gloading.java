@@ -52,6 +52,7 @@ public class Gloading {
     private static volatile Gloading mDefault;
     private Adapter mAdapter;
     private static boolean DEBUG = false;
+    private static final int Tag=0x100100;
 
     /**
      * Provides view to show current loading status
@@ -136,6 +137,10 @@ public class Gloading {
         }
         if (view.getParent() != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
+            Logger.i("parent view is "+parent.toString()+ "  "+view.toString());
+            if (parent instanceof FrameLayout){
+                return new Holder(mAdapter, view.getContext(), parent);
+            }
             int index = parent.indexOfChild(view);
             parent.removeView(view);
             parent.addView(wrapper, index);
@@ -157,7 +162,9 @@ public class Gloading {
             throw new RuntimeException("view has no parent to show gloading as cover!");
         }
         ViewGroup viewGroup = (ViewGroup) parent;
+        Logger.i("parent view is "+viewGroup.toString()+ "  "+view.toString());
         FrameLayout wrapper = new FrameLayout(view.getContext());
+//        wrapper.setTag(Tag,"loading");
         viewGroup.addView(wrapper, view.getLayoutParams());
         return new Holder(mAdapter, view.getContext(), wrapper);
     }
@@ -265,8 +272,9 @@ public class Gloading {
                 } else if (mWrapper.indexOfChild(view) != mWrapper.getChildCount() - 1) {
                     // make sure loading status view at the front
                     Logger.i("gload is already exist ");
+                    mWrapper.bringToFront();
 
-                    view.bringToFront();
+//                    view.bringToFront();
                 }
                 mCurStatusView = view;
                 mStatusViews.put(status, view);

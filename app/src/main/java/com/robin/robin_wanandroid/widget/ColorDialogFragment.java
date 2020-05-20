@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.ThemeColorAdapter;
@@ -69,27 +69,27 @@ public class ColorDialogFragment extends DialogFragment {
         view = inflater.inflate(R.layout.fragment_select_color_layout, null);
         themeColorAdapter = new ThemeColorAdapter(color_data);
         mRecyclerView = view.findViewById(R.id.recycle);
-        themeColorAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Logger.i("post button which 444 " + position);
-                BaseViewHolder hodler = (BaseViewHolder) mRecyclerView.findViewHolderForLayoutPosition(mSelect);
-                if (hodler != null) {
-                    hodler.getView(R.id.img_select).setVisibility(View.GONE);
-                } else {
-                    adapter.notifyItemChanged(mSelect);
-                }
-                color_data.get(mSelect).setSelect(false);
-
-                mSelect = position;
-                color_data.get(mSelect).setSelect(true);
-                view.findViewById(R.id.img_select).setVisibility(View.VISIBLE);
-                SettingUtil.setColor(color_data.get(position).getColorInt());
-
-                RxBus.getInstance().post(new ColorEvent(color_data.get(position).getColorName(), color_data.get(position).getColorInt()));
-
-            }
-        });
+//        themeColorAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                Logger.i("post button which 444 " + position);
+//                BaseViewHolder hodler = (BaseViewHolder) mRecyclerView.findViewHolderForLayoutPosition(mSelect);
+//                if (hodler != null) {
+//                    hodler.getView(R.id.img_select).setVisibility(View.GONE);
+//                } else {
+//                    adapter.notifyItemChanged(mSelect);
+//                }
+//                color_data.get(mSelect).setSelect(false);
+//
+//                mSelect = position;
+//                color_data.get(mSelect).setSelect(true);
+//                view.findViewById(R.id.img_select).setVisibility(View.VISIBLE);
+//                SettingUtil.setColor(color_data.get(position).getColorInt());
+//
+//                RxBus.getInstance().post(new ColorEvent(color_data.get(position).getColorName(), color_data.get(position).getColorInt()));
+//
+//            }
+//        });
         if (mRecyclerView.getLayoutManager() == null) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -6,10 +6,12 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.robin.rbase.CommonUtils.ArmsUtils;
 import com.robin.robin_wanandroid.R;
 import com.robin.robin_wanandroid.adapter.ImageNetAdapter;
 import com.robin.robin_wanandroid.adapter.wanandroid.myViewPagerAdapter;
@@ -79,9 +81,33 @@ public class WanAndroidMainFragment extends RobinBaseFragment<WanAndroidMainFrag
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mViewPager.setAdapter(new myViewPagerAdapter(getChildFragmentManager()));
-        mViewPager.setOffscreenPageLimit(4);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.selectTab(mTabLayout.getTabAt(1));
+        for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab=mTabLayout.getTabAt(i);
+            tab.setCustomView(R.layout.layout_custom_tabview);
+            ((TextView) tab.getCustomView()).setText(tab.getText());
+            ((TextView) tab.getCustomView()).setTextColor(tab.isSelected()? getResources().getColor(R.color.Black):getResources().getColor(R.color.Grey400));
+            ((TextView) tab.getCustomView()).setTextSize(tab.isSelected()? 24f:22f);
+        }
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextSize(24f);
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.Black));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.Grey400));
+                ((TextView) tab.getCustomView()).setTextSize(22f);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mTabLayout.selectTab(mTabLayout.getTabAt(0));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui.wanandroid.home.fragment;
+package com.robin.robin_wanandroid.ui.wanandroid.explore;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.layoutmanager.FlowLayoutManager;
 import com.robin.rbase.CommonUtils.Logger.Logger;
 import com.robin.rbase.MVP.MvpBase.BaseLazyLoadFragment;
 import com.robin.robin_wanandroid.base.RobinBaseFragment;
@@ -95,7 +94,7 @@ public class ProjectFragment extends RobinBaseFragment<ProjectPresenter> impleme
                         });
 
                         mPopopWindowRecycleView=contentView.findViewById(R.id.data_list);
-                        mPopopWindowRecycleView.setLayoutManager(new FlowLayoutManager());
+                        mPopopWindowRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
                         mPopopWindow_ProjectCategoryAdapter= new ProjectCategoryAdapter(R.layout.top_nav_item, mCategory_list);
                         mPopopWindowRecycleView.setAdapter(mPopopWindow_ProjectCategoryAdapter);
                     }
@@ -125,28 +124,28 @@ public class ProjectFragment extends RobinBaseFragment<ProjectPresenter> impleme
         mCategory_RecyclerView.setAdapter(mProjectCategoryAdapter);
         mItem_RecyclerView.setAdapter(mProjectItemAdapter);
 
-        mPopopWindow_ProjectCategoryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ProjectCategoryBean.DataBean bean= (ProjectCategoryBean.DataBean) adapter.getItem(position);
-                mPresenter.getProjectitem(1,bean.getId(),false);
-            }
-        });
-
-        mProjectCategoryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ProjectCategoryBean.DataBean bean= (ProjectCategoryBean.DataBean) adapter.getItem(position);
-                mPresenter.getProjectitem(1,bean.getId(),false);
-            }
-        });
-        mProjectItemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ProjectItemBean.DataBean.DatasBean bean= (ProjectItemBean.DataBean.DatasBean) adapter.getItem(position);
-                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
-            }
-        });
+//        mPopopWindow_ProjectCategoryAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                ProjectCategoryBean.DataBean bean= (ProjectCategoryBean.DataBean) adapter.getItem(position);
+//                mPresenter.getProjectitem(1,bean.getId(),false);
+//            }
+//        });
+//
+//        mProjectCategoryAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                ProjectCategoryBean.DataBean bean= (ProjectCategoryBean.DataBean) adapter.getItem(position);
+//                mPresenter.getProjectitem(1,bean.getId(),false);
+//            }
+//        });
+//        mProjectItemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                ProjectItemBean.DataBean.DatasBean bean= (ProjectItemBean.DataBean.DatasBean) adapter.getItem(position);
+//                ContentActivity.startActivity(mContext,bean.getTitle(),bean.getLink());
+//            }
+//        });
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

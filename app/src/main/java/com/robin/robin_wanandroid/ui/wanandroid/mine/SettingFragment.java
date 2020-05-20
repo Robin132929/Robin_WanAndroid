@@ -1,4 +1,4 @@
-package com.robin.robin_wanandroid.ui;
+package com.robin.robin_wanandroid.ui.wanandroid.mine;
 
 import android.content.DialogInterface;
 import android.content.Intent;

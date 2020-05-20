@@ -15,7 +15,7 @@
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/viewBackground"
     app:cardCornerRadius="@dimen/dp_5"
-    app:cardElevation="@dimen/dp_5">
+   >
 
     <RelativeLayout
         android:layout_width="match_parent"
